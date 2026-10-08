@@ -544,11 +544,40 @@ To verify the STF framework end-to-end before expanding to additional agents:
 - [x] `config/runtime.yaml` and `config/README.md` for non-secret runtime settings.
 - [x] `generate-bob-adapter.sh` bash 3.2 fix applied.
 - [x] Bob custom mode definition (`bob-mode-terraform-support.yaml`) complete.
-- [ ] **Operator action required**: Run `onboarding.sh` to populate `memory/preferences.md`.
-- [ ] **Operator action required**: Execute eval pilot (E01–E10) and record pass/fail results.
-- [ ] **Operator action required**: Confirm Phase II registry routing process status with team.
+- [ ] **GAP-02 — Operator action (onboarding)**: Run `onboarding.sh` to populate `memory/preferences.md`.
+  1. `cd portable/terraform-support-agent`
+  2. `bash export/scripts/onboarding.sh`
+  3. Answer the two prompts: your display name and job title (stored as `operator_name` / `operator_title` in `memory/preferences.md` YAML front matter).
+  4. Verify the file was written: `grep operator_name memory/preferences.md`
+  5. Commit the updated preferences file: `git add memory/preferences.md && git commit -m "chore: populate operator preferences (GAP-02)"`
 
-### Phase 3b: A2A agent scaffold *(🔄 In Progress — session 4)*
+- [ ] **GAP-03 — Operator action (eval pilot)**: Execute eval cases E01–E10 and record pass/fail results.
+  1. Ensure the A2A server starts: `cd portable/terraform-support-agent/a2a && cp .env.example .env` (fill in WatsonX or Ollama keys).
+  2. Add the `aicoe-agent-utils` submodule first (see GAP-06 action below — must be done before this step).
+  3. Run: `pip install -r requirements.txt && python main.py &`
+  4. Open each eval case in `evals/cases/E01-*.md` through `E10-*.md` and send the customer report to the agent.
+  5. Compare actual output against the **Key assertions** and **Must not** sections in each file.
+  6. Record results in a new file `evals/results/session-<date>.md` with columns: `eval_id | pass | notes`.
+  7. Flip any failing case's `status:` field from `ready` → `fail` with a `failure_note` in the YAML front matter.
+  8. Commit results: `git add evals/results/ evals/cases/ && git commit -m "eval: Phase 3b pilot results (E01–E10)"`
+
+- [ ] **GAP-04 — Operator action (registry routing)**: Confirm Phase II registry routing process status with team.
+  1. Open `memory/ops/registry-routing.md` and review the current routing decision tree.
+  2. Contact the team channel or the person listed in `memory/ops/escalation-paths.md` to confirm: is the Phase II process (automated routing via CSP tag) live, in staging, or still pending?
+  3. If live: update `memory/ops/registry-routing.md` with the confirmed process and set `phase: 2` in the YAML front matter.
+  4. If still pending: add a `gap_note` entry with the expected timeline and owner.
+  5. Commit: `git add memory/ops/registry-routing.md && git commit -m "ops: confirm Phase II registry routing status (GAP-04)"`
+
+- [ ] **GAP-06 — Operator action (submodule)**: Add `aicoe-agent-utils` as a git submodule (requires IBM GitHub access).
+  1. Confirm you have access to `https://github.ibm.com/AI-CoE/aicoe-agent-utils`.
+  2. `cd portable/terraform-support-agent/a2a`
+  3. `git submodule add https://github.ibm.com/AI-CoE/aicoe-agent-utils.git lib/aicoe-agent-utils`
+  4. `git submodule update --init --recursive`
+  5. Verify: `ls lib/aicoe-agent-utils/` should show the repo contents.
+  6. Commit from the STF repo root: `git add .gitmodules portable/terraform-support-agent/a2a/.gitmodules portable/terraform-support-agent/a2a/lib/ && git commit -m "chore: add aicoe-agent-utils submodule (GAP-06)"`
+  7. Test: `pip install -e lib/aicoe-agent-utils[agent]` from inside `a2a/` — should install without errors.
+
+### Phase 3b: A2A agent scaffold *(✅ Complete — session 4)*
 
 **Goal**: Promote the Terraform Support Agent from a Bob skill bundle to a production-grade
 A2A server using `aicoe-agent-utils`, independently testable and invokable by other agents.
@@ -556,16 +585,16 @@ A2A server using `aicoe-agent-utils`, independently testable and invokable by ot
 **All files land under `portable/terraform-support-agent/a2a/`.**
 
 **Agent deliverables:**
-- [ ] `aicoe-agent-utils` git submodule added and initialised (`git submodule add https://github.ibm.com/AI-CoE/aicoe-agent-utils.git`).
-- [ ] `config.py` — env-var loading for WatsonX / Ollama, MCP server URLs, host/port, auth flags (both default `false`), AgentOps.
-- [ ] `terraform_agent.py` — `BaseLangGraphAgent` subclass; `get_prompt()` sourced from `export/agents/coordinator.md`; `get_agent_card()` with name, description, and skills list. **Never call `build_graph()`.**
-- [ ] `a2a_factory.py` — `A2AAgentFactory` subclass; `make_agent()` + `make_agent_executor()`; `get_mcp_tools()` override ready for Phase 4 MCP wiring.
-- [ ] `main.py` — `asyncclick` entry point; `start_a2a_server()` call. (**NOT `__main__.py`**.)
-- [ ] `test_client.py` — uses `run_streaming_test()` from `aicoe_agent_utils.a2a.client_utils`.
-- [ ] `requirements.txt` — includes `-e ./aicoe-agent-utils[agent]`.
-- [ ] `Dockerfile` — Red Hat UBI base image (`registry.redhat.io/ubi9/python-311-minimal:latest`), non-root user, `CMD ["python", "main.py"]`.
-- [ ] `.env.example` — all config options (WatsonX, Ollama, MCP, host/port, auth flags, AgentOps).
-- [ ] `.gitignore`, `.gitmodules`.
+- [x] `aicoe-agent-utils` git submodule scaffold added (`.gitmodules` committed); `git submodule add` is an **operator action** — requires IBM GitHub access (see operator actions below).
+- [x] `config.py` — env-var loading for WatsonX / Ollama, MCP server URLs, host/port, auth flags (both default `false`), AgentOps.
+- [x] `terraform_agent.py` — `BaseLangGraphAgent` subclass; `get_prompt()` sourced from `export/agents/coordinator.md`; `get_agent_card()` with name, description, and skills list. No `build_graph()` calls.
+- [x] `a2a_factory.py` — `A2AAgentFactory` subclass; `make_agent()` + `make_agent_executor()`; `get_mcp_tools()` override ready for Phase 4 MCP wiring.
+- [x] `main.py` — `asyncclick` entry point; `start_a2a_server()` call. (Not `__main__.py`.)
+- [x] `test_client.py` — uses `run_streaming_test()` from `aicoe_agent_utils.a2a.client_utils`.
+- [x] `requirements.txt` — includes `-e ./aicoe-agent-utils[agent]`.
+- [x] `Dockerfile` — Red Hat UBI base image (`registry.redhat.io/ubi9/python-311-minimal:latest`), non-root user, `CMD ["python", "main.py"]`.
+- [x] `.env.example` — all config options (WatsonX, Ollama, MCP, host/port, auth flags, AgentOps).
+- [x] `.gitignore`, `.gitmodules`.
 
 **Phase 3 gap close-out** (agent-owned):
 - [x] GAP-01: `memory/patterns/P009-vcs-webhook-outdated-pattern.md` — **already present** (verified session 4).
