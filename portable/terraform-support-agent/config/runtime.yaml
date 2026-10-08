@@ -1,0 +1,66 @@
+# runtime.yaml — Terraform Support Agent runtime configuration
+#
+# Non-secret settings only. Credentials and tokens go in .env (gitignored).
+# All values below are documented defaults. Change only with operator approval.
+# Changes take effect on the next coordinator invocation.
+#
+# Phase 3 active. Phase 4+ settings are present but inactive (noted below).
+
+# ── Token budgets ──────────────────────────────────────────────────────────────
+token_budgets:
+  # Maximum tokens consumed per coordinator pass (intake → evidence → action)
+  coordinator_pass: 8000
+  # Maximum tokens for a single specialist sub-agent response
+  specialist_response: 4000
+  # Maximum tokens for a communication draft (reply, handoff, closure)
+  communication_draft: 2000
+
+# ── Retry limits ──────────────────────────────────────────────────────────────
+retry_limits:
+  # Maximum consecutive retries when a tool call returns an error
+  tool_call: 2
+  # Maximum retries for a source lookup that returns no results
+  source_lookup: 1
+  # Maximum attempts to regenerate a draft if the operator marks it unsatisfactory
+  # (Phase 3: operator manually re-invokes; Phase 6+ may use structured feedback loop)
+  draft_regeneration: 1
+
+# ── Confidence thresholds ─────────────────────────────────────────────────────
+confidence_thresholds:
+  # Minimum confidence level before the coordinator presents a root cause as likely
+  # Values: high | medium | low
+  present_cause: medium
+  # Minimum confidence before the coordinator recommends a fix step (not just a test)
+  recommend_fix: high
+  # Below this threshold, coordinator must state "unconfirmed" in any output
+  unconfirmed_floor: low
+
+# ── Stale pattern behaviour ───────────────────────────────────────────────────
+memory:
+  # When a pattern has status: outdated, treat it as a lead only (not confirmed)
+  outdated_pattern_as_lead_only: true
+  # Maximum age in days before a pattern is flagged for re-verification
+  pattern_review_threshold_days: 180
+
+# ── Phase 4+ tool permission overrides (inactive until Phase 4 gate approved) ──
+# tool_permissions:
+#   terraform_mcp:
+#     enabled: false               # set to true after Phase 4 allowlist review
+#     allowlist:
+#       - workspace:read
+#       - run:read
+#       - state:read
+#   jira:
+#     enabled: false
+#     allowlist:
+#       - issue:read
+#       - comment:read
+
+# ── Feature flags ─────────────────────────────────────────────────────────────
+feature_flags:
+  # Phase 4: enable Terraform MCP connector (requires allowlist review)
+  terraform_mcp_connector: false
+  # Phase 5: enable specialist sub-agent delegation
+  specialist_delegation: false
+  # Phase 6: enable bounded automation (reproduction skill execution)
+  bounded_automation: false

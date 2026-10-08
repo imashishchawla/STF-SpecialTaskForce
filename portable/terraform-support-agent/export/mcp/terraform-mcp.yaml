@@ -1,0 +1,31 @@
+# Terraform MCP Server configuration stub
+# Phase: 4 (not active in Phases 1–3)
+# Status: Design placeholder — do not activate until Phase 4 allowlist review is complete
+#
+# See: docs/design/05-runtime-and-integration.md §3 for full allowlist specification
+# Required: Confirm exact tool names against current Terraform MCP server before enabling
+
+server:
+  name: terraform-mcp
+  # url: <set by installer from environment — never hardcode>
+  enabled: false   # must be set to true manually after Phase 4 allowlist review
+
+allowed_tools:
+  # Read-only documentation tools (proposed Phase 4 initial set)
+  - resolveProviderDocID
+  - getProviderDocs
+  - searchProviderDocs
+  - listProviderDataSources
+  - listProviderResources
+  - getResourceDetails
+  - searchModules
+  # HCP Terraform query tools: NONE enabled until explicit Phase 4 review
+
+blocked_tools:
+  # ALL mutation and execution tools — blocked regardless of ENABLE_TF_OPERATIONS setting
+  # See docs/design/05-runtime-and-integration.md §3 for the full blocked list
+
+credentials:
+  # Token must be injected via environment variable only — never paste in this file
+  # token_env: TF_MCP_TOKEN   # uncomment and set env var during Phase 4 setup
+  # scope: read-only team token or read-only user token (no write scope)

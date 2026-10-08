@@ -1,0 +1,17 @@
+# Environment — never commit real credentials
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Editor / OS
+.DS_Store
+*.swp
+*.swo

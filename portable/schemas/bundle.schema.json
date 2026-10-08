@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stf.local/schemas/bundle.schema.json",
+  "title": "STF portable bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "bundle_id", "version", "status", "description", "license", "minimum_harness_version", "agents", "skills", "capabilities", "files"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "bundle_id": {"type": "string", "pattern": "^[a-z0-9]+([.-][a-z0-9]+)*$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "status": {"enum": ["draft", "released"]},
+    "description": {"type": "string", "minLength": 1},
+    "license": {"type": "string", "minLength": 1},
+    "minimum_harness_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "agents": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "skills": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "capabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": {"type": "string", "pattern": "^(?!.*(?:^|/)\\.{1,2}(?:/|$))[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$"},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+        }
+      }
+    },
+    "source": {"type": "string", "format": "uri"},
+    "release_notes": {"type": "string"}
+  },
+  "if": {"properties": {"status": {"const": "released"}}},
+  "then": {
+    "properties": {
+      "agents": {"minItems": 1},
+      "files": {"minItems": 1},
+      "license": {"not": {"const": "UNDECIDED"}}
+    }
+  }
+}

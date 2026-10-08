@@ -1,0 +1,87 @@
+---
+agent_id: terraform-diagnostics
+version: "0.1.0-draft"
+status: draft
+phase: 3
+role: specialist
+parent: terraform-coordinator
+skill: terraform-diagnosis
+---
+
+# Agent: terraform-diagnostics (specialist)
+> Stub — full spec: `docs/design/02-specialist-contracts.md §2`
+
+Invoked by coordinator when logs, HCL, or version strings are present. May run in parallel with Source Researcher if Bob approves.
+
+**Returns**: `DiagnosticsOutput` — observations, ranked hypotheses with discriminating checks, and unresolved evidence gaps.
+**Must not**: Send customer messages, change severity, spawn sub-agents, or commit memory directly.
+
+---
+agent_id: terraform-source-researcher
+version: "0.1.0-draft"
+status: draft
+phase: 3
+role: specialist
+parent: terraform-coordinator
+skill: terraform-source-check
+---
+
+# Agent: terraform-source-researcher (specialist)
+> Stub — full spec: `docs/design/02-specialist-contracts.md §3`
+
+Invoked by coordinator when a claim requires source verification. May run in parallel with Diagnostics.
+
+**Returns**: `SourceResearcherOutput` — source findings with full URLs, version applicability, publication status, and freshness assessment.
+**Must not**: Present GitHub comments as authoritative, use status page for historical failures, infer a fix from a closed issue.
+
+---
+agent_id: terraform-validation-reviewer
+version: "0.1.0-draft"
+status: draft
+phase: 3
+role: specialist
+parent: terraform-coordinator
+---
+
+# Agent: terraform-validation-reviewer (specialist)
+> Stub — full spec: `docs/design/02-specialist-contracts.md §4`
+
+Invoked after diagnostics and source research are consolidated. Sequential — must not start until consolidated findings are ready.
+
+**Returns**: `ValidationReviewerOutput` — validated recommendation OR explicit evidence gaps with re-check items.
+**Must not**: Override coordinator's scope classification, approve actions outside the case's validated scope.
+
+---
+agent_id: terraform-communication-specialist
+version: "0.1.0-draft"
+status: draft
+phase: 3
+role: specialist
+parent: terraform-coordinator
+skill: terraform-communication
+---
+
+# Agent: terraform-communication-specialist (specialist)
+> Stub — full spec: `docs/design/02-specialist-contracts.md §5`
+
+Invoked after Validation Reviewer approves findings. Sequential.
+
+**Returns**: Stage-appropriate draft (customer reply, internal update, handoff, CAN, RCA, KB draft, closure).
+**Must not**: Use unvalidated findings, expose internal routing in customer drafts, generate closure without real ticket number.
+
+---
+agent_id: terraform-memory-curator
+version: "0.1.0-draft"
+status: draft
+phase: 3
+role: specialist
+parent: terraform-coordinator
+---
+
+# Agent: terraform-memory-curator (specialist)
+> Stub — full spec: `docs/design/02-specialist-contracts.md §6`
+
+Invoked only after confirmed resolution. Sequential.
+
+**Returns**: Candidate lesson entry for the operator's review — `CandidateLessonEntry` with issue pattern, resolution, evidence refs, and validation status.
+**Must not**: Write directly to `memory/` or `checkpoints/`. All writes require human approval.

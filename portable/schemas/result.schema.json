@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stf.local/schemas/result.schema.json",
+  "title": "STF result envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "task_id", "status", "summary", "next_actions", "artifacts", "evidence_refs"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "task_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["success", "partial", "failed", "blocked", "cancelled"]},
+    "summary": {"type": "string", "minLength": 1},
+    "next_actions": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "artifacts": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "evidence_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "error_class": {"type": "string"},
+    "recovery_hint": {"type": "string"}
+  }
+}

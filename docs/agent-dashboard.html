@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terraform Support Agent — Diagnostic Dashboard</title>
+<style>
+  :root {
+    --blue:       #0f62fe;
+    --blue-light: #d0e2ff;
+    --dark:       #161616;
+    --mid:        #393939;
+    --light-bg:   #f4f4f4;
+    --white:      #ffffff;
+    --red:        #da1e28;
+    --red-light:  #fff1f1;
+    --yellow:     #f1c21b;
+    --yellow-light:#fdf6dd;
+    --green:      #198038;
+    --green-light:#defbe6;
+    --border:     #e0e0e0;
+    --sidebar-w:  220px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'IBM Plex Sans', 'Segoe UI', Arial, sans-serif;
+    background: var(--light-bg);
+    color: var(--dark);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar ── */
+  #sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: var(--dark);
+    color: #f4f4f4;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+  }
+  #sidebar .brand {
+    padding: 18px 16px 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    border-bottom: 1px solid #393939;
+  }
+  #sidebar nav { flex: 1; padding: 10px 0; }
+  #sidebar nav a {
+    display: block;
+    padding: 8px 16px;
+    color: #c6c6c6;
+    text-decoration: none;
+    font-size: 0.83rem;
+    line-height: 1.4;
+    border-left: 3px solid transparent;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  #sidebar nav a:hover { background: #262626; color: #fff; }
+  #sidebar nav a.active { border-left-color: var(--blue); background: #262626; color: #fff; }
+  #sidebar nav .section-label {
+    padding: 14px 16px 4px;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6f6f6f;
+  }
+  #sidebar .footer {
+    padding: 12px 16px;
+    font-size: 0.7rem;
+    color: #6f6f6f;
+    border-top: 1px solid #393939;
+  }
+
+  /* ── Main ── */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 0 0 60px;
+  }
+
+  /* ── Top bar ── */
+  #topbar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 32px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  #topbar h1 { font-size: 1.25rem; font-weight: 600; }
+  #topbar p  { font-size: 0.82rem; color: #525252; margin-top: 4px; }
+
+  /* ── Sections ── */
+  .section {
+    padding: 36px 32px 0;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .section-header .num {
+    background: var(--blue);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 1.1rem; font-weight: 600; }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; color: var(--mid); }
+
+  /* ── Mermaid container ── */
+  .mermaid-wrap {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  .mermaid-wrap .label {
+    font-size: 0.75rem;
+    color: #6f6f6f;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .mermaid { min-width: 400px; }
+
+  /* Mermaid offline fallback */
+  .mermaid-fallback {
+    display: none;
+    background: #f4f4f4;
+    border: 1px dashed #a8a8a8;
+    border-radius: 4px;
+    padding: 14px;
+    font-size: 0.8rem;
+    color: #525252;
+  }
+
+  /* ── Diagnostic checklist ── */
+  #checklist { background: var(--white); }
+  .checklist-intro {
+    font-size: 0.85rem;
+    color: #525252;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .check-group { margin-bottom: 24px; }
+  .check-group-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #525252;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid #f4f4f4;
+    cursor: pointer;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-item input[type="checkbox"] {
+    width: 16px; height: 16px;
+    accent-color: var(--blue);
+    margin-top: 2px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .check-item label {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+  .check-item label span.tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .tag-critical { background: var(--red-light); color: var(--red); }
+  .tag-warning  { background: var(--yellow-light); color: #8a6900; }
+  .tag-info     { background: var(--blue-light); color: #0043ce; }
+
+  .check-item.checked label { text-decoration: line-through; color: #a8a8a8; }
+  .check-item.checked label span.tag { opacity: 0.5; }
+
+  #checklist-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  #progress-bar-wrap {
+    flex: 1;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  #progress-bar {
+    height: 100%;
+    background: var(--blue);
+    border-radius: 4px;
+    transition: width 0.3s;
+    width: 0%;
+  }
+  #progress-label { font-size: 0.8rem; color: #525252; white-space: nowrap; }
+  #reset-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: #525252;
+    font-size: 0.78rem;
+    padding: 4px 12px;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  #reset-btn:hover { background: var(--light-bg); }
+
+  /* ── Legend / info cards ── */
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+  .badge {
+    display: flex; align-items: center; gap: 7px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 0.78rem;
+  }
+  .badge-dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  }
+
+  .alert-box {
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: 0.83rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 10px;
+  }
+  .alert-box.warn { background: var(--yellow-light); border-left: 4px solid var(--yellow); }
+  .alert-box.red  { background: var(--red-light);    border-left: 4px solid var(--red); }
+  .alert-box.info { background: var(--blue-light);   border-left: 4px solid var(--blue); }
+  .alert-box.ok   { background: var(--green-light);  border-left: 4px solid var(--green); }
+
+  /* ── Table ── */
+  table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+  th { background: var(--light-bg); text-align: left; padding: 8px 12px; font-weight: 600; border-bottom: 2px solid var(--border); }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  code { background: #f4f4f4; padding: 1px 5px; border-radius: 2px; font-size: 0.82em; font-family: 'IBM Plex Mono', 'Courier New', monospace; }
+
+  /* ── Divider ── */
+  .divider { height: 1px; background: var(--border); margin: 40px 0 0; }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    #sidebar { display: none; }
+    #main { margin-left: 0; }
+    .section { padding: 24px 16px 0; }
+    #topbar { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     SIDEBAR
+═════════════════════════════════════════ -->
+<aside id="sidebar">
+  <div class="brand">Terraform Support Agent</div>
+  <nav>
+    <div class="section-label">Diagrams</div>
+    <a href="#s1" class="nav-link">1. End-to-end flow</a>
+    <a href="#s2" class="nav-link">2. Investigation loop</a>
+    <a href="#s3" class="nav-link">3. CasePacket schema</a>
+    <a href="#s4" class="nav-link">4. Result envelope</a>
+    <a href="#s5" class="nav-link">5. Memory layout</a>
+    <a href="#s6" class="nav-link">6. Case lifecycle</a>
+    <a href="#s7" class="nav-link">7. Approval gate</a>
+    <a href="#s8" class="nav-link">8. STF schema alignment</a>
+    <div class="section-label">Design Docs</div>
+    <a href="design/08-pii-protection-and-encryption.md" class="nav-link" target="_blank">08 · PII &amp; encryption</a>
+    <a href="design/09-inter-agent-wire-format.md" class="nav-link" target="_blank">09 · Wire format</a>
+    <a href="design/10-storage-architecture.md" class="nav-link" target="_blank">10 · Storage architecture</a>
+    <div class="section-label">Tools</div>
+    <a href="#checklist" class="nav-link">✓ Diagnostic checklist</a>
+    <a href="#reference" class="nav-link">Quick reference</a>
+  </nav>
+  <div class="footer">Design phase only — no live MCP</div>
+</aside>
+
+<!-- ════════════════════════════════════════
+     MAIN CONTENT
+═════════════════════════════════════════ -->
+<div id="main">
+
+  <div id="topbar">
+    <h1>Terraform Support Agent — Diagnostic Dashboard</h1>
+    <p>Design-phase reference · All diagrams from <code>docs/design/00a-architecture-diagrams.md</code> · No runnable agents</p>
+  </div>
+
+  <div class="alert-box warn" style="margin: 20px 32px 0;">
+    <span>⚠</span>
+    <span>This is a <strong>design-phase dashboard</strong>. Milestone constraint: no active specialist agent, no live MCP, no home directory install. Diagrams describe intended behaviour only.</span>
+  </div>
+
+  <!-- ── S1 End-to-end flow ── -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="num">1</span>
+      <h2>End-to-end system flow</h2>
+    </div>
+    <div class="mermaid-wrap">
+      <div class="label">Full pipeline from operator input to memory commit</div>
+      <div class="mermaid">
+flowchart TD
+    A([Operator — manual input]) -->|case packet\nMarkdown + YAML front matter| B[Coordinator\nterraform-support-coordinator]
+
+    B --> C{complexity\nthreshold?}
+    C -->|simple| D[Coordinator solo\ninvestigation]
+    C -->|complex| E[Request Bob\nspawn approval]
+
+    E -->|Bob approves\nDiagnostics| F[Diagnostics\nsub-agent]
+    E -->|Bob approves\nSource Researcher| G[Source Researcher\nsub-agent]
+    E -->|Bob declines spawn| D
+
+    F -->|findings: observations\nhypotheses ranked\ndiscriminating checks| H[Coordinator\nconsolidate]
+    G -->|findings: doc passages\nURLs\nversion applicability| H
+
+    H --> I{conflict\ndetected?}
+    I -->|yes — targeted re-check| H
+    I -->|no| J[Validation Reviewer\nsub-agent]
+
+    D --> J
+    J -->|validated findings\nOR evidence gaps| K{validated?}
+    K -->|gaps — return blocker| Z1([Return: status=blocked\nrecovery_hint])
+    K -->|yes| L[Communication Specialist\nsub-agent]
+
+    L -->|draft reply / update\n/ handoff / CAN / RCA| M[Coordinator\nassemble result envelope]
+    M --> N([STF result.schema.json\nstatus · summary · next_actions\nartifacts · evidence_refs])
+
+    N --> O{resolution\nconfirmed?}
+    O -->|yes| P[Memory Curator\nsub-agent proposes]
+    O -->|no| Z2([Case remains open\ncheckpoint saved])
+
+    P -->|candidate entries| Q{Operator\napproves?}
+    Q -->|yes| R[(memory/\npatterns · prefs · ops\ncorrections)]
+    Q -->|no| S([Proposal discarded])
+
+    style R fill:#defbe6,stroke:#198038
+    style Z1 fill:#fdf6dd,stroke:#f1c21b
+    style Z2 fill:#fdf6dd,stroke:#f1c21b
+    style S fill:#fff1f1,stroke:#da1e28
+      </div>
+      <div class="mermaid-fallback" id="fb1">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §1</code></div>
+    </div>
+  </div>
+
+  <!-- ── S2 Investigation loop ── -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="num">2</span>
+      <h2>Investigation loop (bounded 3-pass)</h2>
+    </div>
+    <div class="badge-row">
+      <div class="badge"><div class="badge-dot" style="background:#f1c21b"></div>BLOCKED — stop condition triggered</div>
+      <div class="badge"><div class="badge-dot" style="background:#0f62fe"></div>REDACT / ASK — recovery path</div>
+    </div>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+flowchart TD
+    START([CasePacket received]) --> P1
+
+    subgraph P1["Pass 1 (or resumed pass N)"]
+        direction TB
+        T1[Reconstruct timeline\nclassify ownership] --> T2[Identify missing\nprerequisites]
+        T2 --> T3[Check checkpoint\nfor prior patterns]
+        T3 --> T4[Formulate ranked\nhypotheses]
+        T4 --> T5{Spawn specialists?}
+        T5 -->|yes| T6[Diagnostics +\nSource Researcher]
+        T5 -->|no| T7[Coordinator-only\nanalysis]
+        T6 --> T8[Consolidate\nfindings]
+        T7 --> T8
+        T8 --> T9[Validation Reviewer]
+    end
+
+    P1 --> SC{Stop\ncondition?}
+    SC -->|3 passes exhausted\non same evidence| BLOCKED([status: blocked])
+    SC -->|2 tool errors\nsame operation| BLOCKED
+    SC -->|sources conflict\nno resolution| BLOCKED
+    SC -->|auth action\nwithout approval| BLOCKED
+    SC -->|credential in\ninput| REDACT([Redact first\nthen resume])
+    SC -->|ownership\nambiguous| ASK([Ask one\nclarifying question])
+    SC -->|new evidence\nmid-pass| RESUME([Complete pass\nresume from checkpoint])
+    SC -->|validated| COMM[Communication\nSpecialist]
+
+    COMM --> RESULT([STF result envelope])
+    RESULT --> P2{New evidence\nreceived?}
+    P2 -->|yes — max 3 passes total| P1
+    P2 -->|no| END([Case closed or\nawaiting customer/engineering])
+
+    style BLOCKED fill:#fdf6dd,stroke:#f1c21b
+    style REDACT fill:#d0e2ff,stroke:#0f62fe
+    style ASK fill:#d0e2ff,stroke:#0f62fe
+      </div>
+      <div class="mermaid-fallback" id="fb2">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §2</code></div>
+    </div>
+  </div>
+
+  <!-- ── S3 CasePacket ── -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="num">3</span>
+      <h2>Input — CasePacket structure</h2>
+    </div>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+classDiagram
+    class CasePacket {
+        +string case_alias
+        +RequestedOutput requested_output
+        +ProductScope product_scope
+        +CaseStage case_stage
+        +string description_redacted
+        +string[] previous_actions
+        +EvidenceItem[] supplied_evidence
+        +string? current_hypothesis
+        +string? checkpoint_path
+    }
+    class ProductScope {
+        +primary: hcp_terraform|terraform_enterprise|terraform_core
+        +string? provider_name
+        +string? product_version
+        +string? cli_version
+    }
+    class EvidenceItem {
+        +string label
+        +string content_redacted
+        +string format
+    }
+    class RequestedOutput {
+        <<enumeration>>
+        assessment
+        customer_reply
+        internal_update
+        handoff
+        can_report
+        rca
+        closure
+        kb_draft
+    }
+    class CaseStage {
+        <<enumeration>>
+        open
+        investigating
+        awaiting_customer
+        awaiting_engineering
+        escalated
+        pending_closure
+    }
+
+    CasePacket --> ProductScope
+    CasePacket --> EvidenceItem
+    CasePacket --> RequestedOutput
+    CasePacket --> CaseStage
+      </div>
+      <div class="mermaid-fallback" id="fb3">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §3</code></div>
+    </div>
+  </div>
+
+  <!-- ── S4 Result envelope ── -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="num">4</span>
+      <h2>Output — STF result envelope</h2>
+    </div>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+classDiagram
+    class ResultEnvelope {
+        +int schema_version
+        +string task_id
+        +ResultStatus status
+        +string summary
+        +string[] next_actions
+        +string[] artifacts
+        +EvidenceRef[] evidence_refs
+        +string? error_class
+        +string? recovery_hint
+    }
+    class ResultStatus {
+        <<enumeration>>
+        success
+        partial
+        blocked
+        failed
+        cancelled
+    }
+    class EvidenceRef {
+        +string ref_id
+        +string title
+        +SourceType source_type
+        +string? url
+        +string? internal_ref
+        +string retrieved_date
+        +string version_applicability
+    }
+    class SourceType {
+        <<enumeration>>
+        public_docs
+        release_notes
+        github_issue
+        status_page
+        internal_process
+        memory_pattern
+        supplied_evidence
+    }
+
+    ResultEnvelope --> ResultStatus
+    ResultEnvelope --> EvidenceRef
+    EvidenceRef --> SourceType
+      </div>
+      <div class="mermaid-fallback" id="fb4">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §4</code></div>
+    </div>
+  </div>
+
+  <!-- ── S5 Memory layout ── -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="num">5</span>
+      <h2>Memory and local storage layout</h2>
+    </div>
+    <div class="alert-box info" style="margin-bottom:16px">
+      <span>ℹ</span>
+      <span><strong>memory/ ≠ .memory/</strong> — <code>.memory/</code> is STF project governance. <code>memory/</code> is the terraform agent's own repo (Phase 3, separate repo).</span>
+    </div>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+flowchart LR
+    subgraph SESSION["Session memory (not persisted)"]
+        WC[Working context\nredacted excerpts\ntemp analysis]
+    end
+
+    subgraph CHECKPOINTS["checkpoints/  (human-approved)"]
+        CD["checkpoints/draft/\ncurrent-pass-N.md — staging area"]
+        CP["checkpoints/CASE-alias-pass-N.md\npromoted after approval"]
+        CD -->|operator approves\npromotion| CP
+    end
+
+    subgraph MEMORY["memory/  (human-approved, in agent repo)"]
+        PAT["patterns/\ncandidate → validated → outdated"]
+        PREF["preferences.md\nresponse style · signature · templates"]
+        OPS["ops/topic.md\ninternal process refs · routing"]
+        CORR["corrections/slug.md\npermanent audit · accepted corrections"]
+    end
+
+    CURATOR[Memory Curator\nsubagent proposes]
+    CURATOR -->|proposes candidate| CD
+    CURATOR -->|proposes pattern| PAT
+    CURATOR -->|proposes pref update| PREF
+    CURATOR -->|proposes correction| CORR
+
+    OPERATOR([Operator approves]) -->|per write| CP
+    OPERATOR -->|per write| PAT
+    OPERATOR -->|per write| PREF
+    OPERATOR -->|per write| OPS
+    OPERATOR -->|per write| CORR
+
+    COORD[Coordinator] -->|reads only| CP
+    COORD -->|reads only| PAT
+    COORD -->|reads only| PREF
+    COORD -->|reads only| OPS
+    COORD -->|writes draft only| CD
+
+    style CD fill:#fdf6dd,stroke:#f1c21b
+      </div>
+      <div class="mermaid-fallback" id="fb5">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §5</code></div>
+    </div>
+  </div>
+
+  <!-- ── S6 State machine ── -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="num">6</span>
+      <h2>Case lifecycle state machine</h2>
+    </div>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+stateDiagram-v2
+    [*] --> IMPORTED : manual import (only entry path)
+
+    IMPORTED --> INVESTIGATING : intake complete
+
+    INVESTIGATING --> AWAITING_CUSTOMER : requires customer evidence
+    INVESTIGATING --> AWAITING_ENGINEERING : requires Engineering input
+    INVESTIGATING --> VALIDATING : evidence consolidated
+
+    AWAITING_CUSTOMER --> INVESTIGATING : evidence received
+    AWAITING_ENGINEERING --> INVESTIGATING : evidence received
+
+    VALIDATING --> INVESTIGATING : conflicting sources (targeted re-check)
+    VALIDATING --> AWAITING_APPROVAL : reviewer approved / auth action required
+
+    AWAITING_APPROVAL --> RESOLVED : operator approves
+
+    RESOLVED --> CLOSED : checkpoint + memory curation / customer confirms
+
+    CLOSED --> [*]
+
+    note right of INVESTIGATING
+        7 stop conditions:
+        3 passes exhausted · 2 tool errors
+        sources conflict · auth without approval
+        credential in input · ownership ambiguous
+        new evidence mid-pass
+    end note
+
+    note right of AWAITING_APPROVAL
+        10 approval classes:
+        external_message · case_update
+        severity_change · collaboration_case_creation
+        pagerduty_engagement · case_closure
+        run_operation · state_operation
+        config_change · memory_commit
+    end note
+      </div>
+      <div class="mermaid-fallback" id="fb6">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §6</code></div>
+    </div>
+  </div>
+
+  <!-- ── S7 Approval gate ── -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="num">7</span>
+      <h2>Approval gate — per-action protocol</h2>
+    </div>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+sequenceDiagram
+    participant C as Coordinator
+    participant A as Operator
+    participant S as Target System
+
+    C->>A: PRE-ANNOUNCE: action · target · evidence_ref · expected outcome
+    A-->>C: explicit confirmation (in-chat)
+    C->>C: record authorization (authorized_by · authorized_at · action · target · rationale)
+    C->>S: execute action
+    S-->>C: actual outcome
+    C->>C: record actual outcome in checkpoint
+    C->>A: report outcome (honest — failed ≠ completed)
+      </div>
+      <div class="mermaid-fallback" id="fb7">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §7</code></div>
+    </div>
+  </div>
+
+  <!-- ── S8 STF schema alignment ── -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="num">8</span>
+      <h2>STF schema alignment</h2>
+    </div>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+flowchart LR
+    subgraph SCHEMAS["portable/schemas/"]
+        TS["task.schema.json\ntask_id · parent_task_id · task_type\nintent · input · acceptance_criteria\nrequested_capabilities · state"]
+        RS["result.schema.json\nstatus · summary · next_actions\nartifacts · evidence_refs\nerror_class · recovery_hint"]
+        AS["agent.schema.json\nagent_id · version · description\ninputs_schema · outputs_schema\nrequired_capabilities · optional_capabilities\napproval_classes · eval_refs"]
+    end
+
+    COORD[terraform-support-coordinator] -->|every sub-agent invocation\ncreates a task| TS
+    COORD -->|every agent returns\nthis envelope| RS
+    AS -->|describes each\nagents/ contract| COORD
+
+    STATES["task.state → case lifecycle mapping:\ndraft → IMPORTED\nrunning → INVESTIGATING\nwaiting_approval → AWAITING APPROVAL\ncompleted → RESOLVED/CLOSED\nfailed → CLOSED (unresolved)\npaused → AWAITING CUSTOMER/ENGINEERING"]
+
+    TS --> STATES
+      </div>
+      <div class="mermaid-fallback" id="fb8">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §8</code></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════
+       DIAGNOSTIC CHECKLIST
+  ═══════════════════════════════════════ -->
+  <div class="section" id="checklist" style="padding-top: 36px;">
+    <div class="section-header">
+      <span class="num" style="background: var(--green)">✓</span>
+      <h2>Diagnostic checklist</h2>
+    </div>
+
+    <div class="card">
+      <p class="checklist-intro">
+        Run through this checklist before submitting a case result, before requesting operator approval, or when diagnosing a blocked/failed run. Check items off as you verify them — progress persists in browser session.
+      </p>
+
+      <div id="checklist-progress">
+        <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+        <span id="progress-label">0 / 0 complete</span>
+        <button id="reset-btn" onclick="resetChecklist()">Reset</button>
+      </div>
+
+      <!-- GROUP: Pre-submission -->
+      <div class="check-group">
+        <div class="check-group-title">Pre-submission gates</div>
+
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Redaction confirmed — all PII, credentials, internal hostnames removed from <code>description_redacted</code> and all <code>content_redacted</code> fields before any analysis began<span class="tag tag-critical">Critical</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>No credential detected mid-pass — if one was, pass was halted, credential redacted, then pass resumed from checkpoint<span class="tag tag-critical">Critical</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Authorization recorded — every external action has an <code>authorized_by</code> + <code>authorized_at</code> entry in the checkpoint<span class="tag tag-critical">Critical</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Result status is honest — <code>failed</code> or <code>partial</code> used when applicable; not overridden to <code>success</code><span class="tag tag-critical">Critical</span></label>
+        </div>
+      </div>
+
+      <!-- GROUP: Investigation quality -->
+      <div class="check-group">
+        <div class="check-group-title">Investigation quality</div>
+
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Pass count ≤ 3 — if 3 passes exhausted on same evidence, status must be <code>blocked</code> with <code>recovery_hint</code><span class="tag tag-warning">Warning</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Tool error limit respected — if same operation failed twice, stopped and returned <code>blocked</code>; did not retry a third time<span class="tag tag-warning">Warning</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Source conflict resolved — contradictory sources flagged and either resolved via targeted re-check or noted in <code>recovery_hint</code><span class="tag tag-warning">Warning</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Ownership not assumed — if customer vs. provider vs. platform ambiguous, asked exactly one clarifying question before proceeding<span class="tag tag-info">Info</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Checkpoint is current — <code>checkpoints/draft/current-pass-N.md</code> reflects latest pass; promoted copy matches what operator approved<span class="tag tag-info">Info</span></label>
+        </div>
+      </div>
+
+      <!-- GROUP: Memory & preferences -->
+      <div class="check-group">
+        <div class="check-group-title">Memory and preferences</div>
+
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Signature tokens populated — <code>memory/preferences.md</code> has non-empty <code>operator_name</code>; onboarding ran if fields were blank<span class="tag tag-critical">Critical</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>No direct memory writes — coordinator only proposed to Memory Curator; operator approved each write individually<span class="tag tag-critical">Critical</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Memory path correct — used <code>memory/</code> (agent repo), not <code>.memory/</code> (STF governance)<span class="tag tag-warning">Warning</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Stale patterns flagged — any memory pattern older than the product version in the case marked as requiring validation<span class="tag tag-info">Info</span></label>
+        </div>
+      </div>
+
+      <!-- GROUP: Sub-agent spawning -->
+      <div class="check-group">
+        <div class="check-group-title">Sub-agent spawn chain</div>
+
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Spawn gate respected — complex cases requested Bob approval before spawning; Bob declining spawn falls back to coordinator-only<span class="tag tag-warning">Warning</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Each sub-agent invocation produced a <code>task.schema.json</code>-compliant task object with <code>task_id</code> and <code>acceptance_criteria</code><span class="tag tag-info">Info</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>Each sub-agent returned a <code>result.schema.json</code>-compliant envelope; <code>error_class</code> populated if failed<span class="tag tag-info">Info</span></label>
+        </div>
+      </div>
+
+      <!-- GROUP: Result envelope completeness -->
+      <div class="check-group">
+        <div class="check-group-title">Result envelope completeness</div>
+
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label><code>next_actions</code> present and actionable — at least one item; not empty array on <code>partial</code> or <code>blocked</code> status<span class="tag tag-warning">Warning</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label>All <code>evidence_refs</code> include <code>retrieved_date</code>, <code>version_applicability</code>, and <code>publication_status</code><span class="tag tag-info">Info</span></label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <input type="checkbox">
+          <label><code>artifacts</code> list populated — communication drafts, checkpoint paths, or KB drafts referenced by filename<span class="tag tag-info">Info</span></label>
+        </div>
+      </div>
+
+    </div><!-- /.card -->
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════
+       QUICK REFERENCE
+  ═══════════════════════════════════════ -->
+  <div class="section" id="reference" style="padding-top: 36px; padding-bottom: 40px;">
+    <div class="section-header">
+      <span class="num" style="background: var(--mid)">?</span>
+      <h2>Quick reference</h2>
+    </div>
+
+    <div class="card">
+      <h3>10 approval classes requiring pre-announce</h3>
+      <table>
+        <tr><th>Class</th><th>Example trigger</th></tr>
+        <tr><td><code>external_message</code></td><td>Sending reply to customer</td></tr>
+        <tr><td><code>case_update</code></td><td>Updating severity, status, or collaborators in ticketing system</td></tr>
+        <tr><td><code>severity_change</code></td><td>Escalating or de-escalating severity</td></tr>
+        <tr><td><code>collaboration_case_creation</code></td><td>Opening a provider collaboration case</td></tr>
+        <tr><td><code>pagerduty_engagement</code></td><td>Paging on-call engineer</td></tr>
+        <tr><td><code>case_closure</code></td><td>Marking case as resolved/closed</td></tr>
+        <tr><td><code>run_operation</code></td><td>Cancelling or triggering a Terraform run</td></tr>
+        <tr><td><code>state_operation</code></td><td>State push, pull, force-unlock</td></tr>
+        <tr><td><code>config_change</code></td><td>Workspace variable or agent pool change</td></tr>
+        <tr><td><code>memory_commit</code></td><td>Writing to memory/ patterns, prefs, or ops</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>task.state → case lifecycle mapping</h3>
+      <table>
+        <tr><th>task.state</th><th>Case lifecycle state</th></tr>
+        <tr><td><code>draft</code></td><td>IMPORTED</td></tr>
+        <tr><td><code>running</code></td><td>INVESTIGATING</td></tr>
+        <tr><td><code>waiting_approval</code></td><td>AWAITING APPROVAL</td></tr>
+        <tr><td><code>completed</code></td><td>RESOLVED / CLOSED</td></tr>
+        <tr><td><code>failed</code></td><td>CLOSED (unresolved)</td></tr>
+        <tr><td><code>paused</code></td><td>AWAITING CUSTOMER / AWAITING ENGINEERING</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Key file paths (design phase)</h3>
+      <table>
+        <tr><th>Path</th><th>Purpose</th></tr>
+        <tr><td><code>portable/terraform-support-agent/</code></td><td>Portable agent bundle root</td></tr>
+        <tr><td><code>export/agents/coordinator.md</code></td><td>Coordinator agent contract</td></tr>
+        <tr><td><code>export/skills/intake.md</code></td><td>Onboarding check + intake logic</td></tr>
+        <tr><td><code>memory/preferences.md</code></td><td>Operator tokens: <code>operator_name</code>, <code>operator_title</code>, <code>availability</code></td></tr>
+        <tr><td><code>checkpoints/draft/</code></td><td>Staging area — not yet operator-approved</td></tr>
+        <tr><td><code>portable/schemas/</code></td><td>STF task / result / agent JSON schemas</td></tr>
+        <tr><td><code>docs/design/00a-architecture-diagrams.md</code></td><td>Source of all diagrams in this dashboard</td></tr>
+        <tr><td><code>docs/design/08-pii-protection-and-encryption.md</code></td><td>XCVBH token scheme, redaction pipeline, vault layout</td></tr>
+        <tr><td><code>docs/design/09-inter-agent-wire-format.md</code></td><td>SignedEnvelope format, message types, TTL rules</td></tr>
+        <tr><td><code>docs/design/10-storage-architecture.md</code></td><td>Flat-file layout, SQLite index, retention policy</td></tr>
+        <tr><td><code>docs/agent-dashboard.html</code></td><td>This file</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+</div><!-- /#main -->
+
+<!-- ════════════════════════════════════════
+     MERMAID + INTERACTION SCRIPTS
+═════════════════════════════════════════ -->
+<script>
+  // ── Mermaid loader (CDN with offline fallback) ──
+  (function() {
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
+    s.onload = function() {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'neutral',
+        themeVariables: {
+          primaryColor: '#d0e2ff',
+          primaryTextColor: '#161616',
+          primaryBorderColor: '#0f62fe',
+          lineColor: '#525252',
+          secondaryColor: '#f4f4f4',
+          tertiaryColor: '#defbe6'
+        },
+        flowchart: { curve: 'basis', htmlLabels: true },
+        sequence: { actorMargin: 60, messageMargin: 40 }
+      });
+    };
+    s.onerror = function() {
+      // Show fallback notices when offline
+      document.querySelectorAll('.mermaid').forEach(function(el) {
+        el.style.display = 'none';
+      });
+      document.querySelectorAll('.mermaid-fallback').forEach(function(el) {
+        el.style.display = 'block';
+      });
+    };
+    document.head.appendChild(s);
+  })();
+
+  // ── Sidebar active link tracking ──
+  var sections = [];
+  document.querySelectorAll('.section').forEach(function(s) { sections.push(s); });
+  var navLinks = document.querySelectorAll('.nav-link');
+
+  function updateNav() {
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var active = null;
+    sections.forEach(function(s) {
+      if (s.getBoundingClientRect().top + window.scrollY - 80 <= scrollTop) {
+        active = s.id;
+      }
+    });
+    navLinks.forEach(function(a) {
+      var href = a.getAttribute('href').replace('#', '');
+      a.classList.toggle('active', href === active);
+    });
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+
+  // ── Checklist ──
+  var STORAGE_KEY = 'tsa-checklist-v1';
+
+  function loadChecklist() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    } catch(e) { return {}; }
+  }
+
+  function saveChecklist(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  function updateProgress() {
+    var items = document.querySelectorAll('.check-item');
+    var total = items.length;
+    var done = 0;
+    items.forEach(function(item) {
+      if (item.classList.contains('checked')) done++;
+    });
+    var pct = total > 0 ? Math.round(done / total * 100) : 0;
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('progress-label').textContent = done + ' / ' + total + ' complete';
+    var bar = document.getElementById('progress-bar');
+    bar.style.background = pct === 100 ? '#198038' : '#0f62fe';
+  }
+
+  function toggleCheck(item) {
+    item.classList.toggle('checked');
+    var cb = item.querySelector('input[type="checkbox"]');
+    if (cb) cb.checked = item.classList.contains('checked');
+
+    // Persist
+    var items = document.querySelectorAll('.check-item');
+    var state = {};
+    items.forEach(function(it, i) { state[i] = it.classList.contains('checked'); });
+    saveChecklist(state);
+    updateProgress();
+  }
+
+  function resetChecklist() {
+    document.querySelectorAll('.check-item').forEach(function(item) {
+      item.classList.remove('checked');
+      var cb = item.querySelector('input[type="checkbox"]');
+      if (cb) cb.checked = false;
+    });
+    saveChecklist({});
+    updateProgress();
+  }
+
+  // Restore from storage on load
+  (function() {
+    var state = loadChecklist();
+    var items = document.querySelectorAll('.check-item');
+    items.forEach(function(item, i) {
+      if (state[i]) {
+        item.classList.add('checked');
+        var cb = item.querySelector('input[type="checkbox"]');
+        if (cb) cb.checked = true;
+      }
+    });
+    updateProgress();
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# Draft bundle template. This is not an installable agent release.
+schema_version: 1
+bundle_id: stf.template
+version: 0.0.0
+status: draft
+description: Repository foundation template; contains no active agent.
+license: UNDECIDED
+minimum_harness_version: 0.0.0
+agents: []
+skills: []
+capabilities: []
+files: []

@@ -1,0 +1,24 @@
+# Terraform Support Agent — A2A server dependencies
+#
+# Install:
+#   pip install -r requirements.txt
+#
+# For the aicoe-agent-utils submodule to be importable, first run:
+#   git submodule update --init --recursive
+# then the editable install below will pick it up.
+
+# ── Core A2A + LangGraph runtime (from local submodule) ───────────────────────
+-e ./lib/aicoe-agent-utils[agent]
+
+# ── Config / env ──────────────────────────────────────────────────────────────
+python-dotenv>=1.0.0
+
+# ── Async CLI ─────────────────────────────────────────────────────────────────
+asyncclick>=8.1.7
+
+# ── HTTP client (used by A2A client utilities) ────────────────────────────────
+httpx>=0.27.0
+
+# ── ASGI server ───────────────────────────────────────────────────────────────
+uvicorn[standard]>=0.30.0
+fastapi>=0.111.0
