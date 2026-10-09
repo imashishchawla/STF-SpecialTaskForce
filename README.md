@@ -1,25 +1,21 @@
 # STF — Special Task Force
 
-STF is a repository for designing portable, human-governed agents. The current milestone builds the repository foundation. No agent, adapter, harness service, home installation, or network automation is active yet.
+STF is a repository for designing portable, human-governed agents. The first agent is the draft [Terraform Support Agent](portable/terraform-support-agent/README.md). Its Terraform-specific design, dashboard, and planning files live under `portable/terraform-support-agent/`; they are not duplicated at the repository root.
 
-Start with [plan.md](plan.md). It records the full target architecture, the repo-first roadmap, portability and admin visibility rules, and the supplied network-device inventory. [AGENTS.md](AGENTS.md) gives contributors the repository operating rules.
+Start with [plan.md](plan.md) for the STF-wide architecture and roadmap. [AGENTS.md](AGENTS.md) gives contributor rules, and [security](docs/security.md) records approval boundaries. The Terraform agent's [active priority plan](portable/terraform-support-agent/plan/portability-readiness-plan.md) distinguishes implemented files from unverified installer and runtime behavior.
 
 ## Repository map
 
-| Location | Purpose | State |
+| Location | Purpose | Current state |
 | :--- | :--- | :--- |
-| `docs/` | Architecture, workflow, and security decisions | Foundation specification |
-| `portable/` | Bundle template and runtime-neutral contract schemas | Draft contracts; no published bundle |
-| `harness/` | Tool mediation, policy, and evaluation interface | Design only |
-| `builder/` | Interactive agent-creation flow | Design only |
-| `evals/` | Acceptance gates for future implementations | Design only |
-| `.mcp/`, `.trace/`, `.memory/`, `.history/`, `.checkpoints/` | Integration and state governance | Documentation only |
-| `.agents/`, `.skills/` | Future agent and skill definitions | Deferred until the human-led agent-design phase |
+| `docs/` | Shared STF architecture, workflows, and security | Specifications |
+| `portable/schemas/` | Shared bundle, agent, task, result, and trace contracts | Draft schemas |
+| `portable/terraform-support-agent/` | Terraform agent source, optional A2A scaffold, installer, evaluations, design, and archived inputs | Phase 3b remediation active |
+| `harness/`, `builder/`, `evals/` | Future mediation, builder, and platform-level evaluation interfaces | Design stubs |
+| `install.sh` | Generic host-skill installer | Has a live copy path; preview with `--dry-run` |
 
-## How the portable library will work
+The Terraform agent has its own `installer.sh`; its planned menu, package, update, removal, and release-verification behavior is listed in the active priority plan. A file existing in the repository does not establish that a portable release or A2A service has passed runtime verification.
 
-An approved bundle will be exported from this repository and imported into each user's home as `~/.stf/`. Each LLM application needs its own small adapter or supported tool bridge to discover that bundle. The shared library will not contain credentials or readable fleet activity traces. [Architecture](docs/architecture.md) and [security](docs/security.md) describe the boundaries.
+## Portable library boundary
 
-## Next milestone
-
-After the repository foundation is reviewed, interview the human about the first agent's problem and workflow, research existing solutions and licenses, then draft and evaluate an agent. The Sophos, Cyberoam, Aruba, TP-Link, Syrotech, and Netgear inventory is planning context in [plan.md](plan.md); it does not authorize device changes.
+Approved bundles will be imported per destination account. Runtime-specific adapters must prove discovery and report what they can enforce. The portable source must exclude credentials, customer data, private memory, and raw traces. The network-device inventory in [plan.md](plan.md) is planning context and authorizes no device action.

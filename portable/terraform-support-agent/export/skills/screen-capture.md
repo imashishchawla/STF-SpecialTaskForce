@@ -159,5 +159,5 @@ blocked_tools:
 
 - [`intake.md`](intake.md) — redaction logic (this skill reuses the same patterns)
 - [`diagnosis.md`](diagnosis.md) — consumes approved screen-capture evidence items
-- [`docs/design/05-runtime-and-integration.md §3`](../docs/design/05-runtime-and-integration.md) — MCP integration design
+- [`docs/design/05-runtime-and-integration.md §3`](../../docs/design/05-runtime-and-integration.md) — MCP integration design
 - [`export/mcp/terraform-mcp.yaml`](../mcp/terraform-mcp.yaml) — MCP config pattern to follow

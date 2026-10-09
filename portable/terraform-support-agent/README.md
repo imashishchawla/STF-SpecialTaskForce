@@ -1,7 +1,6 @@
 # Terraform Support Agent
 
-> **Status**: Build-phase artifact — `v0.1.0-draft`. Not yet in active use.
-> **Phase**: 3b (Portability Remediation) — `installer.sh` ready; pending pilot run.
+> **Status**: `v0.1.0-draft`; Phase 3b consolidation and installer remediation are active. No portable install or A2A runtime has been accepted.
 
 A Bob-based agent that helps a HashiCorp / IBM HCP Terraform support engineer
 diagnose cases, draft communications, and capture resolved patterns — without
@@ -9,31 +8,16 @@ ever taking unsupervised action.
 
 ---
 
-## Quick Start (first time)
+## Current entry points
+
+The existing `installer.sh` has draft commands that can write to `~/.bob/`. Its `install --a2a` option does not yet install or start A2A, and the new menu, package, update, signing, and rollback behavior is specified in the [priority plan](plan/portability-readiness-plan.md). Inspect the plan and preview before using the live path.
 
 ```bash
-# 1. Run the installer (fills .env, memory/preferences.md, generates Bob adapters)
-bash installer.sh install
-
-# Optionally include the A2A optional component:
-bash installer.sh install --a2a
-
-# Preview what would happen without touching anything:
+bash installer.sh help
 bash installer.sh install --dry-run
 ```
 
-Other useful subcommands:
-
-```bash
-bash installer.sh status          # show .env, preferences, MCP, and A2A status
-bash installer.sh mcp             # install/enable Terraform MCP server
-bash installer.sh propel          # configure Propel connections
-bash installer.sh start --a2a     # start the A2A server (if installed)
-bash installer.sh stop  --a2a     # stop the A2A server
-bash installer.sh remove          # uninstall (prompts before removing data)
-```
-
-For manual steps only: `bash export/scripts/onboarding.sh` (fills `.env` and `memory/preferences.md` interactively).
+The planned single installer will detect existing installations and offer Re-install, Install / Update, Package, Remove Installer, Install / Update Propel, and Update from Repo. In a terminal these are numbered choices; Bob chat will offer equivalent buttons. The planned ASCII Terraform-themed mark will show “Making Terraform Support Simple” and “Created by Ashish Chawla.” Signed packages and repository permissions will establish authorship and detect changes; a distributed executable script cannot be made uneditable by encryption. Propel and MCP activation remain behind their phase gates.
 
 ---
 
@@ -41,15 +25,17 @@ For manual steps only: `bash export/scripts/onboarding.sh` (fills `.env` and `me
 
 ```
 terraform-support-agent/
-├── installer.sh          ← single entry point: install/modify/start/stop/status/remove/mcp/propel
-├── docs/design/          ← 11 design documents (architecture through storage)
+├── installer.sh          ← draft lifecycle script; expanded menu planned
+├── docs/
+│   ├── agent-dashboard.html ← standalone diagnostic dashboard
+│   └── design/          ← canonical Terraform design documents (00–10)
 ├── export/
 │   ├── agents/           ← coordinator.md + 5 specialist agent definitions
 │   ├── skills/           ← 6 canonical skill files (EDIT HERE, not .bob/skills/)
 │   ├── templates/        ← 9 communication templates
 │   ├── mcp/              ← terraform-mcp.yaml (enabled: false until Phase 4)
 │   └── scripts/          ← onboarding.sh (manual), generate-bob-adapter.sh
-├── a2a/                  ← optional A2A component (not installed by default)
+├── a2a/                  ← optional A2A scaffold; security implementation pending
 ├── memory/
 │   ├── preferences.md    ← operator config (populated by installer/onboarding)
 │   ├── patterns/         ← confirmed issue patterns (written after real cases)
@@ -59,8 +45,10 @@ terraform-support-agent/
 ├── sources/
 │   └── catalog.md        ← 40+ curated sources, priority by claim type
 ├── evals/
-│   └── cases/            ← 10 sanitized evaluation cases (E01–E10 all ✅ Ready)
-└── plan/                 ← design prompt, plan documents, and archive
+│   └── cases/            ← 11 sanitized cases (E01–E11); pilot results pending
+└── plan/
+    ├── portability-readiness-plan.md ← active priorities
+    └── archive/          ← completed original plan, prompt, PDF, agent history
 ```
 
 ---
@@ -84,8 +72,8 @@ terraform-support-agent/
 |---|---|
 | 1 — Plan approved | ✅ Complete |
 | 2 — Design | ✅ Complete (11 design docs, decisions signed off) |
-| 3 — Initial build | 🔄 Active — skills ✅ templates ✅ evals ✅ A2A scaffold ✅ `installer.sh` ✅ — pending pilot run |
-| 3b — Portability remediation | 🔄 Active — Dockerfile removed ✅ onboarding scoped ✅ `installer.sh` created ✅ |
+| 3 — Initial build | Source files present; pilot evaluations pending |
+| 3b — Portability remediation | Active; installer and A2A behavior not yet verified |
 | 4 — Retrieval / MCP | ⏳ Requires Phase 3 acceptance — Terraform MCP + Jira/CSP connectors |
 | 5 — Specialist delegation | ⏳ Requires Phase 4 acceptance |
 | 6 — Controlled automation | ⏳ Requires Phase 5 acceptance |
@@ -96,7 +84,10 @@ terraform-support-agent/
 
 - Full design: [`docs/design/00-overview.md`](docs/design/00-overview.md)
 - Implementation plan: [`docs/design/07-implementation-plan.md`](docs/design/07-implementation-plan.md)
+- Diagnostic dashboard: [`docs/agent-dashboard.html`](docs/agent-dashboard.html)
 - Installer: [`installer.sh`](installer.sh)
+- Plan index: [`plan/README.md`](plan/README.md)
 - Portability plan: [`plan/portability-readiness-plan.md`](plan/portability-readiness-plan.md)
+- Completed planning inputs: [`plan/archive/`](plan/archive/)
 - Source catalog: [`sources/catalog.md`](sources/catalog.md)
 - Eval cases: [`evals/cases/README.md`](evals/cases/README.md)

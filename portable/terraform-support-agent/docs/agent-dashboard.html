@@ -328,7 +328,7 @@
 
   <div id="topbar">
     <h1>Terraform Support Agent — Diagnostic Dashboard</h1>
-    <p>Design-phase reference · All diagrams from <code>docs/design/00a-architecture-diagrams.md</code> · No runnable agents</p>
+    <p>Design-phase reference · All diagrams from <code>design/00a-architecture-diagrams.md</code> · No runnable agents</p>
   </div>
 
   <div class="alert-box warn" style="margin: 20px 32px 0;">
@@ -384,7 +384,7 @@ flowchart TD
     style Z2 fill:#fdf6dd,stroke:#f1c21b
     style S fill:#fff1f1,stroke:#da1e28
       </div>
-      <div class="mermaid-fallback" id="fb1">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §1</code></div>
+      <div class="mermaid-fallback" id="fb1">Mermaid unavailable offline — see <code>design/00a-architecture-diagrams.md §1</code></div>
     </div>
   </div>
 
@@ -435,7 +435,7 @@ flowchart TD
     style REDACT fill:#d0e2ff,stroke:#0f62fe
     style ASK fill:#d0e2ff,stroke:#0f62fe
       </div>
-      <div class="mermaid-fallback" id="fb2">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §2</code></div>
+      <div class="mermaid-fallback" id="fb2">Mermaid unavailable offline — see <code>design/00a-architecture-diagrams.md §2</code></div>
     </div>
   </div>
 
@@ -496,7 +496,7 @@ classDiagram
     CasePacket --> RequestedOutput
     CasePacket --> CaseStage
       </div>
-      <div class="mermaid-fallback" id="fb3">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §3</code></div>
+      <div class="mermaid-fallback" id="fb3">Mermaid unavailable offline — see <code>design/00a-architecture-diagrams.md §3</code></div>
     </div>
   </div>
 
@@ -552,7 +552,7 @@ classDiagram
     ResultEnvelope --> EvidenceRef
     EvidenceRef --> SourceType
       </div>
-      <div class="mermaid-fallback" id="fb4">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §4</code></div>
+      <div class="mermaid-fallback" id="fb4">Mermaid unavailable offline — see <code>design/00a-architecture-diagrams.md §4</code></div>
     </div>
   </div>
 
@@ -606,7 +606,7 @@ flowchart LR
 
     style CD fill:#fdf6dd,stroke:#f1c21b
       </div>
-      <div class="mermaid-fallback" id="fb5">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §5</code></div>
+      <div class="mermaid-fallback" id="fb5">Mermaid unavailable offline — see <code>design/00a-architecture-diagrams.md §5</code></div>
     </div>
   </div>
 
@@ -656,7 +656,7 @@ stateDiagram-v2
         config_change · memory_commit
     end note
       </div>
-      <div class="mermaid-fallback" id="fb6">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §6</code></div>
+      <div class="mermaid-fallback" id="fb6">Mermaid unavailable offline — see <code>design/00a-architecture-diagrams.md §6</code></div>
     </div>
   </div>
 
@@ -681,7 +681,7 @@ sequenceDiagram
     C->>C: record actual outcome in checkpoint
     C->>A: report outcome (honest — failed ≠ completed)
       </div>
-      <div class="mermaid-fallback" id="fb7">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §7</code></div>
+      <div class="mermaid-fallback" id="fb7">Mermaid unavailable offline — see <code>design/00a-architecture-diagrams.md §7</code></div>
     </div>
   </div>
 
@@ -708,7 +708,7 @@ flowchart LR
 
     TS --> STATES
       </div>
-      <div class="mermaid-fallback" id="fb8">Mermaid unavailable offline — see <code>docs/design/00a-architecture-diagrams.md §8</code></div>
+      <div class="mermaid-fallback" id="fb8">Mermaid unavailable offline — see <code>design/00a-architecture-diagrams.md §8</code></div>
     </div>
   </div>
 
@@ -894,11 +894,11 @@ flowchart LR
         <tr><td><code>memory/preferences.md</code></td><td>Operator tokens: <code>operator_name</code>, <code>operator_title</code>, <code>availability</code></td></tr>
         <tr><td><code>checkpoints/draft/</code></td><td>Staging area — not yet operator-approved</td></tr>
         <tr><td><code>portable/schemas/</code></td><td>STF task / result / agent JSON schemas</td></tr>
-        <tr><td><code>docs/design/00a-architecture-diagrams.md</code></td><td>Source of all diagrams in this dashboard</td></tr>
-        <tr><td><code>docs/design/08-pii-protection-and-encryption.md</code></td><td>XCVBH token scheme, redaction pipeline, vault layout</td></tr>
-        <tr><td><code>docs/design/09-inter-agent-wire-format.md</code></td><td>SignedEnvelope format, message types, TTL rules</td></tr>
-        <tr><td><code>docs/design/10-storage-architecture.md</code></td><td>Flat-file layout, SQLite index, retention policy</td></tr>
-        <tr><td><code>docs/agent-dashboard.html</code></td><td>This file</td></tr>
+        <tr><td><code>design/00a-architecture-diagrams.md</code></td><td>Source of all diagrams in this dashboard</td></tr>
+        <tr><td><code>design/08-pii-protection-and-encryption.md</code></td><td>XCVBH token scheme, redaction pipeline, vault layout</td></tr>
+        <tr><td><code>design/09-inter-agent-wire-format.md</code></td><td>SignedEnvelope format, message types, TTL rules</td></tr>
+        <tr><td><code>design/10-storage-architecture.md</code></td><td>Flat-file layout, SQLite index, retention policy</td></tr>
+        <tr><td><code>agent-dashboard.html</code></td><td>This file</td></tr>
       </table>
     </div>
 

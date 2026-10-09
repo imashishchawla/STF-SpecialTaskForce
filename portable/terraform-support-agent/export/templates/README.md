@@ -1,8 +1,8 @@
 # Template catalog
-> **Status**: Stubs — Phase 3 implementation required.
+> **Status**: Nine draft templates are present; pilot use and validation remain pending.
 > Full specification: `docs/design/03-skills-and-templates.md §8`
 
-These templates are referenced by the `communication` skill. Each file is a draft placeholder with required fields noted.
+These templates are referenced by the `communication` skill. Placeholder fields are intentional and must be resolved from validated case evidence or local operator preferences before use.
 All templates require: validated findings from Validation Reviewer before use.
 
 ---
@@ -119,7 +119,7 @@ Thank you for choosing IBM Support.
 
 ---
 
-## Additional templates (Phase 3 — stubs only)
+## Additional draft templates
 - `can-report.md` — Customer Advocacy Notification
 - `rca.md` — Root cause analysis (confirmed vs investigation update variants)
 - `kb-draft.md` — Customer-facing knowledge base article

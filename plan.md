@@ -512,6 +512,8 @@ To verify the STF framework end-to-end before expanding to additional agents:
 > is the **Terraform Support Agent** in `portable/terraform-support-agent/`. Its own phased plan
 > is the authoritative record of that agent's status:
 > `portable/terraform-support-agent/docs/design/07-implementation-plan.md`.
+> The active Terraform-specific consolidation and installer priorities are in
+> `portable/terraform-support-agent/plan/portability-readiness-plan.md`.
 > The STF-level phases below are updated to reflect actual progress.
 
 ### Phase 1: Repository plan and foundation *(Complete)*
@@ -529,7 +531,7 @@ To verify the STF framework end-to-end before expanding to additional agents:
 ### Phase 2: Human-led agent design *(Complete — Terraform Support Agent)*
 - [x] Interview the human about a specific problem (Terraform Cloud support case handling).
 - [x] Choose new build; define scope, approval gates, and measurable acceptance criteria.
-- [x] Produce 11 design documents in `portable/terraform-support-agent/docs/design/`.
+- [x] Produce 12 design documents in `portable/terraform-support-agent/docs/design/`.
 - [x] Record all open design decisions and confirm them before build start.
 
 ### Phase 3: Agent builder and first specialist *(Build complete — pilot eval pending)*
@@ -605,7 +607,7 @@ A2A server using `aicoe-agent-utils`, independently testable and invokable by ot
 - `python test_client.py` receives a streaming response from the agent.
 - `bash install.sh --dry-run` still passes (7 skills, 0 errors).
 - No `build_graph()` calls, no hardcoded credentials, no `__main__.py`.
-- `Dockerfile` uses Red Hat UBI base image and non-root user (IBM security policy).
+- Docker/container packaging is deferred; it is not a Phase 3b acceptance criterion.
 
 ---
 
@@ -623,8 +625,8 @@ installer, and all docs updated.
 - [x] `README.md` — **updated**: installer quick-start, Phase 3b status row, directory layout.
 - [x] `a2a/README.md` — **created**: optional component overview, quick-start, smoke test, config table.
 - [x] `a2a/security/README.md` — **created**: trust model, token rotation, incident response, Phase 4 open items.
-- [x] `docs/design/07-implementation-plan.md` — **updated**: `Dockerfile` and `.gitmodules` removed from §2.3.1 file table; remediation note added.
-- [x] `plan/archive/` — **created**; `export/agents/specialists.md.archived` moved here.
+- [x] `portable/terraform-support-agent/docs/design/07-implementation-plan.md` — **updated**: `Dockerfile` and `.gitmodules` removed from §2.3.1 file table; remediation note added.
+- [x] `portable/terraform-support-agent/plan/archive/` — contains completed Terraform planning inputs and specialist history. The active Terraform priority plan remains beside it.
 
 ### Phase 4: Agent pilot and verification *(Pending Phase 3 + 3b completion)*
 - [ ] Run eval pilot (E01–E10) and record pass/fail against acceptance criteria in `07-implementation-plan.md §5`.

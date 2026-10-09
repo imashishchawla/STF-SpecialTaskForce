@@ -29,4 +29,4 @@ An adapter reports its tier and gaps. Portability proof needs the same approved 
 
 ## Repository boundaries
 
-The current milestone creates documents and draft schemas. It does not create `.agents/` or `.skills/`, install files into `~/.stf/`, start a broker, collect real traces, or touch network hardware. Those actions belong to later phases in `plan.md`.
+The current milestone consolidates Terraform-specific source under `portable/terraform-support-agent/` and remediates its draft installer and optional A2A scaffold. Shared STF schemas and the master `plan.md` remain at the repository root. No verified `~/.stf/` release, broker, real trace collection, or network-hardware action is part of this milestone.

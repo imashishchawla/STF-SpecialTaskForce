@@ -2,11 +2,11 @@
 
 This file provides guidance to agents when working with code in this repository.
 
-Read `plan.md` before changing STF. **Phase 3 is complete. The current milestone is Phase 3b — A2A agent scaffold (actively in progress, session 4).** Phase 3b scope: build the `portable/terraform-support-agent/a2a/` Python scaffold (LangGraph agent, A2A server, Dockerfile, eval harness) — see `portable/terraform-support-agent/docs/design/07-implementation-plan.md §2.3` for the authoritative build plan. Do not enable `terraform-mcp.yaml`, install into a home directory, connect a live MCP server, collect activity traces, or access network devices as part of this milestone.
+Read `plan.md` before changing STF. **Phase 3b portability remediation is active.** The Terraform agent's current priority list is `portable/terraform-support-agent/plan/portability-readiness-plan.md`; its design implementation plan is `portable/terraform-support-agent/docs/design/07-implementation-plan.md`. Do not enable `terraform-mcp.yaml`, install into a home directory, connect a live MCP server, collect activity traces, or access network devices as part of this milestone.
 
 ## Build / lint / test
 
-No build system, package manager, or test runner. Files are Markdown, JSON Schema 2020-12, and bash scripts only. JSON Schema validation requires an external validator if needed — none is configured. To test `install.sh` non-interactively: `bash install.sh --agent terraform-support-agent --hosts bob --dry-run`.
+No repository-wide build system or test runner is configured. The Terraform agent also contains a draft Python A2A scaffold. JSON Schema validation requires an external validator if needed. To preview the generic installer: `bash install.sh --agent terraform-support-agent --hosts bob --dry-run`. To inspect the Terraform agent's installer choices: `bash portable/terraform-support-agent/installer.sh help`.
 
 ## Work sequence
 
@@ -23,11 +23,11 @@ No build system, package manager, or test runner. Files are Markdown, JSON Schem
 - **Agent front matter fields**: `agent_id`, `version`, `status`, `phase`, `role`, `entry_point` — different from skill front matter.
 - **`generate-bob-adapter.sh` strips `--- ... ---` YAML front matter via `awk`** — Bob front matter format, symlink support, `skill_id` field requirements, and `.bob/skills/` precedence all need Phase 3 verification before running.
 - **`terraform-mcp.yaml` has `enabled: false`** — must be manually set to `true` after Phase 4 allowlist review. Never enable programmatically.
-- **`docs/design/` at repo root and `portable/terraform-support-agent/docs/design/` are identical copies** — keep in sync; use `cp` to sync after any edit to the `portable/` copy (authoritative source).
-- **`docs/agent-dashboard.html` is the standalone HTML diagnostic dashboard** — self-contained (Mermaid loaded via CDN with offline fallback). Embeds all 8 diagrams from `00a-architecture-diagrams.md` plus an interactive diagnostic checklist. Checklist state persists in `localStorage`.
+- **Terraform design ownership** — `portable/terraform-support-agent/docs/design/` is the single canonical copy. Completed planning inputs live in that agent's `plan/archive/`; the active priority plan stays in `plan/`.
+- **`portable/terraform-support-agent/docs/agent-dashboard.html` is the standalone HTML diagnostic dashboard** — self-contained (Mermaid loaded via CDN with offline fallback). It embeds eight diagrams and an interactive checklist whose state persists in `localStorage`.
 - **Operator tokens** — never hard-code operator names in skill/template files. Use `{{operator_name}}`, `{{operator_title}}`, `{{operator_availability}}` resolved from `memory/preferences.md` YAML front matter. The intake skill asks two onboarding questions if those fields are empty strings.
 - **`portable/terraform-support-agent/memory/preferences.md`** — YAML front matter fields: `operator_name`, `operator_title`, `operator_availability`, `agent_repo_path`. All empty by default; populated via Memory Curator proposal after operator answers onboarding questions in the intake skill.
-- **`install.sh` is a Phase 1 skeleton** — runs prerequisites check and prints plan, then halts. Phase 3 stubs are present as comments; do not uncomment without explicit approval. Phase 3b work targets `portable/terraform-support-agent/a2a/` only — not `install.sh`.
+- **Root `install.sh` is generic; agent-local `installer.sh` exists** — the root script has a live host-copy path, while the agent script has draft lifecycle commands. Inspect exact targets and use dry runs; neither script establishes a verified portable release yet.
 - **`install.sh` uses `set -euo pipefail`** — any unhandled error exits immediately; test with `--dry-run` before live use.
 - **`agent_id` pattern `^[a-z0-9]+(-[a-z0-9]+)*$`** (kebab, no dots) differs from **`bundle_id` pattern `^[a-z0-9]+([.-][a-z0-9]+)*$`** (dots and dashes allowed).
 - **`bundle.schema.json` has a conditional `if/then`** — `status: "released"` requires non-empty `agents` and `files` and a non-`"UNDECIDED"` license. Current template uses `status: "draft"` intentionally.
@@ -55,11 +55,11 @@ No build system, package manager, or test runner. Files are Markdown, JSON Schem
 - `portable/README.md`: portable bundle layout, per-agent directory convention, phase table.
 - `portable/schemas/`: five JSON Schema 2020-12 contracts (bundle, agent, task, result, trace-event).
 - `portable/{agent-name}/`: one directory per agent — `docs/design/`, `plan/`, `export/` (agents, skills, mcp, scripts, templates).
-- `portable/terraform-support-agent/`: first agent — Phase 3 complete (7 skills, 9 templates, eval cases E01–E10, install.sh, config/, bob-mode YAML). Phase 3b target: `a2a/` scaffold (does not yet exist — see `07-implementation-plan.md §2.3`).
-- `portable/terraform-support-agent/docs/design/00a-architecture-diagrams.md` (mirrored to `docs/design/`): end-to-end flow, 3-pass investigation loop, CasePacket/ResultEnvelope class diagrams, memory layout, case lifecycle state machine, approval gate sequence diagram, STF schema alignment.
-- `docs/design/08-pii-protection-and-encryption.md`: XCVBH token scheme, redaction filter pipeline, vault file format, credential interception, de-tokenisation flow.
-- `docs/design/09-inter-agent-wire-format.md`: SignedEnvelope JSON format, XCVBH substitution rules, `task`/`result`/`ack`/`nack` message types, TTL enforcement, schema extension points.
-- `docs/design/10-storage-architecture.md`: flat-file directory layout, checkpoint and audit JSONL formats, SQLite index schema, access control by actor, retention/rotation policy, gitignore requirements.
+- `portable/terraform-support-agent/`: first agent — seven skills, templates, eval cases, local installer, and optional A2A scaffold; Phase 3b remediation and runtime proof remain open.
+- `portable/terraform-support-agent/docs/design/00a-architecture-diagrams.md`: end-to-end flow, investigation loop, case/result contracts, memory, lifecycle, approval gates, and STF schema alignment.
+- `portable/terraform-support-agent/docs/design/08-pii-protection-and-encryption.md`: XCVBH token scheme, redaction pipeline, vault format, and de-tokenisation.
+- `portable/terraform-support-agent/docs/design/09-inter-agent-wire-format.md`: SignedEnvelope format, substitution, message types, TTL, and schema extension points.
+- `portable/terraform-support-agent/docs/design/10-storage-architecture.md`: flat-file layout, SQLite index, access control, and retention.
 - `install.sh`: interactive CLI installer — selects agent, checks prerequisites, previews install plan. Non-interactive: `--agent <name> --hosts <list> [--dry-run]`.
 - `harness/` and `builder/`: future implementation interfaces (README stubs only — nothing implemented).
 - `.memory/decisions.md` and `.memory/lessons.md`: empty ADR and lesson registers (format in `plan.md §7.3`).

@@ -4,7 +4,7 @@
 > **Prepared**: 2 October 2026.  
 > **Scope**: Design phase only. No collaboration cases, PagerDuty alerts, or messages have been created.
 >
-> ⚠️ **Source classification**: The rules in this document derive from an **interim internal process** (PDF reviewed: `plan/01-TCPR-Terraform-Public-Registry_-Case-Handling-in-CSP-270426-034252.pdf`, reviewed 2 October 2026). The document's current organizational validity has not been independently established. These rules require verification with the team before operational use. They are **internal-only** — no detail may appear in customer-visible output.
+> ⚠️ **Source classification**: The rules in this document derive from an **interim internal process** (PDF reviewed: `plan/archive/01-TCPR-Terraform-Public-Registry_-Case-Handling-in-CSP-270426-034252.pdf`, reviewed 2 October 2026). The document's current organizational validity has not been independently established. These rules require verification with the team before operational use. They are **internal-only** — no detail may appear in customer-visible output.
 
 ---
 

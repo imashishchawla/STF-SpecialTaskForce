@@ -266,7 +266,7 @@ interface EvidenceRef {
 schema_version: 1
 topic: registry-routing
 classification: internal_restricted     # never exposed in customer-visible output
-source_ref: "plan/01-TCPR-Terraform-Public-Registry_-Case-Handling-in-CSP-270426-034252.pdf"
+source_ref: "plan/archive/01-TCPR-Terraform-Public-Registry_-Case-Handling-in-CSP-270426-034252.pdf"
 source_status: interim
 review_date: "2026-10-02"
 verification_required: true             # must verify with team before operational use

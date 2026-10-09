@@ -1,6 +1,6 @@
 # evals/cases/
 
-Sanitized evaluation cases for the Terraform Support Agent Phase 3 pilot.
+Sanitized evaluation cases for the Terraform Support Agent pilot. Eleven case files exist; pass/fail results have not been recorded.
 
 ## Pilot requirement
 

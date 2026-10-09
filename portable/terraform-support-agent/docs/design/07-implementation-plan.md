@@ -10,8 +10,8 @@
 
 | Phase | Gate | Deliverable | Acceptance |
 |---|---|---|---|
-| 1. Approve plan | **COMPLETE** | `plan/terraform-support-agent-plan.md` approved | ✓ |
-| 2. Design | **COMPLETE** | 11 design documents in `docs/design/` | ✓ — sign-off decisions recorded in §8 below |
+| 1. Approve plan | **COMPLETE** | `plan/archive/terraform-support-agent-plan.md` approved | ✓ |
+| 2. Design | **COMPLETE** | 12 design documents in this agent's `docs/design/` | ✓ — sign-off decisions recorded in §8 below |
 | 3. Initial build | **BUILD COMPLETE — EVAL PENDING** | Skills, templates, patterns, install.sh, config/ — see §2.1 | Evals E01–E10 ready; pilot run pending operator |
 | 3b. A2A agent scaffold | **PLANNED** | aicoe-agent-utils A2A server wrapping coordinator logic | Agent card served, streaming invoke works, MCP tools wired |
 | 4. Retrieval and connectors | Phase 3 + 3b accepted | Terraform MCP read-only + Jira/CSP read access (allowlisted) | Tool permissions and provenance verified in practice |
@@ -65,34 +65,32 @@
 
 ---
 
-## 2.3 A2A agent scaffold plan (Phase 3b — next session)
+## 2.3 A2A agent scaffold plan (Phase 3b — historical build sequence)
 
 The Terraform Support Agent will be promoted from a Bob skill bundle to a fully functional
 **A2A-compatible server** using `aicoe-agent-utils`. This allows it to be invoked by other agents,
 connected to MCP tool servers, and tested with a streaming client — independent of Bob's runtime.
 
-### 2.3.1 Target file structure
+### 2.3.1 Current source structure and open dependency
 
 ```
 portable/terraform-support-agent/a2a/
-├── aicoe-agent-utils/         ← git submodule (https://github.ibm.com/AI-CoE/aicoe-agent-utils)
 ├── main.py                    ← asyncclick entry point; calls start_a2a_server()
 ├── config.py                  ← all env-var config: LLM provider, MCP URLs, host/port, auth flags
 ├── terraform_agent.py         ← extends BaseLangGraphAgent; implements get_prompt(), get_agent_card()
 ├── a2a_factory.py             ← extends A2AAgentFactory; implements make_agent(), make_agent_executor()
 ├── test_client.py             ← uses run_streaming_test() from aicoe_agent_utils.a2a.client_utils
-├── requirements.txt           ← python-dotenv, httpx, fastapi, uvicorn, asyncclick, -e ./aicoe-agent-utils[agent]
+├── requirements.txt           ← currently references missing lib/aicoe-agent-utils
 ├── .env.example               ← all config vars with placeholders; ENABLE_CLIENT_AUTH=false by default
+├── .gitmodules                ← placeholder only; no tracked submodule gitlink
 ├── security/
-│   └── README.md              ← trust model, token rotation, incident response
-└── README.md                  ← component overview, quick-start, smoke test
-
-> **Note (Phase 3b remediation):** `Dockerfile` and `.gitmodules` were removed from the
-> active scaffold. Container packaging will be reintroduced as a separate, approved
-> deployment target in a future phase. The git submodule was also deferred; the
-> `aicoe-agent-utils` library is referenced in `requirements.txt` via its published
-> package until Phase 4 approves the submodule workflow.
+│   └── README.md              ← design only; enforcement code pending
+└── README.md                  ← current status and required proof
 ```
+
+The Dockerfile was removed because the local installer does not need containers. The
+private agent-utils source, installer lifecycle, and security module still need the
+work and proof listed in [`plan/portability-readiness-plan.md`](../../plan/portability-readiness-plan.md).
 
 ### 2.3.2 Agent identity
 
@@ -106,7 +104,7 @@ portable/terraform-support-agent/a2a/
 | Auth | `ENABLE_CLIENT_AUTH=false`, `ENABLE_USER_AUTH=false` by default |
 | AgentOps | Optional — install `aicoe-agent-utils[agentops]` on demand |
 
-### 2.3.3 Build steps (session 4)
+### 2.3.3 Original build steps (session 4; superseded where they differ from the active plan)
 
 ```
 Step 1: Create a2a/ directory and .gitmodules
