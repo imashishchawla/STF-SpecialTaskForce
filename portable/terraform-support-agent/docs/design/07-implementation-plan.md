@@ -82,10 +82,16 @@ portable/terraform-support-agent/a2a/
 ├── a2a_factory.py             ← extends A2AAgentFactory; implements make_agent(), make_agent_executor()
 ├── test_client.py             ← uses run_streaming_test() from aicoe_agent_utils.a2a.client_utils
 ├── requirements.txt           ← python-dotenv, httpx, fastapi, uvicorn, asyncclick, -e ./aicoe-agent-utils[agent]
-├── Dockerfile                 ← python:3.11-slim; git; submodule init; CMD ["python", "main.py"]
 ├── .env.example               ← all config vars with placeholders; ENABLE_CLIENT_AUTH=false by default
-├── .gitignore                 ← .env, __pycache__, venv/, *.pyc
-└── .gitmodules                ← submodule record
+├── security/
+│   └── README.md              ← trust model, token rotation, incident response
+└── README.md                  ← component overview, quick-start, smoke test
+
+> **Note (Phase 3b remediation):** `Dockerfile` and `.gitmodules` were removed from the
+> active scaffold. Container packaging will be reintroduced as a separate, approved
+> deployment target in a future phase. The git submodule was also deferred; the
+> `aicoe-agent-utils` library is referenced in `requirements.txt` via its published
+> package until Phase 4 approves the submodule workflow.
 ```
 
 ### 2.3.2 Agent identity

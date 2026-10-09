@@ -607,6 +607,25 @@ A2A server using `aicoe-agent-utils`, independently testable and invokable by ot
 - No `build_graph()` calls, no hardcoded credentials, no `__main__.py`.
 - `Dockerfile` uses Red Hat UBI base image and non-root user (IBM security policy).
 
+---
+
+### Phase 3b portability remediation *(🔄 Active)*
+
+**Goal**: Clean up the Phase 3b A2A scaffold so the portable bundle remains properly
+portable — no Docker build artifacts, no scope-creep in onboarding, single entry-point
+installer, and all docs updated.
+
+**Changes (this session):**
+- [x] `a2a/Dockerfile` — **removed** (Docker packaging deferred to a separately-approved deployment target; `Dockerfile` cannot use relative `..` paths in COPY and the UBI-based build is out of scope for the portable bundle).
+- [x] `export/scripts/onboarding.sh` — **scoped**: path bug fixed (`$SCRIPT_DIR/../..`); Sections 7–8 (MCP `npx` installs, Propel connections) removed; those steps moved to `installer.sh mcp` and `installer.sh propel`.
+- [x] `installer.sh` — **created**: 8 subcommands (`install`, `modify`, `start`, `stop`, `status`, `remove`, `mcp`, `propel`), `--dry-run`, `--a2a` flag; A2A is explicit opt-in, never silent.
+- [x] `.gitignore` — **expanded**: A2A artifacts (`a2a/.venv/`, `a2a/__pycache__/`, `a2a/a2a-server.log`, `a2a/.a2a.pid`), `!a2a/.env.example` track exception, Python artifacts, `.install-manifest`.
+- [x] `README.md` — **updated**: installer quick-start, Phase 3b status row, directory layout.
+- [x] `a2a/README.md` — **created**: optional component overview, quick-start, smoke test, config table.
+- [x] `a2a/security/README.md` — **created**: trust model, token rotation, incident response, Phase 4 open items.
+- [x] `docs/design/07-implementation-plan.md` — **updated**: `Dockerfile` and `.gitmodules` removed from §2.3.1 file table; remediation note added.
+- [x] `plan/archive/` — **created**; `export/agents/specialists.md.archived` moved here.
+
 ### Phase 4: Agent pilot and verification *(Pending Phase 3 + 3b completion)*
 - [ ] Run eval pilot (E01–E10) and record pass/fail against acceptance criteria in `07-implementation-plan.md §5`.
 - [ ] Resolve GAP-03 (eval results), GAP-04 (registry routing status).

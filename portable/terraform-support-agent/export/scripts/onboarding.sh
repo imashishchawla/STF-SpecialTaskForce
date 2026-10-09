@@ -2,13 +2,18 @@
 # onboarding.sh — Interactive first-run configuration for the Terraform Support Agent
 #
 # Run once before starting the agent for the first time:
-#   bash onboarding.sh
+#   bash export/scripts/onboarding.sh
 #
 # What it does:
 #   1. Asks a series of questions to understand the operator's context, preferences,
 #      and prior prompt history.
 #   2. Writes answers to .env (never committed) and memory/preferences.md (human-approved).
 #   3. Prints a summary and asks: "Save and activate? [y/n/skip]"
+#
+# What it does NOT do (deferred to installer.sh):
+#   - MCP server installation (terraform-mcp, playwright-mcp)
+#   - IBM Propel connection configuration
+#   Run: bash installer.sh --help for those options.
 #
 # Requirements: bash 3.2+, standard POSIX utilities.
 # Design reference: docs/design/03-skills-and-templates.md §7
@@ -18,7 +23,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-AGENT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+AGENT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 ENV_FILE="$AGENT_ROOT/.env"
 PREFS_FILE="$AGENT_ROOT/memory/preferences.md"
 
@@ -65,7 +70,7 @@ yn "Do you want to configure now, or skip for later?" CONFIGURE_NOW
 
 if [[ "$CONFIGURE_NOW" == "skip" || "$CONFIGURE_NOW" == "n" ]]; then
   echo ""
-  echo -e "${YELLOW}Skipped. Run 'bash onboarding.sh' when ready.${RESET}"
+  echo -e "${YELLOW}Skipped. Run 'bash export/scripts/onboarding.sh' when ready.${RESET}"
   echo "The agent will ask you these questions on first case intake instead."
   exit 0
 fi
@@ -179,144 +184,6 @@ yn "Has Phase II of the registry routing process started in your team? (unsure =
 
 echo ""
 sep
-echo -e "${BOLD}Section 7 — Required MCP Servers (Prerequisites)${RESET}"
-sep
-echo "This agent has two optional MCP servers that unlock additional capabilities."
-echo "You can install them now, skip them, or install manually later."
-echo "Nothing is installed without your explicit 'y'."
-echo ""
-
-# ── MCP 1: Terraform MCP ──────────────────────────────────────────────────────
-echo -e "${BOLD}MCP Server 1: terraform-mcp${RESET}"
-echo "  Purpose:  Provider docs lookup, resource/data-source search, HCP Terraform read queries."
-echo "  Without it: Source-researcher and registry-routing skills fall back to web search only."
-echo "  Install command that will be run:  npx -y @hashicorp/terraform-mcp-server"
-echo ""
-MCP_TF_STATUS="skipped"
-yn "Install terraform-mcp now?" INSTALL_TF_MCP
-if [[ "$INSTALL_TF_MCP" == "y" ]]; then
-  echo ""
-  echo -e "${CYAN}Running: npx -y @hashicorp/terraform-mcp-server --version${RESET}"
-  if npx -y @hashicorp/terraform-mcp-server --version 2>/dev/null; then
-    MCP_TF_STATUS="installed"
-    echo -e "${GREEN}  ✓ terraform-mcp installed successfully.${RESET}"
-  else
-    MCP_TF_STATUS="failed"
-    echo -e "${YELLOW}  ⚠ Install attempt failed. Recorded as failed — you can retry manually.${RESET}"
-    echo "  See: https://developer.hashicorp.com/terraform/mcp-server"
-  fi
-else
-  echo -e "${YELLOW}  Skipped. Source-researcher will use web search only until installed.${RESET}"
-fi
-
-echo ""
-# ── MCP 2: Playwright MCP ─────────────────────────────────────────────────────
-echo -e "${BOLD}MCP Server 2: playwright-mcp${RESET}"
-echo "  Purpose:  Live DOM text extraction from a customer's browser tab during a support call."
-echo "  Without it: Screen-capture skill is unavailable; paste content manually instead."
-echo "  Install command that will be run:  npx -y @playwright/mcp"
-echo ""
-MCP_PW_STATUS="skipped"
-yn "Install playwright-mcp now?" INSTALL_PW_MCP
-if [[ "$INSTALL_PW_MCP" == "y" ]]; then
-  echo ""
-  echo -e "${CYAN}Running: npx -y @playwright/mcp --version${RESET}"
-  if npx -y @playwright/mcp --version 2>/dev/null; then
-    MCP_PW_STATUS="installed"
-    echo -e "${GREEN}  ✓ playwright-mcp installed successfully.${RESET}"
-  else
-    MCP_PW_STATUS="failed"
-    echo -e "${YELLOW}  ⚠ Install attempt failed. Recorded as failed — you can retry manually.${RESET}"
-    echo "  See: https://playwright.dev/docs/mcp"
-  fi
-else
-  echo -e "${YELLOW}  Skipped. Screen-capture skill will be unavailable until installed.${RESET}"
-fi
-
-echo ""
-sep
-echo -e "${BOLD}Section 8 — IBM Propel Connections${RESET}"
-sep
-echo "IBM Propel provides pre-built MCP connections for IBM internal tools."
-echo "The following connections are useful for Terraform Support work."
-echo "Each one is installed into ~/.bob/propel/connections/ — you can enable or skip each."
-echo "Nothing is installed without your explicit 'y'."
-echo ""
-echo -e "${YELLOW}Prerequisite: IBM Bob must already be installed on this machine.${RESET}"
-echo -e "${YELLOW}Propel connections require your IBM w3id and may need a Propel API token.${RESET}"
-echo ""
-
-# ── Propel 1: product-knowledge ───────────────────────────────────────────────
-echo -e "${BOLD}Propel Connection 1: product-knowledge${RESET}"
-echo "  What it does:  Semantic search across IBM product documentation (Instana, watsonx.ai, etc.)"
-echo "  Useful for:    Researching IBM-side context when customers mix Terraform with IBM cloud products."
-echo "  IBM Docs:      https://propel.ibm.com/connections/product-knowledge"
-echo ""
-PROPEL_PKB_STATUS="skipped"
-yn "Enable product-knowledge connection?" ENABLE_PROPEL_PKB
-if [[ "$ENABLE_PROPEL_PKB" == "y" ]]; then
-  echo ""
-  ask "Paste your Propel product-knowledge Bearer token (from propel.ibm.com → API Keys):" PROPEL_PKB_TOKEN
-  if [[ -n "$PROPEL_PKB_TOKEN" ]]; then
-    PROPEL_PKB_STATUS="configured"
-    echo -e "${GREEN}  ✓ Token recorded. Add it to ~/.bob/settings/mcp.json under 'product-knowledge'.${RESET}"
-  else
-    PROPEL_PKB_STATUS="skipped-no-token"
-    echo -e "${YELLOW}  No token entered. Skipped.${RESET}"
-  fi
-else
-  echo -e "${YELLOW}  Skipped.${RESET}"
-fi
-
-echo ""
-# ── Propel 2: w3-people ───────────────────────────────────────────────────────
-echo -e "${BOLD}Propel Connection 2: w3-people${RESET}"
-echo "  What it does:  Search IBM employee directory (name, email, manager, org chart)."
-echo "  Useful for:    Looking up IBM team members or escalation contacts by name or org."
-echo "  IBM Docs:      https://propel.ibm.com/connections/w3-people"
-echo ""
-PROPEL_W3_STATUS="skipped"
-yn "Enable w3-people connection?" ENABLE_PROPEL_W3
-if [[ "$ENABLE_PROPEL_W3" == "y" ]]; then
-  echo ""
-  ask "Paste your IBM Bluepages API key (from w3id settings):" BLUEPAGES_API_KEY
-  if [[ -n "$BLUEPAGES_API_KEY" ]]; then
-    PROPEL_W3_STATUS="configured"
-    echo -e "${GREEN}  ✓ API key recorded. Add it to ~/.bob/settings/mcp.json under 'w3-people'.${RESET}"
-  else
-    PROPEL_W3_STATUS="skipped-no-token"
-    echo -e "${YELLOW}  No key entered. Skipped.${RESET}"
-  fi
-else
-  echo -e "${YELLOW}  Skipped.${RESET}"
-fi
-
-echo ""
-# ── Propel 3: propel-web-search ───────────────────────────────────────────────
-echo -e "${BOLD}Propel Connection 3: propel-web-search${RESET}"
-echo "  What it does:  Free web search via Propel (no external API key required)."
-echo "  Useful for:    Searching HashiCorp docs, GitHub issues, and status pages."
-echo "  IBM Docs:      https://propel.ibm.com/connections/propel-web-search"
-echo ""
-PROPEL_WEB_STATUS="skipped"
-yn "Enable propel-web-search connection?" ENABLE_PROPEL_WEB
-if [[ "$ENABLE_PROPEL_WEB" == "y" ]]; then
-  echo ""
-  echo -e "${CYAN}Running: bob propel install propel-web-search${RESET}"
-  if command -v bob >/dev/null 2>&1 && bob propel install propel-web-search 2>/dev/null; then
-    PROPEL_WEB_STATUS="installed"
-    echo -e "${GREEN}  ✓ propel-web-search installed via Bob CLI.${RESET}"
-  else
-    PROPEL_WEB_STATUS="manual-required"
-    echo -e "${YELLOW}  Bob CLI not found or install failed.${RESET}"
-    echo "  Install manually: open Bob → Settings → Propel → propel-web-search → Install"
-  fi
-else
-  echo -e "${YELLOW}  Skipped.${RESET}"
-fi
-
-echo ""
-sep
 echo -e "${BOLD}Configuration Summary${RESET}"
 sep
 echo ""
@@ -332,11 +199,6 @@ echo -e "  Comm tone:           ${GREEN}$COMM_TONE${RESET}"
 echo -e "  Prior prompt:        ${GREEN}${PRIOR_PROMPT_PATH:-none}${RESET}"
 echo -e "  Extra sources:       ${GREEN}${EXTRA_SOURCES:-none}${RESET}"
 echo -e "  Registry Phase II:   ${GREEN}$REGISTRY_PHASE2${RESET}"
-echo -e "  terraform-mcp:       ${GREEN}$MCP_TF_STATUS${RESET}"
-echo -e "  playwright-mcp:      ${GREEN}$MCP_PW_STATUS${RESET}"
-echo -e "  propel/product-kb:   ${GREEN}$PROPEL_PKB_STATUS${RESET}"
-echo -e "  propel/w3-people:    ${GREEN}$PROPEL_W3_STATUS${RESET}"
-echo -e "  propel/web-search:   ${GREEN}$PROPEL_WEB_STATUS${RESET}"
 echo ""
 
 yn "Save this configuration and generate .env + memory/preferences.md?" SAVE_CONFIG
@@ -365,19 +227,10 @@ COMMUNICATION_TONE="${COMM_TONE}"
 
 REGISTRY_PHASE2_STATUS="${REGISTRY_PHASE2}"
 
-# MCP server prerequisite status (set by onboarding.sh — values: installed | skipped | failed)
+# MCP credential placeholders (Phase 4 — fill in only after Phase 4 allowlist review)
 # Phase 4: set enabled: true in export/mcp/terraform-mcp.yaml only after Phase 4 allowlist review
-MCP_TERRAFORM_STATUS="${MCP_TF_STATUS}"
-MCP_PLAYWRIGHT_STATUS="${MCP_PW_STATUS}"
-
-# MCP credentials (Phase 4 — fill in only after Phase 4 allowlist review; never paste tokens here manually)
 TF_MCP_TOKEN=
 TF_MCP_URL=
-
-# IBM Propel connection status (values: configured | installed | skipped | skipped-no-token | manual-required | failed)
-PROPEL_PRODUCT_KNOWLEDGE_STATUS="${PROPEL_PKB_STATUS}"
-PROPEL_W3_PEOPLE_STATUS="${PROPEL_W3_STATUS}"
-PROPEL_WEB_SEARCH_STATUS="${PROPEL_WEB_STATUS}"
 EOF
 
 echo -e "${GREEN}  ✓ Written: $ENV_FILE${RESET}"
@@ -572,43 +425,7 @@ echo "  1. Review memory/preferences.md — edit anything that looks wrong."
 echo "  2. Check sources/catalog.md — add any internal sources you use."
 echo "  3. Verify registry routing status in memory/ops/registry-routing.md."
 echo "  4. Run: bash export/scripts/generate-bob-adapter.sh"
-echo "  5. Open a real case and run the intake skill for the first time."
+echo "  5. To install MCP servers or Propel connections, run: bash installer.sh --help"
+echo "  6. Open a real case and run the intake skill for the first time."
 echo ""
-
-# ── MCP capability warnings ───────────────────────────────────────────────────
-if [[ "$MCP_TF_STATUS" != "installed" ]]; then
-  echo -e "${YELLOW}⚠ terraform-mcp is ${MCP_TF_STATUS}.${RESET}"
-  echo "  Source-researcher and registry-routing skills will use web search only."
-  echo "  To install manually: npx -y @hashicorp/terraform-mcp-server"
-  echo "  Then re-run onboarding.sh or set MCP_TERRAFORM_STATUS=installed in .env"
-  echo "  Docs: https://developer.hashicorp.com/terraform/mcp-server"
-  echo ""
-fi
-if [[ "$MCP_PW_STATUS" != "installed" ]]; then
-  echo -e "${YELLOW}⚠ playwright-mcp is ${MCP_PW_STATUS}.${RESET}"
-  echo "  Screen-capture skill is unavailable. Paste customer content manually."
-  echo "  To install manually: npx -y @playwright/mcp"
-  echo "  Then re-run onboarding.sh or set MCP_PLAYWRIGHT_STATUS=installed in .env"
-  echo "  Docs: https://playwright.dev/docs/mcp"
-  echo ""
-fi
-if [[ "$PROPEL_PKB_STATUS" != "configured" ]]; then
-  echo -e "${YELLOW}⚠ IBM Propel product-knowledge is ${PROPEL_PKB_STATUS}.${RESET}"
-  echo "  IBM product documentation search unavailable."
-  echo "  Configure at: https://propel.ibm.com/connections/product-knowledge"
-  echo ""
-fi
-if [[ "$PROPEL_W3_STATUS" != "configured" ]]; then
-  echo -e "${YELLOW}⚠ IBM Propel w3-people is ${PROPEL_W3_STATUS}.${RESET}"
-  echo "  IBM employee directory search unavailable."
-  echo "  Configure at: https://propel.ibm.com/connections/w3-people"
-  echo ""
-fi
-if [[ "$PROPEL_WEB_STATUS" != "installed" ]]; then
-  echo -e "${YELLOW}⚠ IBM Propel propel-web-search is ${PROPEL_WEB_STATUS}.${RESET}"
-  echo "  Free web search via Propel unavailable."
-  echo "  Install via Bob: Settings → Propel → propel-web-search → Install"
-  echo ""
-fi
-
 echo -e "${YELLOW}Remember: .env is never committed. Keep it in your local repo only.${RESET}"

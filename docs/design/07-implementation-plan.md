@@ -1,8 +1,8 @@
 # Design 07 — Implementation and Evaluation Plan
 
-> **Status**: Draft — awaiting operator review.  
-> **Prepared**: 2 October 2026.  
-> **Scope**: Design phase only. No implementation has started. Phases 3–6 require the operator's approval at each gate.
+> **Status**: Phase 3 active — core build complete; A2A agent implementation planned (session 4).
+> **Prepared**: 2 October 2026. **Last updated**: 2 October 2026 (session 4).
+> **Scope**: Phase 3 close-out + A2A agent scaffold is current. Phases 4–6 require operator approval at each gate.
 
 ---
 
@@ -11,15 +11,149 @@
 | Phase | Gate | Deliverable | Acceptance |
 |---|---|---|---|
 | 1. Approve plan | **COMPLETE** | `plan/terraform-support-agent-plan.md` approved | ✓ |
-| 2. Design | **CURRENT** | All 7 design documents in `docs/design/` | the operator reviews and approves or requests revisions |
-| 3. Initial build | the operator approves design | Coordinator + core skills + manual import + checkpoints | Correct, useful next actions on representative cases |
-| 4. Retrieval and connectors | Phase 3 accepted | Terraform MCP read-only + approved Jira/CSP read access | Tool permissions and provenance verified in practice |
+| 2. Design | **COMPLETE** | 11 design documents in `docs/design/` | ✓ — sign-off decisions recorded in §8 below |
+| 3. Initial build | **BUILD COMPLETE — EVAL PENDING** | Skills, templates, patterns, install.sh, config/ — see §2.1 | Evals E01–E10 ready; pilot run pending operator |
+| 3b. A2A agent scaffold | **PLANNED** | aicoe-agent-utils A2A server wrapping coordinator logic | Agent card served, streaming invoke works, MCP tools wired |
+| 4. Retrieval and connectors | Phase 3 + 3b accepted | Terraform MCP read-only + Jira/CSP read access (allowlisted) | Tool permissions and provenance verified in practice |
 | 5. Specialist delegation | Phase 4 accepted | On-demand sub-agents with explicit context | Demonstrated value over coordinator-only workflow |
 | 6. Controlled automation | Phase 5 accepted | Reproduction skill execution + follow-up preparation | Reliable stop conditions, audit, bounded retries |
 
 ---
 
-## 2. Phase 3 build sequence
+## 2.1 Phase 3 completed inventory
+
+| Item | Path | Status |
+|---|---|---|
+| Coordinator contract | `export/agents/coordinator.md` | ✅ Complete |
+| Communication specialist | `export/agents/communication-specialist.md` | ✅ Complete |
+| Diagnostics specialist | `export/agents/diagnostics.md` | ✅ Complete |
+| Memory Curator specialist | `export/agents/memory-curator.md` | ✅ Complete |
+| Source Researcher specialist | `export/agents/source-researcher.md` | ✅ Complete |
+| Validation Reviewer specialist | `export/agents/validation-reviewer.md` | ✅ Complete |
+| Bob custom mode definition | `export/agents/bob-mode-terraform-support.yaml` | ✅ Complete |
+| Intake skill (+ G003 approval gate) | `export/skills/intake.md` | ✅ Complete |
+| Diagnosis skill (+ G002 stale pattern rules) | `export/skills/diagnosis.md` | ✅ Complete |
+| Source-check skill (+ G001 tool-unavailable fallback) | `export/skills/source-check.md` | ✅ Complete |
+| Communication skill | `export/skills/communication.md` | ✅ Complete |
+| Registry routing skill | `export/skills/registry-routing.md` | ✅ Complete |
+| Reproduction skill | `export/skills/reproduction.md` | ✅ Complete |
+| Screen-capture skill | `export/skills/screen-capture.md` | ✅ Complete |
+| 9 communication templates (all with COPY wrappers) | `export/templates/` | ✅ Complete |
+| Memory patterns P001–P008 | `memory/patterns/P001–P008.md` | ✅ Complete |
+| Memory corrections C001–C002 | `memory/corrections/` | ✅ Complete |
+| Ops files (registry-routing, entitlement-checks, escalation-paths) | `memory/ops/` | ✅ Complete |
+| Source catalog (40+ sources) | `sources/catalog.md` | ✅ Complete |
+| Eval cases E01–E10 | `evals/cases/E01–E10.md` | ✅ Ready — not yet run |
+| Checkpoint README | `checkpoints/README.md` | ✅ Complete |
+| `generate-bob-adapter.sh` (bash 3.2 fix) | `export/scripts/generate-bob-adapter.sh` | ✅ Complete |
+| `onboarding.sh` | `export/scripts/onboarding.sh` | ✅ Written — not yet run |
+| `install.sh` Phase 3 implementation (bash 3.2 fix + copy logic) | `../../install.sh` (repo root) | ✅ Complete |
+| `config/runtime.yaml` + `config/README.md` | `config/` | ✅ Complete |
+| Terraform MCP config (disabled) | `export/mcp/terraform-mcp.yaml` | ✅ Present — `enabled: false` (Phase 4) |
+| Playwright MCP config (disabled) | `export/mcp/playwright-mcp.yaml` | ✅ Present — `enabled: false` (Phase 4) |
+
+## 2.2 Remaining gaps (Phase 3 close-out)
+
+| ID | Gap | Owner | Status | Blocking? |
+|---|---|---|---|---|
+| GAP-01 | E09 synthetic outdated pattern file | Agent | ✅ **RESOLVED** — `memory/patterns/P009-vcs-webhook-outdated-pattern.md` written | No |
+| GAP-02 | `memory/preferences.md` is empty — needs `onboarding.sh` run | Operator | ⏳ Pending operator action | No |
+| GAP-03 | Eval cases E01–E10 not yet executed — no pass/fail recorded | Operator | ⏳ Pending operator action | Blocks Phase 4 gate |
+| GAP-04 | Phase II registry routing status not confirmed with team | Operator | ⏳ Pending operator action | Yes for `registry-routing` operational use |
+| GAP-05 | Alias-to-ticket secure mapping store not defined | Design decision | ✅ **RESOLVED** — ADR-001 accepted (Option C: defer to Phase 4, use ticket numbers in Phase 3b) | No |
+| GAP-06 | Separate repo for Phase 4+ not yet created | Operator | ⏳ Pending operator action | Blocks Phase 4 gate |
+
+---
+
+## 2.3 A2A agent scaffold plan (Phase 3b — next session)
+
+The Terraform Support Agent will be promoted from a Bob skill bundle to a fully functional
+**A2A-compatible server** using `aicoe-agent-utils`. This allows it to be invoked by other agents,
+connected to MCP tool servers, and tested with a streaming client — independent of Bob's runtime.
+
+### 2.3.1 Target file structure
+
+```
+portable/terraform-support-agent/a2a/
+├── aicoe-agent-utils/         ← git submodule (https://github.ibm.com/AI-CoE/aicoe-agent-utils)
+├── main.py                    ← asyncclick entry point; calls start_a2a_server()
+├── config.py                  ← all env-var config: LLM provider, MCP URLs, host/port, auth flags
+├── terraform_agent.py         ← extends BaseLangGraphAgent; implements get_prompt(), get_agent_card()
+├── a2a_factory.py             ← extends A2AAgentFactory; implements make_agent(), make_agent_executor()
+├── test_client.py             ← uses run_streaming_test() from aicoe_agent_utils.a2a.client_utils
+├── requirements.txt           ← python-dotenv, httpx, fastapi, uvicorn, asyncclick, -e ./aicoe-agent-utils[agent]
+├── .env.example               ← all config vars with placeholders; ENABLE_CLIENT_AUTH=false by default
+├── security/
+│   └── README.md              ← trust model, token rotation, incident response
+└── README.md                  ← component overview, quick-start, smoke test
+
+> **Note (Phase 3b remediation):** `Dockerfile` and `.gitmodules` were removed from the
+> active scaffold. Container packaging will be reintroduced as a separate, approved
+> deployment target in a future phase. The git submodule was also deferred; the
+> `aicoe-agent-utils` library is referenced in `requirements.txt` via its published
+> package until Phase 4 approves the submodule workflow.
+```
+
+### 2.3.2 Agent identity
+
+| Field | Value |
+|---|---|
+| Agent name | `terraform-support-agent` |
+| Role | Terraform Cloud support case coordinator |
+| Default LLM provider | WatsonX (`meta-llama/llama-3-3-70b-instruct`) |
+| Alternate LLM provider | Ollama (switchable via `LLM_PROVIDER=ollama`) |
+| MCP tools wired | None by default (Phase 3b); `terraform-mcp` added in Phase 4 gate |
+| Auth | `ENABLE_CLIENT_AUTH=false`, `ENABLE_USER_AUTH=false` by default |
+| AgentOps | Optional — install `aicoe-agent-utils[agentops]` on demand |
+
+### 2.3.3 Build steps (session 4)
+
+```
+Step 1: Create a2a/ directory and .gitmodules
+Step 2: Add aicoe-agent-utils as git submodule
+Step 3: Write config.py  — env var loading for LLM, MCP, server, auth, AgentOps
+Step 4: Write terraform_agent.py  — BaseLangGraphAgent subclass
+        - get_prompt() returns the coordinator system prompt from export/agents/coordinator.md
+        - get_agent_card() returns name, description, skills list
+        - get_looking_up_info_msg() / get_processing_info_msg()
+        - NO build_graph() call — framework handles it
+Step 5: Write a2a_factory.py  — A2AAgentFactory subclass
+        - make_agent() instantiates terraform_agent
+        - make_agent_executor() wires tools
+        - Override get_mcp_tools() if MCP URL needs trailing slash handling
+        - NO build_graph() call
+Step 6: Write main.py  — asyncclick CLI; factory → agent → executor → start_a2a_server()
+        - File must be named main.py (NOT __main__.py)
+Step 7: Write test_client.py  — run_streaming_test() from aicoe_agent_utils.a2a.client_utils
+Step 8: Write requirements.txt, Dockerfile, .env.example, .gitignore
+Step 9: Validate: bash -n / syntax check; docker build (optional); python main.py + test_client.py
+```
+
+### 2.3.4 Critical rules (from agent-utils mode)
+
+- **NEVER call `build_graph()`** — framework handles it; calling it manually breaks the graph
+- **NEVER use `__main__.py`** as filename — Python reserved; use `main.py`
+- **NEVER hardcode credentials** — all secrets via `.env`; `.env` is gitignored
+- **Auth disabled by default** — `ENABLE_CLIENT_AUTH=false`, `ENABLE_USER_AUTH=false`
+- **AgentOps not installed by default** — add `aicoe-agent-utils[agentops]` only on request
+- **MCP URLs** — override `get_mcp_tools()` in factory if trailing slash causes issues
+- **Test client** — use `run_streaming_test()` from `aicoe_agent_utils.a2a.client_utils`; do not call `.stream()` or `.invoke()` directly on `A2AClient`
+
+### 2.3.5 GAP-05 — Alias-to-ticket mapping design proposal
+
+The current design leaves alias-to-ticket mapping undefined. Proposed approach for Phase 3b:
+
+| Option | Description | Risk |
+|---|---|---|
+| A (recommended) | Store mapping in a gitignored `memory/.alias-map.jsonl` (one JSON line per alias entry, AES-256 encrypted with a key from the OS keychain) | Requires key management; safe for local use |
+| B | Store mapping in the OS keychain directly (one entry per alias, key = `stf-alias-<alias>`) | Simple; no file; limited to one machine |
+| C | Defer — use ticket number directly in checkpoint front matter; no alias used in Phase 3b | Zero risk; reduces traceability |
+
+**Recommendation**: Use Option C (defer) for Phase 3b. Introduce Option A in Phase 4 when real cases are run and alias references are needed.
+
+---
+
+## 2. Phase 3 build sequence (completed — for reference)
 
 When the operator approves the design, Phase 3 begins. Recommended build order:
 
@@ -186,14 +320,34 @@ The following are explicitly not implemented in the first three phases:
 
 Before the operator approves the design and authorizes Phase 3:
 
-- [ ] All 7 design documents reviewed
-- [ ] Decisions D1–D7 from `00-overview.md` confirmed
-- [ ] All "Must resolve" items from Section 3 above confirmed
-- [ ] Phase II registry process status verified with team
-- [ ] Bob skill front matter format verified
-- [ ] Alias-to-ticket mapping approach agreed
-- [ ] Evaluation pilot case set agreed (minimum 3 for Phase 3)
-- [ ] Repository location for the terraform agent repo agreed (separate from STF)
+- [x] All 7 design documents reviewed — 11 design docs complete including PII, wire format, storage
+- [x] Decisions D1–D7 from `00-overview.md` confirmed — see decisions recorded below
+- [x] All "Must resolve" items from Section 3 above confirmed — see below
+- [x] Skills built and skill gap fixes applied (G001, G002, G003) — all 7 skills complete
+- [x] Templates built — 9 templates with COPY FROM HERE wrappers
+- [x] Memory patterns written — P001–P008 complete
+- [x] Eval cases E01–E10 — all ✅ Ready
+- [x] `install.sh` Phase 3 implementation complete — bash 3.2-compatible, actual copy logic, Bob adapter integration, manifest output
+- [x] `config/runtime.yaml` and `config/README.md` created
+- [x] Bob skill front matter format verified — confirmed from `~/.bob/skills/` inspection; `generate-bob-adapter.sh` patched
+- [ ] Phase II registry process status verified with team — **OPEN: confirm with manager (GAP-04)**
+- [ ] Alias-to-ticket mapping approach agreed — **OPEN: no secure mapping store defined yet (GAP-05)**
+- [x] Evaluation pilot case set agreed — 10 cases built (E01–E10 all ✅ Ready)
+- [ ] Pilot evals E01–E10 executed — **PENDING: operator must run (GAP-03)**
+- [ ] `memory/preferences.md` populated — **PENDING: operator must run `onboarding.sh` (GAP-02)**
+- [ ] Repository location for the terraform agent repo agreed — **OPEN: still inside STF repo; separate repo for Phase 4+ (GAP-06)**
+
+### Decisions recorded (from design sessions)
+
+| ID | Decision | Value chosen |
+|---|---|---|
+| D1 | Sub-agent spawn mode | Sequential primary; parallel aspirational (Bob approval gate makes sequential the only reliable mode) |
+| D2 | Checkpoint storage format | Structured Markdown with YAML front matter |
+| D3 | Memory write approval | In-chat confirmation (operator approves each curator proposal in session) |
+| D6 | Bob skill adapter | Manual script (`generate-bob-adapter.sh`) — runs after any `export/skills/` change |
+| RQ-01 (RT) | Registry Phase II status | **Pending verification** — operator must confirm with team before operational use of `registry-routing` skill |
+| RQ-01 (RI) | Bob skill front matter format | Confirmed: `name`, `description`, `metadata.author`, `metadata.version`, `metadata.display_name`, `metadata.short_description` — sub-directory per skill (`<name>/SKILL.md`) |
+| RQ-02 (RI) | Bob symlinks in `.bob/skills/` | Not used — `generate-bob-adapter.sh` writes full copies to `~/.bob/skills/` |
 
 ---
 
