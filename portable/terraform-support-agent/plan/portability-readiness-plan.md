@@ -1,16 +1,16 @@
 # Terraform Support Agent portability readiness plan
 
-**Status:** Active remediation plan, updated 2026-10-09. The Terraform-specific source and completed planning inputs are being consolidated under this agent. Installer changes below are planned, not proven. This plan authorizes no home installation, connector activation, credential use, or live case processing.
+**Status:** Active remediation plan, updated 2026-10-09. P0 complete (consolidation commit `aafbf67`). P1 installer rewrite complete (commit `6338fd0`). P2 A2A security module is next. This plan authorizes no home installation, connector activation, credential use, or live case processing.
 
 ## Priority order
 
-| Priority | Outcome | Required proof |
-|---|---|---|
-| P0 — ownership and safety | Keep one Terraform-specific copy under this agent; archive completed inputs; repair stale paths. Preserve the STF-wide `plan.md`, schemas, and generic installer at root. | Done in the worktree: 81 Markdown files checked with zero missing relative links; three archived inputs match their tracked originals by SHA-256. |
-| P1 — installer lifecycle | Add installed-state detection and a single menu/command interface for install, re-install, modify/update, package, removal, Propel, and repository updates. | Each action has a no-write preview, scoped manifest, repeatable behavior, and recovery test. |
-| P2 — security and release authenticity | Implement the dedicated A2A security module and signed release/installer verification with operator-owned signing authority. | Sensitive data is stopped before model use; altered releases fail verification; no unsupported claim that a local file cannot be edited. |
-| P3 — experience and distribution | Add the CLI Terraform visual, tagline, author credit, and Bob chat choice flow; keep A2A optional. | Terminal and Bob paths show the same choices and perform the same validated operations. |
-| P4 — documentation and pilot | Update affected READMEs, design links, and evaluation records; test on declared target systems. | Links and commands resolve, E01–E10 results are recorded, and install/update/remove work in a clean test account. |
+| Priority | Outcome | Status | Required proof |
+|---|---|---|---|
+| P0 — ownership and safety | Keep one Terraform-specific copy under this agent; archive completed inputs; repair stale paths. Preserve the STF-wide `plan.md`, schemas, and generic installer at root. | ✅ **Complete** (`aafbf67`) | Done: root `docs/design/` mirror retired; three archived inputs moved to `plan/archive/`; 15+ READMEs updated. |
+| P1 — installer lifecycle | Add installed-state detection and a single menu/command interface for install, re-install, modify/update, package, removal, Propel, and repository updates. | ✅ **Complete** (`6338fd0`) | `installer.sh` rewritten (1248 lines): `dry_exec()` (no eval), validated `--host`, 8-choice menu, subcommands `reinstall`/`package`/`update`, flags `--json`/`--purge`/`--no-start`, ASCII banner + branding, GPG signing for `package`/`update`. Syntax verified (`bash -n`). End-to-end lifecycle test pending until clean target account is available (P4). |
+| P2 — security and release authenticity | Implement the dedicated A2A security module and signed release/installer verification with operator-owned signing authority. | ⏳ **Next** | Sensitive data is stopped before model use; altered releases fail verification; no unsupported claim that a local file cannot be edited. |
+| P3 — experience and distribution | Add the CLI Terraform visual, tagline, author credit, and Bob chat choice flow; keep A2A optional. | ✅ **Merged into P1** | ASCII banner ("Making Terraform Support Simple", "Created by Ashish Chawla", GitHub URL) ships in the P1 rewrite. Bob chat `--json` mode delivers structured choices via same code path. |
+| P4 — documentation and pilot | Update affected READMEs, design links, and evaluation records; test on declared target systems. | 🔄 In progress | README.md and AGENTS.md updated for P1. Full 20-README audit and E01–E10 eval recording remain open. |
 
 ## Decision and intended product
 

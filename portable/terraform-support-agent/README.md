@@ -1,6 +1,6 @@
 # Terraform Support Agent
 
-> **Status**: `v0.1.0-draft`; Phase 3b consolidation and installer remediation are active. No portable install or A2A runtime has been accepted.
+> **Status**: `v0.1.0-draft`; Phase 3b consolidation and installer remediation are active. P1 installer rewrite complete (`6338fd0`). No portable install or A2A runtime has been accepted yet.
 
 A Bob-based agent that helps a HashiCorp / IBM HCP Terraform support engineer
 diagnose cases, draft communications, and capture resolved patterns — without
@@ -8,16 +8,70 @@ ever taking unsupervised action.
 
 ---
 
-## Current entry points
-
-The existing `installer.sh` has draft commands that can write to `~/.bob/`. Its `install --a2a` option does not yet install or start A2A, and the new menu, package, update, signing, and rollback behavior is specified in the [priority plan](plan/portability-readiness-plan.md). Inspect the plan and preview before using the live path.
+## Quick start
 
 ```bash
+# Preview all options without writing anything
 bash installer.sh help
 bash installer.sh install --dry-run
+
+# Interactive menu (detects existing install automatically)
+bash installer.sh
+
+# Machine-readable output for Bob chat
+bash installer.sh status --json
 ```
 
-The planned single installer will detect existing installations and offer Re-install, Install / Update, Package, Remove Installer, Install / Update Propel, and Update from Repo. In a terminal these are numbered choices; Bob chat will offer equivalent buttons. The planned ASCII Terraform-themed mark will show “Making Terraform Support Simple” and “Created by Ashish Chawla.” Signed packages and repository permissions will establish authorship and detect changes; a distributed executable script cannot be made uneditable by encryption. Propel and MCP activation remain behind their phase gates.
+### Commands — new system (no existing install)
+
+| Command | Description |
+|---|---|
+| `install` | Stage and verify agent, register Bob mode, optionally add A2A. |
+| `package` | Create a signed `.tar.gz` release archive of approved assets. |
+| `status` | Show that no install exists yet. |
+| `help` | Print full usage. |
+
+### Commands — existing install detected
+
+| Command | Description |
+|---|---|
+| `reinstall` | Reinstall the same verified version; repair manifest-owned files only. |
+| `install` | Stage, verify, and activate a reviewed local version (covers updates too). |
+| `package` | Create a signed release archive. |
+| `remove` | Preview then remove installed agent, owned adapters, and launcher. |
+| `propel` | Show Bob/Propel version, display permission changes, install on approval. |
+| `update` | Check configured trusted remote for a newer signed release and install on approval. |
+| `status` | Show install state, Bob skills, A2A, and MCP status. |
+| `help` | Print full usage. |
+
+### Additional subcommands (always available)
+
+| Command | Description |
+|---|---|
+| `modify` | Preview and apply a scoped change to host, settings, version, or A2A component. |
+| `start` | Start the A2A server (requires prior install with A2A; use `--a2a`). |
+| `stop` | Stop the A2A server. |
+| `mcp` | Install optional MCP server prerequisites (`terraform-mcp`, `playwright-mcp`). |
+
+### Flags
+
+| Flag | Description |
+|---|---|
+| `--dry-run` | List all planned writes, network requests, and process actions — no changes made. |
+| `--json` | Machine-readable `{"status":…,"message":…}` output for Bob chat integration. |
+| `--no-start` | During `install`, stage A2A but do not start the server. |
+| `--purge` | With `remove`: also remove named local state after a backup preview. |
+| `--host bob\|propel` | Target host adapter. Unknown values error — never silently ignored. |
+| `--a2a` | Include A2A setup during `install`/`reinstall`/`modify`. Default is to skip. |
+
+### Safety contract
+
+- `dry_exec()` never uses `eval` — all mutating calls use explicit argument arrays.
+- `--host` is validated; unknown values error immediately.
+- Installed-state detection runs before any prompt or action.
+- `remove` deletes only manifest-owned files; operator data is preserved unless `--purge`.
+- `update` never executes unreviewed code; shows diff, verifies GPG signature, requires selection.
+- No `git reset --hard` or `git clean -fd` at any point.
 
 ---
 
@@ -25,17 +79,17 @@ The planned single installer will detect existing installations and offer Re-ins
 
 ```
 terraform-support-agent/
-├── installer.sh          ← draft lifecycle script; expanded menu planned
+├── installer.sh          ← lifecycle manager (P1 rewrite complete; commit 6338fd0)
 ├── docs/
 │   ├── agent-dashboard.html ← standalone diagnostic dashboard
-│   └── design/          ← canonical Terraform design documents (00–10)
+│   └── design/          ← canonical Terraform design documents (00–10 + 00a)
 ├── export/
-│   ├── agents/           ← coordinator.md + 5 specialist agent definitions
-│   ├── skills/           ← 6 canonical skill files (EDIT HERE, not .bob/skills/)
+│   ├── agents/           ← coordinator.md + Bob mode YAML
+│   ├── skills/           ← 7 canonical skill files (EDIT HERE, not .bob/skills/)
 │   ├── templates/        ← 9 communication templates
 │   ├── mcp/              ← terraform-mcp.yaml (enabled: false until Phase 4)
 │   └── scripts/          ← onboarding.sh (manual), generate-bob-adapter.sh
-├── a2a/                  ← optional A2A scaffold; security implementation pending
+├── a2a/                  ← optional A2A scaffold; security module pending (P2)
 ├── memory/
 │   ├── preferences.md    ← operator config (populated by installer/onboarding)
 │   ├── patterns/         ← confirmed issue patterns (written after real cases)
@@ -47,7 +101,7 @@ terraform-support-agent/
 ├── evals/
 │   └── cases/            ← 11 sanitized cases (E01–E11); pilot results pending
 └── plan/
-    ├── portability-readiness-plan.md ← active priorities
+    ├── portability-readiness-plan.md ← active priorities (P1 installer ✅)
     └── archive/          ← completed original plan, prompt, PDF, agent history
 ```
 
