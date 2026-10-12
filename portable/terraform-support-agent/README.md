@@ -1,6 +1,6 @@
 # Terraform Support Agent
 
-> **Status**: `v0.1.0-draft`; Phase 3b consolidation and installer remediation active. P0 (consolidation), P1 (installer rewrite), and P2 (A2A security package) complete. P4 documentation & eval suite active.
+> **Status**: `v0.1.0-draft`; Phase 3b complete (P0 consolidation, P1 installer rewrite, P2 security package, P4 documentation & eval suite 10/10 passed). A2A git submodule linked (`aicoe-agent-utils` v0.7.45). Direct GitHub curl installation supported. Phase 4 pending operator gates.
 
 A Bob-based agent that helps a HashiCorp / IBM HCP Terraform support engineer
 diagnose cases, draft communications, and capture resolved patterns — without

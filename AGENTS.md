@@ -2,7 +2,7 @@
 
 This file provides guidance to agents when working with code in this repository.
 
-Read `plan.md` before changing STF. **Phase 3b portability remediation is active.** The Terraform agent's current priority list is `portable/terraform-support-agent/plan/portability-readiness-plan.md`; its design implementation plan is `portable/terraform-support-agent/docs/design/07-implementation-plan.md`. Do not enable `terraform-mcp.yaml`, install into a home directory, connect a live MCP server, collect activity traces, or access network devices as part of this milestone.
+Read `plan.md` before changing STF. **Phase 3b portability remediation is 100% complete** (P0–P4 deliverables, A2A security package, 10/10 automated evaluations passed, and `aicoe-agent-utils` git submodule linked). Operator GAP-04 (Phase II registry routing) is deferred to subsequent per-issue process workflow review. Do not enable `terraform-mcp.yaml`, install into a home directory without `--dry-run`, connect a live MCP server, collect activity traces, or access network devices as part of this milestone.
 
 ## Build / lint / test
 

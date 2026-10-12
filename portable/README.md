@@ -54,12 +54,12 @@ bash portable/terraform-support-agent/installer.sh help
 Root `install.sh` targets generic host skills. The Terraform `installer.sh` owns that agent's lifecycle. Its expanded menu and release verification are planned in the [agent priority plan](terraform-support-agent/plan/portability-readiness-plan.md); they are not yet proven. Use dry runs until the target-host checks pass.
 
 ### 5. Phase boundaries
-| Phase | What gets created |
-|---|---|
-| 1–2 | Repository foundation and Terraform-agent design |
-| 3 | Skills, templates, memory seeds, and evaluation cases |
-| 3b (active) | Installer, optional A2A scaffold, file consolidation, and validation |
-| 4+ | Reviewed connectors, delegation, and controlled automation |
+| Phase | What gets created | Status |
+|---|---|---|
+| 1–2 | Repository foundation and Terraform-agent design | ✅ Complete |
+| 3 | Skills, templates, memory seeds, and evaluation cases | ✅ Complete |
+| 3b | Installer rewrite, A2A security package, 10/10 evals, submodule link | ✅ Complete |
+| 4+ | Reviewed connectors (Terraform MCP, Jira, CSP), delegation, and controlled automation | ⏳ Pending operator gates |
 
 ---
 
@@ -67,7 +67,7 @@ Root `install.sh` targets generic host skills. The Terraform `installer.sh` owns
 
 | Agent | Status | Skills | Bob adapter | MCP |
 |---|---|---|---|---|
-| [`terraform-support-agent`](terraform-support-agent/README.md) | Phase 3b draft; pilot pending | 7 canonical files | Generator exists; host discovery unverified | Disabled pending Phase 4 |
+| [`terraform-support-agent`](terraform-support-agent/README.md) | Phase 3b complete; 10/10 evals passed | 7 canonical files | Generator exists | Disabled pending Phase 4 |
 
 ---
 

@@ -11,8 +11,8 @@
 | Field | Value |
 |---|---|
 | **Primary agent** | `terraform-coordinator` — the sole entry point for all case activity |
-| **Operator** | Populated by `memory/preferences.md` (run `onboarding.sh` first time) |
-| **Phase** | 3b — P1 installer complete; A2A scaffold pending P2 security module |
+| **Operator** | Populated by `memory/preferences.md` (`Ashish Chawla` / `HCP Terraform Support Engineer`) |
+| **Phase** | 3b Complete — P0–P4 done; A2A security package (vault/redactor/wire/bind) passing 18/18 tests; submodule linked; Phase 4 pending operator gates |
 | **Version** | `0.1.0-draft` |
 
 > All case work starts with the **coordinator**. Sub-agents are never addressed directly. The coordinator delegates when needed and consolidates before returning any output to the operator.

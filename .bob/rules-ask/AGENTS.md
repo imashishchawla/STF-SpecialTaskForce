@@ -14,9 +14,8 @@ This file provides guidance to agents when working with code in this repository.
 - **"Portability" means same contracts, not identical behavior** — the same bundle on two runtimes will behave differently; the portable core is neutral, host adapters handle specifics.
 - **Admin activity map vs. runner view** — runners see only their own task result and status; fleet map/cross-run search is admin-only. This distinction is non-negotiable.
 - **Five planned host targets** — IBM Bob (`~/.bob/skills/`), Codex (`~/.agents/skills/`), Google Gemini (`~/.gemini/config/skills/`), OpenCode (`~/.config/opencode/skills/`), Claude Code (`~/.claude/skills/`). None is installed or verified yet.
-- **Support tier vocabulary** — "guidance only", "mediated tools", "full observation" are defined terms with specific meanings in `docs/architecture.md`. Do not use them loosely.
-- **`docs/design/` at repo root and `portable/terraform-support-agent/docs/design/` are identical** — the `portable/` copy is the distribution copy; the repo root is the working draft. Both now include `00a-architecture-diagrams.md` (8 Mermaid diagrams).
-- **`memory/` (terraform agent) ≠ `.memory/` (STF project)** — two completely separate directories in two separate repos. Never describe them as the same thing. The agent's `memory/` does not exist yet; it is a Phase 3 artifact.
+- **`portable/terraform-support-agent/docs/design/` is canonical** — root mirror was retired in P0. It includes `00a-architecture-diagrams.md` (8 Mermaid diagrams).
+- **`memory/` (terraform agent) ≠ `.memory/` (STF project)** — two completely separate directories in two separate repos. Never describe them as the same thing.
 - **CasePacket is a structured Markdown document with 9 sections** — not a JSON payload. `case_alias` is always an internal alias, never the real ticket number. Real ticket ↔ alias mapping lives outside the agent repo (MQ-01).
 - **Three `RequestedOutput` types that produce structured artifacts**: `handoff` → exact 5-field format; `can_report` → exact 5-field format; both are in `memory/preferences.md`.
 - **Operational knowledge files (`memory/ops/`) are session-scoped by default** — the coordinator reads them per session but must never embed their content in checkpoints, memory patterns, or customer-visible output.

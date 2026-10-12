@@ -18,9 +18,10 @@ This file provides guidance to agents when working with code in this repository.
 - **`agent_id` pattern is `^[a-z0-9]+(-[a-z0-9]+)*$`** (kebab, no dots) — `bundle_id` allows dots and dashes `^[a-z0-9]+([.-][a-z0-9]+)*$`. These differ; check the schema before naming.
 - **`bundle.schema.json` uses a conditional `if/then`** — released bundles (`status: "released"`) must have non-empty `agents` and `files` and a non-`"UNDECIDED"` license. The current template uses `status: "draft"` intentionally.
 - **`.memory/` writes require human curation** — propose, do not commit, lessons or ADRs directly.
-- **Rollback is scoped, never broad** — `git reset --hard` and `git clean -fd` are explicitly prohibited. Use isolated branches or worktrees.
-- **`.gitignore` excludes `/.stf/`, `/.trace/data/`, `/backups/`, `/secrets/`** — never create these directories inside the repo.
-- **`docs/design/` at repo root and `portable/terraform-support-agent/docs/design/` are currently identical copies** — keep them in sync when updating design documents. This now includes `00a-architecture-diagrams.md`.
+- **PII protection and session vault (doc 08)** — all sensitive tokens replaced with `XCVBH-*` tokens before LLM context; raw secrets live in AES-256-GCM vault.
+- **Wire format (doc 09)** — inter-agent SignedEnvelope wrapping with TTL and canonical payload hash.
+- **`portable/terraform-support-agent/docs/design/` is canonical** — root mirror was retired in P0.
+- **A2A component includes submodule** — `portable/terraform-support-agent/a2a/lib/aicoe-agent-utils` is linked via git submodule.
 - **`memory/` (terraform agent repo) ≠ `.memory/` (STF repo)** — the agent's persistent memory lives in a separate repo created in Phase 3; STF's `.memory/` is project governance only. Never write terraform case data to `.memory/`.
 - **Case aliases are never real ticket numbers in persistent storage** — real ticket ↔ alias mapping lives outside the agent repo in a separate restricted record (MQ-01 unresolved).
 - **Draft checkpoints go to `checkpoints/draft/` during a pass; promotion requires operator approval** — coordinator can write drafts, but cannot promote them.

@@ -17,8 +17,8 @@ This file provides guidance to agents when working with code in this repository.
 - **Delegation requires scoped identity and bounded budgets** — coordinator-to-subagent delegation can be disabled without changing specialist contracts. Plans must not assume delegation is always available.
 - **Network-device work (Phase 7) requires physical/out-of-band recovery proof before any live change** — never plan a network change without a verified rollback path documented first.
 - **Schema `schema_version: 1` is a forward-compat gate** — future importers reject unknown versions. Any plan that bumps `schema_version` must also plan importer, adapter, and conformance-case updates simultaneously.
-- **`docs/design/` at repo root and `portable/terraform-support-agent/docs/design/` are identical** — plans must account for keeping both in sync; the `portable/` copy is the distribution copy. Both now include `00a-architecture-diagrams.md`.
-- **`memory/` (terraform agent) ≠ `.memory/` (STF project)** — completely separate repos and directories. Plans that reference "memory" must specify which system.
+- **`portable/terraform-support-agent/docs/design/` is canonical** — root mirror was retired in P0.
+- **Phase 3/3b complete; Phase 4 pending operator gates** — Phase 3b portability remediation, installer rewrite, A2A security package, and eval suite are done. Phase 4 will introduce live MCP read-only connectors after allowlist approval.
 - **Issue pattern `confidence` lifecycle is `candidate → validated → outdated`** — superseded entries are kept (never deleted); `rejected` is also a terminal state. Plans for pattern curation must respect immutability of history.
 - **Sub-agent spawn order is fixed** — Diagnostics + Source Researcher (parallel intent, sequential fallback) → Validation Reviewer → Communication Specialist → Memory Curator. No specialist may spawn another specialist.
 - **`ENABLE_TF_OPERATIONS=false` is NOT a complete read-only policy** — an explicit tool allowlist in `terraform-mcp.yaml` is mandatory. Plans for MCP integration must include both the flag and the allowlist.
