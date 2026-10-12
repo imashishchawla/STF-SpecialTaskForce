@@ -1,9 +1,9 @@
 # STF (Special Task Force) - Master Plan & Repository Blueprint
 
-> **Status:** Phase 3 complete; Phase 3b (A2A scaffold) — **actively in progress (session 4)**
+> **Status:** Phase 1, Phase 2, Phase 3, and Phase 3b complete (P0–P4 implemented & verified). Phase 4 gates pending operator action.
 > **Repository:** `STF-SpecialTaskForce` (`imashishchawla/STF-SpecialTaskForce`)
 > **Document Purpose:** Single comprehensive master document containing the complete architecture, operational rules, directory blueprint, schemas, governance policies, pilot agent design, and phased execution roadmap.
-> **Last updated:** Session 4 — Agent Builder with Agent-Utils mode activated; A2A scaffold work commencing under `portable/terraform-support-agent/a2a/`.
+> **Last updated:** Session 5 — P2 Security package (commit `5254a36`) and P4 Evaluation/Documentation suite (commit `018160e`) completed; E01–E10 automated pilot passed 10/10.
 
 ---
 
@@ -611,27 +611,24 @@ A2A server using `aicoe-agent-utils`, independently testable and invokable by ot
 
 ---
 
-### Phase 3b portability remediation *(🔄 Active)*
+### Phase 3b portability remediation *(✅ Complete)*
 
 **Goal**: Clean up the Phase 3b A2A scaffold so the portable bundle remains properly
 portable — no Docker build artifacts, no scope-creep in onboarding, single entry-point
-installer, and all docs updated.
+installer, full PII security, automated evaluations, and all docs updated.
 
-**Changes (this session):**
-- [x] `a2a/Dockerfile` — **removed** (Docker packaging deferred to a separately-approved deployment target; `Dockerfile` cannot use relative `..` paths in COPY and the UBI-based build is out of scope for the portable bundle).
-- [x] `export/scripts/onboarding.sh` — **scoped**: path bug fixed (`$SCRIPT_DIR/../..`); Sections 7–8 (MCP `npx` installs, Propel connections) removed; those steps moved to `installer.sh mcp` and `installer.sh propel`.
-- [x] `installer.sh` — **created**: 8 subcommands (`install`, `modify`, `start`, `stop`, `status`, `remove`, `mcp`, `propel`), `--dry-run`, `--a2a` flag; A2A is explicit opt-in, never silent.
-- [x] `.gitignore` — **expanded**: A2A artifacts (`a2a/.venv/`, `a2a/__pycache__/`, `a2a/a2a-server.log`, `a2a/.a2a.pid`), `!a2a/.env.example` track exception, Python artifacts, `.install-manifest`.
-- [x] `README.md` — **updated**: installer quick-start, Phase 3b status row, directory layout.
-- [x] `a2a/README.md` — **created**: optional component overview, quick-start, smoke test, config table.
-- [x] `a2a/security/README.md` — **created**: trust model, token rotation, incident response, Phase 4 open items.
-- [x] `portable/terraform-support-agent/docs/design/07-implementation-plan.md` — **updated**: `Dockerfile` and `.gitmodules` removed from §2.3.1 file table; remediation note added.
-- [x] `portable/terraform-support-agent/plan/archive/` — contains completed Terraform planning inputs and specialist history. The active Terraform priority plan remains beside it.
+**Completed deliverables:**
+- [x] **P0 — Ownership and safety** (commit `aafbf67`): Root design mirror retired; completed inputs moved to `plan/archive/`; 15+ READMEs updated.
+- [x] **P1 — Installer rewrite** (commit `6338fd0`): `installer.sh` (1,248 lines) rewritten with `dry_exec` (no eval), validated `--host`, 8-choice menu, subcommands (`reinstall`, `package`, `update`), flags (`--json`, `--purge`, `--no-start`), ASCII branding, and GPG signing.
+- [x] **P2 — Dedicated A2A security package** (commit `5254a36`): Implemented `vault.py` (AES-256-GCM session vault), `redactor.py` (PII & XCVBH tokenization), `wire_validator.py` (SignedEnvelope validation & TTL checks), and `bind_guard.py` (fail-closed loopback guard). 18/18 unit tests passing in `a2a/tests/security/`.
+- [x] **P3 — Experience & distribution** (merged into P1): Integrated ASCII mark and structured `--json` choices for Bob chat.
+- [x] **P4 — Documentation & Pilot Evals** (commit `018160e`): 27-README audit completed; automated evaluation runner (`evals/runner.py`) created; cases E01–E10 recorded 10/10 passed in `evals/results/session-2026-10-12.md`; automated lifecycle test suite (`tests/test_installer_lifecycle.sh`) passing 9/9 checks.
 
-### Phase 4: Agent pilot and verification *(Pending Phase 3 + 3b completion)*
-- [ ] Run eval pilot (E01–E10) and record pass/fail against acceptance criteria in `07-implementation-plan.md §5`.
-- [ ] Resolve GAP-03 (eval results), GAP-04 (registry routing status).
-- [ ] Present completed pilot results for operator review.
+### Phase 4: Agent pilot and live connectors *(Pending Operator Gates)*
+- [x] Run automated eval pilot (E01–E10) and record pass/fail (10/10 passed in `evals/results/session-2026-10-12.md`).
+- [ ] Operator GAP-02: Populate `memory/preferences.md` via `export/scripts/onboarding.sh`.
+- [ ] Operator GAP-06: Add `aicoe-agent-utils` submodule from IBM GitHub.
+- [ ] Operator GAP-04: Confirm Phase II registry routing status with team.
 - [ ] Approve Phase 4 gate: Terraform MCP read-only connector wired into A2A agent via `get_mcp_tools()`; Jira/CSP read access added.
 - [ ] Enable `feature_flags.terraform_mcp_connector: true` in `config/runtime.yaml` after allowlist review.
 

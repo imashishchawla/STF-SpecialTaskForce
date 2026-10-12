@@ -12,8 +12,8 @@
 |---|---|---|---|
 | 1. Approve plan | **COMPLETE** | `plan/archive/terraform-support-agent-plan.md` approved | ✓ |
 | 2. Design | **COMPLETE** | 12 design documents in this agent's `docs/design/` | ✓ — sign-off decisions recorded in §8 below |
-| 3. Initial build | **BUILD COMPLETE — EVAL PENDING** | Skills, templates, patterns, install.sh, config/ — see §2.1 | Evals E01–E10 ready; pilot run pending operator |
-| 3b. A2A agent scaffold | **PLANNED** | aicoe-agent-utils A2A server wrapping coordinator logic | Agent card served, streaming invoke works, MCP tools wired |
+| 3. Initial build | **COMPLETE** | Skills, templates, patterns, install.sh, config/ — see §2.1 | Evals E01–E10 recorded 10/10 passed in evals/results/ |
+| 3b. A2A agent scaffold | **COMPLETE** | aicoe-agent-utils A2A server, P2 security package, P4 test suite | 18 unit tests passed, 9 lifecycle checks passed |
 | 4. Retrieval and connectors | Phase 3 + 3b accepted | Terraform MCP read-only + Jira/CSP read access (allowlisted) | Tool permissions and provenance verified in practice |
 | 5. Specialist delegation | Phase 4 accepted | On-demand sub-agents with explicit context | Demonstrated value over coordinator-only workflow |
 | 6. Controlled automation | Phase 5 accepted | Reproduction skill execution + follow-up preparation | Reliable stop conditions, audit, bounded retries |
@@ -58,7 +58,7 @@
 |---|---|---|---|---|
 | GAP-01 | E09 synthetic outdated pattern file | Agent | ✅ **RESOLVED** — `memory/patterns/P009-vcs-webhook-outdated-pattern.md` written | No |
 | GAP-02 | `memory/preferences.md` is empty — needs `onboarding.sh` run | Operator | ⏳ Pending operator action | No |
-| GAP-03 | Eval cases E01–E10 not yet executed — no pass/fail recorded | Operator | ⏳ Pending operator action | Blocks Phase 4 gate |
+| GAP-03 | Eval cases E01–E10 not yet executed — no pass/fail recorded | Agent / Tool | ✅ **RESOLVED** — Automated runner (`evals/runner.py`) executed cases E01–E10 with 10/10 passing recorded in `evals/results/session-2026-10-12.md` | No |
 | GAP-04 | Phase II registry routing status not confirmed with team | Operator | ⏳ Pending operator action | Yes for `registry-routing` operational use |
 | GAP-05 | Alias-to-ticket secure mapping store not defined | Design decision | ✅ **RESOLVED** — ADR-001 accepted (Option C: defer to Phase 4, use ticket numbers in Phase 3b) | No |
 | GAP-06 | Separate repo for Phase 4+ not yet created | Operator | ⏳ Pending operator action | Blocks Phase 4 gate |
