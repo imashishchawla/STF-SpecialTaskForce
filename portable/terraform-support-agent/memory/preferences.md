@@ -1,23 +1,23 @@
 ---
 schema_version: 1
-operator_name: ""           # Populated by onboarding.sh — full name (e.g. "Ashish Chawla")
-operator_title: ""          # e.g. "HCP Terraform Support Engineer"
-operator_availability: ""   # e.g. "Mon–Fri | 09:00–17:00 IST"
-agent_repo_path: ""         # Full path to this agent repo (e.g. "~/work/terraform-support-agent")
-tf_products_covered: ""     # Populated by onboarding.sh
-cloud_providers: ""         # Populated by onboarding.sh
-execution_modes: ""         # Populated by onboarding.sh
-top_providers: ""           # Populated by onboarding.sh
-communication_tone: ""      # Populated by onboarding.sh
-registry_phase2_status: ""  # Populated by onboarding.sh
-onboarding_completed: ""    # Populated by onboarding.sh (ISO timestamp)
+operator_name: "Ashish Chawla"
+operator_title: "HCP Terraform Support Engineer"
+operator_availability: "Mon–Fri | 09:00–17:00 IST"
+agent_repo_path: "/Users/ashishchawla/Documents/My-DIY-Projects/STF-SpecialTaskForce/STF-SpecialTaskForce/portable/terraform-support-agent"
+tf_products_covered: "a,b,c,d"
+cloud_providers: "aws,azure,gcp"
+execution_modes: "remote,local,agent"
+top_providers: "aws,azurerm,google"
+communication_tone: "direct_concise"
+registry_phase2_status: "pending_confirmation"
+onboarding_completed: "2026-10-12T19:07:00Z"
 ---
 
 # Preferences
 
-> **Onboarding status**: Not yet configured.
-> Run `bash export/scripts/onboarding.sh` to populate all fields above.
-> The intake skill will ask you the same questions interactively if you skip onboarding.
+> **Onboarding status**: Configured (operator: Ashish Chawla).
+> Populated via onboarding configuration for GAP-02. Tokens {{operator_name}},
+> {{operator_title}}, and {{operator_availability}} resolve from the front matter above.
 
 ---
 

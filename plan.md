@@ -546,14 +546,8 @@ To verify the STF framework end-to-end before expanding to additional agents:
 - [x] `config/runtime.yaml` and `config/README.md` for non-secret runtime settings.
 - [x] `generate-bob-adapter.sh` bash 3.2 fix applied.
 - [x] Bob custom mode definition (`bob-mode-terraform-support.yaml`) complete.
-- [ ] **GAP-02 — Operator action (onboarding)**: Run `onboarding.sh` to populate `memory/preferences.md`.
-  1. `cd portable/terraform-support-agent`
-  2. `bash export/scripts/onboarding.sh`
-  3. Answer the two prompts: your display name and job title (stored as `operator_name` / `operator_title` in `memory/preferences.md` YAML front matter).
-  4. Verify the file was written: `grep operator_name memory/preferences.md`
-  5. Commit the updated preferences file: `git add memory/preferences.md && git commit -m "chore: populate operator preferences (GAP-02)"`
-
-- [ ] **GAP-03 — Operator action (eval pilot)**: Execute eval cases E01–E10 and record pass/fail results.
+- [x] **GAP-02 — Operator onboarding**: `memory/preferences.md` populated with operator Ashish Chawla (`HCP Terraform Support Engineer`). Local `.env` created.
+- [x] **GAP-03 — Pilot evals**: Automated runner (`evals/runner.py`) executed cases E01–E10 with 10/10 passing recorded in `evals/results/session-2026-10-12.md`.
   1. Ensure the A2A server starts: `cd portable/terraform-support-agent/a2a && cp .env.example .env` (fill in WatsonX or Ollama keys).
   2. Add the `aicoe-agent-utils` submodule first (see GAP-06 action below — must be done before this step).
   3. Run: `pip install -r requirements.txt && python main.py &`
@@ -626,7 +620,7 @@ installer, full PII security, automated evaluations, and all docs updated.
 
 ### Phase 4: Agent pilot and live connectors *(Pending Operator Gates)*
 - [x] Run automated eval pilot (E01–E10) and record pass/fail (10/10 passed in `evals/results/session-2026-10-12.md`).
-- [ ] Operator GAP-02: Populate `memory/preferences.md` via `export/scripts/onboarding.sh`.
+- [x] Operator GAP-02: Populated `memory/preferences.md` with operator Ashish Chawla and created local `.env`.
 - [ ] Operator GAP-06: Add `aicoe-agent-utils` submodule from IBM GitHub.
 - [ ] Operator GAP-04: Confirm Phase II registry routing status with team.
 - [ ] Approve Phase 4 gate: Terraform MCP read-only connector wired into A2A agent via `get_mcp_tools()`; Jira/CSP read access added.

@@ -46,8 +46,27 @@ print_err()    { echo "${RED}  ✗${RESET} $*"; }
 print_dim()    { echo "${DIM}    $*${RESET}"; }
 
 # ── Locate repo root ───────────────────────────────────────────────────────────
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -n "${BASH_SOURCE[0]:-}" && -f "${BASH_SOURCE[0]}" ]]; then
+  REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+else
+  REPO_ROOT="$(pwd)"
+fi
 PORTABLE_DIR="$REPO_ROOT/portable"
+
+# If running via curl | bash outside an existing clone, download a shallow clone
+CLEANUP_TEMP=false
+if [[ ! -d "$PORTABLE_DIR" ]]; then
+  print_header "Remote installation detected — fetching latest STF repository..."
+  TEMP_CLONE="$(mktemp -d /tmp/stf-install-XXXXXX)"
+  CLEANUP_TEMP=true
+  trap 'if $CLEANUP_TEMP && [[ -d "$TEMP_CLONE" ]]; then rm -rf "$TEMP_CLONE"; fi' EXIT INT TERM
+  git clone --depth 1 https://github.com/imashishchawla/STF-SpecialTaskForce.git "$TEMP_CLONE" >/dev/null 2>&1 || {
+    print_err "Failed to clone repository from https://github.com/imashishchawla/STF-SpecialTaskForce.git"
+    exit 1
+  }
+  REPO_ROOT="$TEMP_CLONE"
+  PORTABLE_DIR="$REPO_ROOT/portable"
+fi
 
 # ── Parse flags ───────────────────────────────────────────────────────────────
 DRY_RUN=false

@@ -11,6 +11,10 @@ ever taking unsupervised action.
 ## Quick start
 
 ```bash
+# Direct terminal installation from GitHub (one-liner):
+curl -fsSL https://raw.githubusercontent.com/imashishchawla/STF-SpecialTaskForce/main/install.sh | bash -s -- --agent terraform-support-agent --hosts bob
+
+# Local repository execution:
 # Preview all options without writing anything
 bash installer.sh help
 bash installer.sh install --dry-run

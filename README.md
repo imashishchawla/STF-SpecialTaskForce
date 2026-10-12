@@ -4,6 +4,25 @@ STF is a repository for designing portable, human-governed agents. The first age
 
 Start with [plan.md](plan.md) for the STF-wide architecture and roadmap. [AGENTS.md](AGENTS.md) gives contributor rules, and [security](docs/security.md) records approval boundaries. The Terraform agent's [active priority plan](portable/terraform-support-agent/plan/portability-readiness-plan.md) distinguishes implemented files from unverified installer and runtime behavior.
 
+## Quick Start — Direct Terminal Installation
+
+Install agents directly from your terminal using the GitHub installer URL:
+
+```bash
+# Preview installation (dry-run — no files written):
+curl -fsSL https://raw.githubusercontent.com/imashishchawla/STF-SpecialTaskForce/main/install.sh | bash -s -- --agent terraform-support-agent --hosts bob --dry-run
+
+# Direct install to host application (e.g. IBM Bob):
+curl -fsSL https://raw.githubusercontent.com/imashishchawla/STF-SpecialTaskForce/main/install.sh | bash -s -- --agent terraform-support-agent --hosts bob
+```
+
+Or run interactively from a local clone:
+```bash
+git clone https://github.com/imashishchawla/STF-SpecialTaskForce.git
+cd STF-SpecialTaskForce
+bash install.sh
+```
+
 ## Repository map
 
 | Location | Purpose | Current state |

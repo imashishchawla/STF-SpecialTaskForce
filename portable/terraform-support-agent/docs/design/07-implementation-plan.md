@@ -57,7 +57,7 @@
 | ID | Gap | Owner | Status | Blocking? |
 |---|---|---|---|---|
 | GAP-01 | E09 synthetic outdated pattern file | Agent | ✅ **RESOLVED** — `memory/patterns/P009-vcs-webhook-outdated-pattern.md` written | No |
-| GAP-02 | `memory/preferences.md` is empty — needs `onboarding.sh` run | Operator | ⏳ Pending operator action | No |
+| GAP-02 | `memory/preferences.md` is empty — needs `onboarding.sh` run | Operator | ✅ **RESOLVED** — Populated with operator Ashish Chawla and local `.env` created | No |
 | GAP-03 | Eval cases E01–E10 not yet executed — no pass/fail recorded | Agent / Tool | ✅ **RESOLVED** — Automated runner (`evals/runner.py`) executed cases E01–E10 with 10/10 passing recorded in `evals/results/session-2026-10-12.md` | No |
 | GAP-04 | Phase II registry routing status not confirmed with team | Operator | ⏳ Pending operator action | Yes for `registry-routing` operational use |
 | GAP-05 | Alias-to-ticket secure mapping store not defined | Design decision | ✅ **RESOLVED** — ADR-001 accepted (Option C: defer to Phase 4, use ticket numbers in Phase 3b) | No |
