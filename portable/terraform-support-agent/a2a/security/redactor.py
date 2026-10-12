@@ -23,7 +23,7 @@ XCVBH_PATTERN = re.compile(r"\bXCVBH-[a-f0-9]{8}-\d{4}\b")
 # Credential patterns (Tier: Encrypted)
 RE_AWS_KEY = re.compile(r"\b(AKIA|ASIA|ABIA|ACCA)[A-Z0-9]{16}\b")
 RE_GITHUB_PAT = re.compile(r"\b(ghp_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9_]{82})\b")
-RE_TFC_TOKEN = re.compile(r"\batlasv1\.[a-zA-Z0-9_-]{40,}\b")
+RE_TFC_TOKEN = re.compile(r"\b(?:atlasv1\.[a-zA-Z0-9_-]{32,}|TFE:[a-zA-Z0-9_-]{16,}|(?:ws|org|user|run|app)-[a-zA-Z0-9]{14,})\b")
 RE_PEM_PRIVATE_KEY = re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----")
 
 # PII / Infrastructure patterns (Tier: Redacted)

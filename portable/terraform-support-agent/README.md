@@ -1,6 +1,6 @@
 # Terraform Support Agent
 
-> **Status**: `v0.1.0-draft`; Phase 3b consolidation and installer remediation are active. P1 installer rewrite complete (`6338fd0`). No portable install or A2A runtime has been accepted yet.
+> **Status**: `v0.1.0-draft`; Phase 3b consolidation and installer remediation active. P0 (consolidation), P1 (installer rewrite), and P2 (A2A security package) complete. P4 documentation & eval suite active.
 
 A Bob-based agent that helps a HashiCorp / IBM HCP Terraform support engineer
 diagnose cases, draft communications, and capture resolved patterns — without
@@ -89,7 +89,9 @@ terraform-support-agent/
 │   ├── templates/        ← 9 communication templates
 │   ├── mcp/              ← terraform-mcp.yaml (enabled: false until Phase 4)
 │   └── scripts/          ← onboarding.sh (manual), generate-bob-adapter.sh
-├── a2a/                  ← optional A2A scaffold; security module pending (P2)
+├── a2a/                  ← optional A2A scaffold; P2 security package implemented
+│   ├── security/         ← PII redaction, AES-GCM session vault, SignedEnvelope validation, bind guard
+│   └── tests/            ← 18 passing offline unit tests
 ├── memory/
 │   ├── preferences.md    ← operator config (populated by installer/onboarding)
 │   ├── patterns/         ← confirmed issue patterns (written after real cases)
@@ -99,9 +101,11 @@ terraform-support-agent/
 ├── sources/
 │   └── catalog.md        ← 40+ curated sources, priority by claim type
 ├── evals/
-│   └── cases/            ← 11 sanitized cases (E01–E11); pilot results pending
+│   ├── runner.py         ← automated eval runner for cases E01–E10
+│   ├── cases/            ← 11 sanitized cases (E01–E11)
+│   └── results/          ← session result records
 └── plan/
-    ├── portability-readiness-plan.md ← active priorities (P1 installer ✅)
+    ├── portability-readiness-plan.md ← active priorities (P0 ✅, P1 ✅, P2 ✅, P4 🔄)
     └── archive/          ← completed original plan, prompt, PDF, agent history
 ```
 

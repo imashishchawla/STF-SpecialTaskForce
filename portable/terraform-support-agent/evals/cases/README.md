@@ -39,6 +39,16 @@ Each case file contains:
 
 ## Running a case
 
+### Automated runner (Phase 3b runner)
+```bash
+cd portable/terraform-support-agent/evals
+python3 runner.py --all
+# Or evaluate a specific case:
+python3 runner.py --case E08
+```
+Results are saved to `evals/results/session-YYYY-MM-DD.md`.
+
+### Manual Bob interactive run
 1. Copy the case's Input section into a new Bob session
 2. Invoke the coordinator with that input
 3. Check each acceptance criterion against the actual output
