@@ -79,6 +79,19 @@ class TerraformSupportAgent(BaseLangGraphAgent):
             "phase": "3b",
         }
 
+    def __init__(self, **kwargs) -> None:
+        super().__init__(**kwargs)
+        from security.redactor import RedactionPipeline
+        self._redactor = RedactionPipeline()
+
+    def redact_evidence(self, text: str):
+        """Sanitize incoming customer case evidence before processing."""
+        return self._redactor.redact_text(text)
+
+    def detokenize_for_display(self, text: str) -> str:
+        """Operator display only: decrypt XCVBH tokens back to plain text."""
+        return self._redactor.vault.detokenize_text(text)
+
     def get_looking_up_info_msg(self) -> str:
         return "Reviewing case evidence and approved sources…"
 

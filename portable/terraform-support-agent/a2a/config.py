@@ -28,7 +28,7 @@ OLLAMA_MODEL: str = os.environ.get("OLLAMA_MODEL", "llama3.3")
 
 # ── A2A server ─────────────────────────────────────────────────────────────────
 
-HOST: str = os.environ.get("HOST", "0.0.0.0")
+HOST: str = os.environ.get("HOST", "127.0.0.1")
 PORT: int = int(os.environ.get("PORT", "8080"))
 
 # ── Auth (disabled by default for Phase 3b local use) ─────────────────────────

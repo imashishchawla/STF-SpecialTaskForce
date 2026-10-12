@@ -1,13 +1,40 @@
-# A2A security module
+# A2A Security Package
 
-**Status: design only.** This directory has no enforcement code yet. The current A2A scaffold must not receive real customer cases or be exposed beyond an isolated test. The [active plan](../../plan/portability-readiness-plan.md) makes this module a required gate before A2A startup.
+**Status: Implemented (Phase 3b — Priority P2 Complete).**  
+This package provides security boundaries, PII redaction, cryptographic local storage, wire format verification, and network exposure protection for the Terraform Support Agent A2A server.
 
-## Required boundary
+---
 
-- Validate the request identity, schema, size, and correlation before passing content to the coordinator.
-- Detect and replace sensitive strings before any LLM call using the XCVBH scheme in [design 08](../../docs/design/08-pii-protection-and-encryption.md). Store mappings only in a local encrypted vault outside the exported bundle; never put vault values in model context or messages.
-- Bridge A2A messages to the repository's separate SignedEnvelope contract only after its [design 09](../../docs/design/09-inter-agent-wire-format.md) checks pass. A2A transport does not itself enforce STF policy.
-- Bind to `127.0.0.1` by default. Reject non-loopback startup unless authentication, transport protection, and network policy are explicitly configured and reviewed.
-- Keep MCP, case writes, external messages, Terraform execution, and memory promotion disabled until their separate gates pass.
+## 1. Modules Overview
 
-The planned package should contain focused redaction/vault, inbound-validation, and bind/auth modules with tests in `a2a/tests/security/`. Startup must fail closed when a required check is missing. Do not claim that the current `main.py` or installer already provides these controls.
+| Module | Purpose | Governing Spec |
+|---|---|---|
+| `vault.py` | Manages per-session AES-256-GCM encrypted vaults (`vault/<session_ulid>.jsonl`). Stores encrypted token mappings with 32-byte session salts. Provides display-time detokenization for operators. | [Design Doc 08](../../docs/design/08-pii-protection-and-encryption.md) |
+| `redactor.py` | Two-tier scanner (unstructured text regex + dictionary keys) substituting sensitive values with non-guessable `XCVBH-<8char>-<counter>` tokens before prompt assembly or LLM invocation. | [Design Doc 08](../../docs/design/08-pii-protection-and-encryption.md) |
+| `wire_validator.py` | Validates incoming messages wrapped in `SignedEnvelope` contracts: schema conformance, message size bounds, TTL freshness, and SHA-256 canonical payload hash integrity. | [Design Doc 09](../../docs/design/09-inter-agent-wire-format.md) |
+| `bind_guard.py` | Enforces fail-closed network host binding rules. Fails server startup immediately if configured to bind to `0.0.0.0` or non-loopback interfaces without client/user authentication enabled. | [Portability Plan](../../plan/portability-readiness-plan.md) §4 |
+
+---
+
+## 2. Security Boundaries & Guardrails
+
+1. **Model Context Protection:** Sensitive raw customer data (emails, IPs, tokens, AWS keys, ARNs, passwords) is never passed into the LLM context. Only synthetic `XCVBH-*` tokens are sent.
+2. **Key Storage:** The master vault key lives in `vault/.key` (chmod 600) or `STF_VAULT_KEY` environment variable. The `vault/` directory is strictly ignored by version control.
+3. **Loopback by Default:** The A2A server defaults to `127.0.0.1`. Remote network binding requires explicit activation of client authentication (`ENABLE_CLIENT_AUTH=true`) or user authentication (`ENABLE_USER_AUTH=true`).
+4. **Wire Format Integrity:** Payloads crossing the agent boundary must match their declared canonical payload hash and be within their time-to-live (`ttl_ms`) budget.
+5. **No Live Side Effects:** MCP connectors remain disabled (`enabled: false`) until Phase 4 allowlist reviews.
+
+---
+
+## 3. Testing & Verification
+
+Comprehensive offline unit tests are located in `a2a/tests/security/`:
+- `test_redactor.py`: Token format, session determinism, cross-session salt isolation, idempotency, credential detection, and detokenization.
+- `test_wire_validator.py`: Envelope schema checks, TTL expiration rejection, canonical hash verification, and message size limits.
+- `test_bind_guard.py`: Loopback verification and fail-closed rejection of unauthenticated non-loopback bindings.
+
+Run the test suite:
+```bash
+cd portable/terraform-support-agent/a2a
+PYTHONPATH=. python3 -m unittest discover -s tests -t . -v
+```

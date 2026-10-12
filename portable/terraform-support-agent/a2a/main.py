@@ -22,6 +22,7 @@ load_dotenv()
 import config  # noqa: E402  (after load_dotenv)
 from a2a_factory import TerraformAgentFactory
 from aicoe_agent_utils.a2a.server import start_a2a_server
+from security import verify_bind_address_or_fail
 
 
 @click.command()
@@ -31,6 +32,13 @@ async def main(host: str | None, port: int | None) -> None:
     """Start the Terraform Support A2A server."""
     resolved_host = host or config.HOST
     resolved_port = port or config.PORT
+
+    # Enforce loopback binding and authentication rules (fails closed if misconfigured)
+    verify_bind_address_or_fail(
+        resolved_host,
+        enable_client_auth=config.ENABLE_CLIENT_AUTH,
+        enable_user_auth=config.ENABLE_USER_AUTH,
+    )
 
     factory = TerraformAgentFactory()
     agent = factory.make_agent()
