@@ -328,12 +328,12 @@ Before the operator approves the design and authorizes Phase 3:
 - [x] `install.sh` Phase 3 implementation complete — bash 3.2-compatible, actual copy logic, Bob adapter integration, manifest output
 - [x] `config/runtime.yaml` and `config/README.md` created
 - [x] Bob skill front matter format verified — confirmed from `~/.bob/skills/` inspection; `generate-bob-adapter.sh` patched
-- [ ] Phase II registry process status verified with team — **OPEN: confirm with manager (GAP-04)**
+- [ ] Phase II registry process status verified with team — **DEFERRED: to be planned per issue on the basis of process (GAP-04)**
 - [ ] Alias-to-ticket mapping approach agreed — **OPEN: no secure mapping store defined yet (GAP-05)**
 - [x] Evaluation pilot case set agreed — 10 cases built (E01–E10 all ✅ Ready)
-- [ ] Pilot evals E01–E10 executed — **PENDING: operator must run (GAP-03)**
-- [ ] `memory/preferences.md` populated — **PENDING: operator must run `onboarding.sh` (GAP-02)**
-- [ ] Repository location for the terraform agent repo agreed — **OPEN: still inside STF repo; separate repo for Phase 4+ (GAP-06)**
+- [x] Pilot evals E01–E10 executed — 10/10 passed in `evals/results/session-2026-10-12.md`
+- [x] `memory/preferences.md` populated — Ashish Chawla / HCP Terraform Support Engineer (GAP-02)
+- [x] A2A submodule linked — `aicoe-agent-utils` v0.7.45 linked at root `.gitmodules` (GAP-06)
 
 ### Decisions recorded (from design sessions)
 

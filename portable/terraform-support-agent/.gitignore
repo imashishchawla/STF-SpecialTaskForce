@@ -31,7 +31,8 @@ stf.db
 
 # ── A2A optional component ───────────────────────────────────────────────────
 a2a/.venv/
-a2a/lib/
+a2a/lib/*
+!a2a/lib/aicoe-agent-utils
 a2a/__pycache__/
 a2a/**/__pycache__/
 a2a/*.pyc

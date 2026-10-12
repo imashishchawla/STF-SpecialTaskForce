@@ -8,7 +8,7 @@ This directory contains an **optional, unverified** Agent2Agent server scaffold 
 |---|---|---|
 | `main.py`, `a2a_factory.py`, `terraform_agent.py` | Server entry, factory, coordinator prompt | Syntax checked; framework API and startup unverified |
 | `config.py`, `.env.example` | Provider and server configuration | Example is tracked; safe defaults still require review |
-| `requirements.txt` | Python dependencies | Depends on an unavailable local `lib/aicoe-agent-utils` path |
+| `requirements.txt` | Python dependencies | Linked via git submodule `lib/aicoe-agent-utils` (IBM internal) |
 | `test_client.py` | One manual streaming smoke prompt | Requires a running server |
 | `security/README.md` | Planned security boundary | Implementation is pending |
 

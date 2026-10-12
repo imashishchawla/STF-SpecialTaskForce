@@ -621,8 +621,8 @@ installer, full PII security, automated evaluations, and all docs updated.
 ### Phase 4: Agent pilot and live connectors *(Pending Operator Gates)*
 - [x] Run automated eval pilot (E01–E10) and record pass/fail (10/10 passed in `evals/results/session-2026-10-12.md`).
 - [x] Operator GAP-02: Populated `memory/preferences.md` with operator Ashish Chawla and created local `.env`.
-- [ ] Operator GAP-06: Add `aicoe-agent-utils` submodule from IBM GitHub.
-- [ ] Operator GAP-04: Confirm Phase II registry routing status with team.
+- [x] Operator GAP-06: Added `aicoe-agent-utils` submodule from IBM GitHub (`portable/terraform-support-agent/a2a/lib/aicoe-agent-utils`).
+- [ ] Operator GAP-04: Confirm Phase II registry routing status (deferred to subsequent per-issue process workflow review).
 - [ ] Approve Phase 4 gate: Terraform MCP read-only connector wired into A2A agent via `get_mcp_tools()`; Jira/CSP read access added.
 - [ ] Enable `feature_flags.terraform_mcp_connector: true` in `config/runtime.yaml` after allowlist review.
 

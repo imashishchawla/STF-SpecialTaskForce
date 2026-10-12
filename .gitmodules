@@ -1,0 +1,3 @@
+[submodule "portable/terraform-support-agent/a2a/lib/aicoe-agent-utils"]
+	path = portable/terraform-support-agent/a2a/lib/aicoe-agent-utils
+	url = https://github.ibm.com/AI-CoE/aicoe-agent-utils.git
