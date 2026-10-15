@@ -6,3 +6,6 @@
 /.trace/data/
 /backups/
 /secrets/
+**/.profile/*
+!**/.profile/.keep
+

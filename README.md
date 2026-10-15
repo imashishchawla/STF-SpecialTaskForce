@@ -30,6 +30,7 @@ bash install.sh
 | `docs/` | Shared STF architecture, workflows, and security | Specifications |
 | `portable/schemas/` | Shared bundle, agent, task, result, and trace contracts | Draft schemas |
 | `portable/terraform-support-agent/` | Terraform agent source, optional A2A scaffold, installer, evaluations, design, and archived inputs | Phase 3b remediation active |
+| `portable/Visa-Agent/` | Australian Skilled Migration agent with native MCP server, AES-256 vault, and isolated `.profile/` | Active development |
 | `harness/`, `builder/`, `evals/` | Future mediation, builder, and platform-level evaluation interfaces | Design stubs |
 | `install.sh` | Generic host-skill installer | Has a live copy path; preview with `--dry-run` |
 

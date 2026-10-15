@@ -36,7 +36,7 @@ No repository-wide build system or test runner is configured. The Terraform agen
 - **PII protection (doc 08)** — all sensitive strings in case data are replaced with `XCVBH-<8char>-<counter>` tokens before any LLM call. Plain values live only in `vault/<session_ulid>.jsonl` (AES-256-GCM). Never load vault files into LLM context or pass them in any message envelope.
 - **Wire format (doc 09)** — agent messages are wrapped in a `SignedEnvelope` JSON with `env_version`, `msg_id`, `sent_at_ms`, `ttl_ms`, `from`, `to`, `msg_type`, `payload_hash`, and a `redaction_summary` (field names + token count — no vault path). `vault_ref` in `redaction_summary` is a local session ID, never the vault file path.
 - **Storage layout (doc 10)** — `vault/`, `audit/`, `metrics/`, `messages/` must be in `.gitignore` in `agent_repo_path`. `stf.db` is an index only — delete and rebuild without data loss. Source of truth is always the Markdown checkpoint or JSONL log file.
-- **`.memory/` writes require human curation** — agents propose, they do not commit, lessons or ADRs directly.
+- **Visa Agent profile isolation** — client checklists, roadmaps, fee schedules, CVs, and identity records must never be stored in the agent root directory (`portable/Visa-Agent/`). All case materials must reside strictly within `.profile/<client-name>/` (gitignored, 0700/0600 permissions, AES-256-GCM encrypted PII vault).
 - **`git reset --hard` and `git clean -fd` are explicitly prohibited as rollback** — use isolated branches, worktrees, or scoped patches only.
 
 ## Safety and data
@@ -60,6 +60,7 @@ No repository-wide build system or test runner is configured. The Terraform agen
 - `portable/terraform-support-agent/docs/design/08-pii-protection-and-encryption.md`: XCVBH token scheme, redaction pipeline, vault format, and de-tokenisation.
 - `portable/terraform-support-agent/docs/design/09-inter-agent-wire-format.md`: SignedEnvelope format, substitution, message types, TTL, and schema extension points.
 - `portable/terraform-support-agent/docs/design/10-storage-architecture.md`: flat-file layout, SQLite index, access control, and retention.
+- `portable/Visa-Agent/`: Australian General Skilled Migration agent — native MCP server, AES-256 PII vault, and isolated client profiles under `.profile/<client>/`.
 - `install.sh`: interactive CLI installer — selects agent, checks prerequisites, previews install plan. Non-interactive: `--agent <name> --hosts <list> [--dry-run]`.
 - `harness/` and `builder/`: future implementation interfaces (README stubs only — nothing implemented).
 - `.memory/decisions.md` and `.memory/lessons.md`: empty ADR and lesson registers (format in `plan.md §7.3`).

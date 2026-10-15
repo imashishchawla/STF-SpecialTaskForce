@@ -1,0 +1,3 @@
+[agents.visa_agent]
+description = "Local Australian visa research and client profile coordinator. Reads only the selected .profile case and checks current official sources."
+config_file = "../.agents/visa_agent.toml"

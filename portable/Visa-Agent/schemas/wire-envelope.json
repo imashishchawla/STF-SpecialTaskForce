@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InterAgentSignedEnvelope",
+  "description": "Structured JSON message envelope for inter-agent communication and local document pointer passing",
+  "type": "object",
+  "required": [
+    "env_version",
+    "msg_id",
+    "from",
+    "to",
+    "sent_at",
+    "ttl_ms",
+    "msg_type",
+    "payload",
+    "document_references",
+    "payload_hash"
+  ],
+  "properties": {
+    "env_version": {
+      "type": "integer",
+      "enum": [1]
+    },
+    "msg_id": {
+      "type": "string",
+      "pattern": "^msg_[a-zA-Z0-9_-]+$"
+    },
+    "from": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "to": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ttl_ms": {
+      "type": "integer",
+      "minimum": 1000,
+      "maximum": 300000
+    },
+    "msg_type": {
+      "type": "string",
+      "enum": ["task", "result", "ack", "nack"]
+    },
+    "payload": {
+      "type": "object"
+    },
+    "document_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["doc_id", "doc_type", "local_path", "sha256"],
+        "properties": {
+          "doc_id": {
+            "type": "string"
+          },
+          "doc_type": {
+            "type": "string"
+          },
+          "local_path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "redaction_summary": {
+      "type": "object",
+      "required": ["token_count", "fields_redacted", "vault_ref"],
+      "properties": {
+        "token_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fields_redacted": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "vault_ref": {
+          "type": "string"
+        }
+      }
+    },
+    "payload_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    }
+  }
+}

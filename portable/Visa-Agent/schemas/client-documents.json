@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:local-agent:client-documents:1.0.0",
+  "title": "Private client and source-dated document inputs",
+  "schema_version": "1.0.0",
+  "$defs": {
+    "client_input": {
+      "type": "object",
+      "required": ["given_names", "family_name", "other_names", "name_basis", "provenance", "expected_client_version"],
+      "properties": {
+        "given_names": {"type": "string", "minLength": 1, "maxLength": 120},
+        "family_name": {"type": "string", "minLength": 1, "maxLength": 120},
+        "other_names": {"type": "array", "maxItems": 12, "items": {"type": "string", "minLength": 1, "maxLength": 120}},
+        "name_basis": {"enum": ["candidate_reported", "passport_seen", "other_document_seen"]},
+        "provenance": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "expected_client_version": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "document_source": {
+      "type": "object",
+      "required": ["id", "url", "title", "accessed_at", "published_at", "content"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$"},
+        "url": {"type": "string", "format": "uri"},
+        "title": {"type": "string", "minLength": 1, "maxLength": 300},
+        "accessed_at": {"type": "string", "format": "date-time"},
+        "published_at": {"oneOf": [{"type": "string", "format": "date-time"}, {"type": "null"}]},
+        "content": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "requirement": {
+      "type": "object",
+      "required": ["id", "title", "source_id", "source_excerpt", "necessity", "preparation_note", "alternatives"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$"},
+        "title": {"type": "string", "minLength": 1, "maxLength": 150},
+        "source_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$"},
+        "source_excerpt": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "necessity": {"enum": ["required", "conditional", "unknown"]},
+        "preparation_note": {"type": "string", "maxLength": 2000},
+        "alternatives": {"type": "array", "maxItems": 10, "items": {
+          "type": "object",
+          "required": ["text", "source_id", "source_excerpt"],
+          "properties": {
+            "text": {"type": "string", "minLength": 1, "maxLength": 2000},
+            "source_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$"},
+            "source_excerpt": {"type": "string", "minLength": 1, "maxLength": 2000}
+          },
+          "additionalProperties": false
+        }}
+      },
+      "additionalProperties": false
+    },
+    "requirements_input": {
+      "type": "object",
+      "required": ["route", "expected_list_version", "sources", "items", "coverage_note"],
+      "properties": {
+        "route": {"type": "string", "pattern": "^[0-9]{3}:[A-Za-z0-9_-]{1,48}$"},
+        "expected_list_version": {"type": "integer", "minimum": 0},
+        "sources": {"type": "array", "minItems": 1, "maxItems": 30, "items": {"$ref": "#/$defs/document_source"}},
+        "items": {"type": "array", "maxItems": 200, "items": {"$ref": "#/$defs/requirement"}},
+        "coverage_note": {"type": "string", "minLength": 1, "maxLength": 2000}
+      },
+      "additionalProperties": false
+    },
+    "document_input": {
+      "type": "object",
+      "required": ["route", "requirement_id", "path"],
+      "properties": {
+        "route": {"type": "string", "pattern": "^[0-9]{3}:[A-Za-z0-9_-]{1,48}$"},
+        "requirement_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$"},
+        "path": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "upload_record_input": {
+      "type": "object",
+      "required": ["route", "document_id", "uploaded_at", "evidence_note"],
+      "properties": {
+        "route": {"type": "string", "pattern": "^[0-9]{3}:[A-Za-z0-9_-]{1,48}$"},
+        "document_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$"},
+        "uploaded_at": {"type": "string", "format": "date-time"},
+        "evidence_note": {"type": "string", "minLength": 1, "maxLength": 2000}
+      },
+      "additionalProperties": false
+    }
+  }
+}

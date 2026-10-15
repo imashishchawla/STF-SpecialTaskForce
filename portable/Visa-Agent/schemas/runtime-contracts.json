@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:local-agent:contracts:1.0.0",
+  "title": "Local case record contract",
+  "schema_version": "1.0.0",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/fact"
+    },
+    {
+      "$ref": "#/$defs/source"
+    },
+    {
+      "$ref": "#/$defs/screen"
+    }
+  ],
+  "$defs": {
+    "fact": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "case_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "provenance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "value": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "verification": {
+          "enum": [
+            "candidate_reported",
+            "document_supported",
+            "disputed",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "case_id",
+        "revision",
+        "schema_version",
+        "provenance",
+        "created_at",
+        "name",
+        "value",
+        "verification"
+      ],
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "case_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "provenance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "accessed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_status": {
+          "enum": [
+            "current",
+            "unavailable",
+            "conflicting",
+            "stale"
+          ]
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "open_status": {
+          "enum": [
+            "open",
+            "closed",
+            "transition_only",
+            "unknown"
+          ]
+        },
+        "open_rule": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "case_id",
+        "revision",
+        "schema_version",
+        "provenance",
+        "created_at",
+        "url",
+        "title",
+        "rule",
+        "content_hash",
+        "accessed_at",
+        "source_status",
+        "scope",
+        "open_status",
+        "open_rule"
+      ],
+      "additionalProperties": false
+    },
+    "screen": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "case_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "provenance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "subclass": {
+          "type": "string",
+          "pattern": "^[0-9]{3}$"
+        },
+        "stream": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fit": {
+          "enum": [
+            "potential_fit",
+            "conditional",
+            "excluded",
+            "unresolved",
+            "not_assessed"
+          ]
+        },
+        "source_status": {
+          "enum": [
+            "current",
+            "unavailable",
+            "conflicting",
+            "stale"
+          ]
+        },
+        "open_status": {
+          "enum": [
+            "open",
+            "closed",
+            "transition_only",
+            "unknown"
+          ]
+        },
+        "source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,64}$"
+          }
+        },
+        "fact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,64}$"
+          }
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "gates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/gate"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "case_id",
+        "revision",
+        "schema_version",
+        "provenance",
+        "created_at",
+        "subclass",
+        "stream",
+        "fit",
+        "source_status",
+        "open_status",
+        "source_ids",
+        "fact_ids",
+        "reason",
+        "gaps",
+        "gates"
+      ],
+      "additionalProperties": false
+    },
+    "gate": {
+      "type": "object",
+      "properties": {
+        "fact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "source_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "operator": {
+          "enum": [
+            "eq",
+            "min",
+            "max"
+          ]
+        },
+        "value": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "review_status": {
+          "enum": [
+            "unreviewed",
+            "qualified_human_confirmed"
+          ]
+        },
+        "reviewer": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "fact_id",
+        "source_id",
+        "operator",
+        "value",
+        "rule",
+        "review_status",
+        "reviewer"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

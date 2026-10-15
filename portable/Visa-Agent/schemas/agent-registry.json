@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AgentRegistry",
+  "description": "Catalog of registered agent identities and role boundaries in Visa Agent",
+  "type": "object",
+  "required": ["registry_version", "agents"],
+  "properties": {
+    "registry_version": {
+      "type": "string",
+      "enum": ["1.0.0"]
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["agent_id", "role", "description", "entry_file", "allowed_destinations"],
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+$"
+          },
+          "role": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "entry_file": {
+            "type": "string"
+          },
+          "allowed_destinations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
