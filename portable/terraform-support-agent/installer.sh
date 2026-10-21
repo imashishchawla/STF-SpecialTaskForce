@@ -359,6 +359,22 @@ run_core_install() {
   fi
   ok "Agent root: $AGENT_ROOT"
 
+  # Initialize only neutral configuration; never replace operator answers.
+  local prefs="$AGENT_ROOT/memory/preferences.md"
+  local prefs_template="$AGENT_ROOT/export/templates/preferences.example.md"
+  if [[ ! -f "$prefs" ]]; then
+    if [[ ! -f "$prefs_template" ]]; then
+      err "Missing blank preferences template: $prefs_template"
+      exit 1
+    fi
+    dry_exec "Create private memory directory" -- mkdir -p "$AGENT_ROOT/memory"
+    if $DRY_RUN; then
+      dryline "Would create private blank preferences: $prefs (0600)"
+    else
+      (umask 077; cp "$prefs_template" "$prefs"; chmod 600 "$prefs")
+    fi
+  fi
+
   # 2. Generate Bob skill adapters
   heading "Bob skill adapters"
   local adapter_script="$AGENT_ROOT/export/scripts/generate-bob-adapter.sh"

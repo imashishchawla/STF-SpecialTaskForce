@@ -157,7 +157,7 @@ for src_file in "$SOURCE_DIR"/*.md; do
   # Skip files not in our metadata map
   if ! _in_map "$src_basename"; then
     echo -e "  ${YELLOW}SKIP${RESET} (not in metadata map): $src_basename"
-    ((skipped++))
+    skipped=$((skipped + 1))
     continue
   fi
 
@@ -190,7 +190,7 @@ metadata:
   version: "0.1.0-draft"
   display_name: ${display_name}
   short_description: ${short_desc}
-  generated_from: ${src_file}
+  generated_from: export/skills/${src_basename}
   generated_at: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
 ---
 FRONTMATTER
@@ -201,7 +201,7 @@ FRONTMATTER
   } > "$skill_target_file"
 
   echo -e "  ${GREEN}✓${RESET} $skill_target_dir/"
-  ((generated++))
+  generated=$((generated + 1))
 done
 
 echo ""

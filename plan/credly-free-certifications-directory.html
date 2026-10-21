@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Credly Certifications & Digital Badges Directory</title>
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --card-bg: #111827;
+      --card-border: #1f2937;
+      --card-hover: #1e293b;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent-cyan: #06b6d4;
+      --accent-blue: #3b82f6;
+      --accent-green: #10b981;
+      --accent-purple: #a855f7;
+      --accent-amber: #f59e0b;
+      --gradient-brand: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 30px 20px 80px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      padding: 6px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: rgba(6, 182, 212, 0.12);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 9999px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto 25px;
+    }
+
+    /* Stats Grid */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 35px;
+    }
+
+    .stat-card {
+      background: rgba(17, 24, 39, 0.7);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    /* Controls: Search and Filters */
+    .controls-wrapper {
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 35px;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 18px 14px 46px;
+      font-size: 1.05rem;
+      background: #0b0f19;
+      border: 1px solid #374151;
+      border-radius: 10px;
+      color: #fff;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1.2rem;
+    }
+
+    .filter-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .filter-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-right: 6px;
+    }
+
+    .filter-chip {
+      background: #1f2937;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .filter-chip:hover {
+      background: #374151;
+      color: #fff;
+    }
+
+    .filter-chip.active {
+      background: rgba(6, 182, 212, 0.18);
+      color: var(--accent-cyan);
+      border-color: rgba(6, 182, 212, 0.5);
+      font-weight: 600;
+    }
+
+    /* Cards Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #374151;
+      box-shadow: 0 12px 28px -10px rgba(0, 0, 0, 0.6);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .issuer-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #e5e7eb;
+      background: #1e293b;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent-cyan);
+    }
+
+    .mode-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .mode-anywhere {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-green);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .mode-proctored {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+
+    .category-label {
+      font-size: 0.78rem;
+      color: var(--accent-purple);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .card-desc {
+      color: #d1d5db;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .skill-chip {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      color: #94a3b8;
+      font-size: 0.74rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .meta-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 12px 14px;
+      background: #0b0f19;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      border: 1px solid #1a2234;
+    }
+
+    .meta-item strong {
+      display: block;
+      color: #e5e7eb;
+      font-size: 0.84rem;
+      margin-top: 2px;
+    }
+
+    .actions-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: #0284c7;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #0369a1;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #374151;
+      color: #e5e7eb;
+    }
+
+    .btn-outline:hover {
+      background: #1f2937;
+      border-color: #6b7280;
+    }
+
+    /* Empty state */
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .actions-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge-pill">100% Free • Verified Digital Badges</div>
+      <h1>Free Credly Certifications & Badges Directory</h1>
+      <p class="subtitle">
+        Curated portfolio of industry-recognized badges from AWS, Cisco, IBM, Tigera, Isovalent, Chainguard, Datadog, and Oracle.
+      </p>
+
+      <div class="stats-bar">
+        <div class="stat-card">
+          <div class="stat-number" id="statTotal">0</div>
+          <div class="stat-label">Total Free Badges</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statUnproctored">0</div>
+          <div class="stat-label">Take Anywhere (Unproctored)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statCategories">0</div>
+          <div class="stat-label">Tech Domains</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statOrgs">0</div>
+          <div class="stat-label">Issuing Organizations</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="controls-wrapper">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="searchInput" 
+          class="search-input" 
+          placeholder="Search by badge title, issuer (AWS, Cisco, IBM...), category, or skills (Kubernetes, Terraform, AI, eBPF)..." 
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-group" id="categoryFilters">
+          <span class="filter-title">Category:</span>
+          <button class="filter-chip active" data-cat="all">All Categories</button>
+          <button class="filter-chip" data-cat="AI & Generative AI">🤖 AI & GenAI</button>
+          <button class="filter-chip" data-cat="Kubernetes & Containers">☸️ Kubernetes & Containers</button>
+          <button class="filter-chip" data-cat="Cloud Infrastructure">☁️ Cloud & AWS</button>
+          <button class="filter-chip" data-cat="DevSecOps & Security">🛡️ DevSecOps & Security</button>
+          <button class="filter-chip" data-cat="Observability & Monitoring">📊 Observability</button>
+          <button class="filter-chip" data-cat="Networking & Systems">🌐 Networking & Systems</button>
+        </div>
+
+        <div class="filter-group" id="modeFilters">
+          <span class="filter-title">Exam Mode:</span>
+          <button class="filter-chip active" data-mode="all">All Modes</button>
+          <button class="filter-chip" data-mode="unproctored">🟢 Anywhere / Unproctored</button>
+          <button class="filter-chip" data-mode="proctored">🟡 Proctored / Center</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid" id="badgeGrid">
+      <!-- Cards rendered via JS -->
+    </div>
+  </div>
+
+  <script>
+    const BADGES = [{"title": "Chainguard AI/ML Guardian", "org": "Chainguard", "category": "AI & Generative AI", "proctored": false, "format": "100% Unproctored \u2022 Browser Reading & Quiz", "time": "1\u20132 hours", "passing": "Pass quiz", "skills": ["AI/ML Supply Chain", "Model Security", "SBOMs", "Cosign Signing", "Container Security"], "course_url": "https://edu.chainguard.dev/chainguard/chainguard-enforce/chainguard-academy/ai-ml-guardian/", "credly_url": "https://www.credly.com/org/chainguard/badge/chainguard-ai-ml-guardian", "desc": "Validates skills in securing machine learning pipelines, preventing model tampering, scanning Python/PyTorch containers for CVEs, and signing AI artifacts."}, {"title": "AWS Knowledge: Amazon Q Developer Fundamentals", "org": "Amazon Web Services", "category": "AI & Generative AI", "proctored": false, "format": "100% Unproctored \u2022 Online Course & Quiz", "time": "2\u20133 hours", "passing": "80% or higher", "skills": ["Amazon Q", "Generative AI", "Code Generation", "DevOps Automation", "Cloud Troubleshooting"], "course_url": "https://explore.skillbuilder.aws/learn/course/external/view/elearning/19504/amazon-q-developer-fundamentals", "credly_url": "https://www.credly.com/org/amazon-web-services/badge/aws-knowledge-amazon-q-developer-fundamentals-train", "desc": "Demonstrates proficiency using AWS generative AI coding assistant for automated code generation, bug fixing, infrastructure troubleshooting, and code modernization."}, {"title": "AWS Educate: Introduction to Generative AI", "org": "Amazon Web Services", "category": "AI & Generative AI", "proctored": false, "format": "100% Unproctored \u2022 Self-paced Assessment", "time": "1\u20132 hours", "passing": "70% or higher", "skills": ["Generative AI", "Foundation Models", "Prompt Engineering", "Amazon Bedrock", "SageMaker"], "course_url": "https://aws.amazon.com/education/awseducate/", "credly_url": "https://www.credly.com/org/amazon-web-services/badge/aws-educate-introduction-to-generative-ai", "desc": "Foundational knowledge of Generative AI principles, foundation model architectures, business applications, and AWS generative AI ecosystem."}, {"title": "Securing LLM and NLP APIs", "org": "APIsec University", "category": "AI & Generative AI", "proctored": false, "format": "100% Unproctored \u2022 Video + Assessment", "time": "1 hour", "passing": "Pass quiz", "skills": ["OWASP LLM Top 10", "Prompt Injection", "Data Leakage", "API Security", "AI Guardrails"], "course_url": "https://www.apisecuniversity.com/courses/securing-llm-and-nlp-apis", "credly_url": "https://www.credly.com/org/apisec-university/badge/securing-llm-and-nlp-apis-1-hour", "desc": "Specialized training addressing vulnerability vectors in generative AI applications, prompt injection mitigation, and securing large language model endpoints."}, {"title": "Introduction to Modern AI", "org": "Cisco", "category": "AI & Generative AI", "proctored": false, "format": "100% Unproctored \u2022 Self-paced Labs & Final Exam", "time": "6 hours", "passing": "70% on final exam", "skills": ["Generative AI", "LLMs", "Prompt Engineering", "Computer Vision", "Ethical AI"], "course_url": "https://skillsforall.com/course/introduction-to-modern-ai", "credly_url": "https://www.credly.com/org/cisco/badge/introduction-to-modern-ai", "desc": "Covers core machine learning paradigms, LLM behavior, multi-turn prompt engineering strategies, and practical application with modern generative tools."}, {"title": "Generative AI in Action", "org": "IBM SkillsBuild", "category": "AI & Generative AI", "proctored": false, "format": "100% Unproctored \u2022 Interactive Modules & Quizzes", "time": "3\u20134 hours", "passing": "Complete all modules & quizzes", "skills": ["Generative AI", "Transformer Models", "Business AI", "Prompt Design", "Ethics"], "course_url": "https://skillsbuild.org/learn", "credly_url": "https://www.credly.com/org/ibm-skillsbuild/badge/generative-ai-in-action", "desc": "Explores practical implementations of generative models across enterprise workflows, operational efficiency, and responsible deployment practices."}, {"title": "Artificial Intelligence Fundamentals", "org": "IBM SkillsBuild", "category": "AI & Generative AI", "proctored": false, "format": "100% Unproctored \u2022 Self-paced Course", "time": "4 hours", "passing": "Complete quizzes", "skills": ["Machine Learning", "Deep Learning", "Neural Networks", "NLP", "Computer Vision"], "course_url": "https://skillsbuild.org/learn", "credly_url": "https://www.credly.com/org/ibm-skillsbuild/badge/artificial-intelligence-fundamentals", "desc": "Comprehensive foundation in AI terminology, model types, classification systems, neural networks, and computer vision foundations."}, {"title": "Generative AI Overview for Project Managers", "org": "Project Management Institute (PMI)", "category": "AI & Generative AI", "proctored": false, "format": "100% Unproctored \u2022 Course & Knowledge Check", "time": "5 hours", "passing": "Complete assessment", "skills": ["Project Management", "GenAI Tools", "Workflow Automation", "Risk Management", "Productivity"], "course_url": "https://www.pmi.org/shop/p/elearning/generative-ai-overview-for-project-managers/el083", "credly_url": "https://www.credly.com/org/project-management-institute/badge/generative-ai-overview-for-project-managers", "desc": "Instructs technology and project leaders on applying generative AI to automate documentation, scheduling, sprint planning, and communication."}, {"title": "OCI Generative AI Certified Professional", "org": "Oracle", "category": "AI & Generative AI", "proctored": true, "format": "\ud83d\udfe1 Proctored Exam (Free during Oracle Promotions)", "time": "10\u201315 hours prep", "passing": "Passing score on proctored exam", "skills": ["OCI GenAI", "LLM Deployment", "Fine-Tuning", "RAG Architecture", "Vector Databases"], "course_url": "https://mylearn.oracle.com/ou/learning-path/become-an-oci-generative-ai-certified-professional-2024/136060", "credly_url": "https://www.credly.com/org/oracle/badge/oracle-cloud-infrastructure-2024-generative-ai-certified-professional", "desc": "Rigorous professional certification validating deployment, fine-tuning, and retrieval-augmented generation architectures on Oracle Cloud."}, {"title": "AWS Knowledge: Cloud Essentials", "org": "Amazon Web Services", "category": "Cloud Infrastructure", "proctored": false, "format": "100% Unproctored \u2022 Online Knowledge Assessment", "time": "2\u20134 hours", "passing": "80% or higher", "skills": ["AWS Core Services", "IAM", "VPC", "EC2", "Billing & Budgets", "Well-Architected"], "course_url": "https://explore.skillbuilder.aws/learn/course/external/view/elearning/13449/aws-knowledge-cloud-essentials", "credly_url": "https://www.credly.com/org/amazon-web-services/badge/aws-knowledge-cloud-essentials-training-badge", "desc": "Validates foundational architectural proficiency across core compute, storage, identity management, networking, and cloud financial optimization."}, {"title": "AWS Knowledge: Compute", "org": "Amazon Web Services", "category": "Cloud Infrastructure", "proctored": false, "format": "100% Unproctored \u2022 Skill Builder Assessment", "time": "2\u20133 hours", "passing": "80% or higher", "skills": ["Amazon EC2", "AWS Lambda", "Auto Scaling", "Elastic Load Balancing", "Cost Optimization"], "course_url": "https://explore.skillbuilder.aws/learn/course/external/view/elearning/13766/aws-knowledge-compute", "credly_url": "https://www.credly.com/org/amazon-web-services/badge/aws-knowledge-compute-training-badge", "desc": "Deep dive into virtualized instances, serverless runtime execution, autoscaling groups, and compute architecture best practices."}, {"title": "AWS Knowledge: Networking Core", "org": "Amazon Web Services", "category": "Cloud Infrastructure", "proctored": false, "format": "100% Unproctored \u2022 Skill Builder Assessment", "time": "3\u20134 hours", "passing": "80% or higher", "skills": ["Amazon VPC", "Subnetting", "Route Tables", "NAT Gateways", "Direct Connect", "Transit Gateway"], "course_url": "https://explore.skillbuilder.aws/learn/course/external/view/elearning/13768/aws-knowledge-networking-core", "credly_url": "https://www.credly.com/org/amazon-web-services/badge/aws-knowledge-networking-core-training-badge", "desc": "Crucial for infrastructure and Terraform engineers: validates enterprise VPC design, traffic routing, hybrid connectivity, and network isolation."}, {"title": "AWS Knowledge: Serverless", "org": "Amazon Web Services", "category": "Cloud Infrastructure", "proctored": false, "format": "100% Unproctored \u2022 Skill Builder Assessment", "time": "3 hours", "passing": "80% or higher", "skills": ["AWS Lambda", "API Gateway", "EventBridge", "Step Functions", "Serverless Architecture"], "course_url": "https://explore.skillbuilder.aws/learn/course/external/view/elearning/13770/aws-knowledge-serverless", "credly_url": "https://www.credly.com/org/amazon-web-services/badge/aws-knowledge-serverless-training-badge", "desc": "Covers decoupled event-driven architectures, API proxies, serverless state machines, and microservice integration patterns."}, {"title": "AWS Knowledge: Object Storage", "org": "Amazon Web Services", "category": "Cloud Infrastructure", "proctored": false, "format": "100% Unproctored \u2022 Skill Builder Assessment", "time": "2 hours", "passing": "80% or higher", "skills": ["Amazon S3", "S3 Glacier", "Lifecycle Policies", "S3 Replication", "Storage Security"], "course_url": "https://explore.skillbuilder.aws/learn/course/external/view/elearning/13764/aws-knowledge-object-storage", "credly_url": "https://www.credly.com/org/amazon-web-services/badge/aws-knowledge-object-storage-training-badge", "desc": "In-depth validation of S3 bucket configurations, encryption keys, access control lists, cross-region replication, and lifecycle tiering."}, {"title": "AWS Knowledge: Data Protection & Disaster Recovery", "org": "Amazon Web Services", "category": "Cloud Infrastructure", "proctored": false, "format": "100% Unproctored \u2022 Skill Builder Assessment", "time": "2\u20133 hours", "passing": "80% or higher", "skills": ["Disaster Recovery", "RTO / RPO", "AWS Backup", "Failover Strategies", "Data Resilience"], "course_url": "https://explore.skillbuilder.aws/learn/course/external/view/elearning/13765/aws-knowledge-data-protection-and-disaster-recovery", "credly_url": "https://www.credly.com/org/amazon-web-services/badge/aws-knowledge-data-protection-disaster-recovery-tra", "desc": "Essential cloud reliability badge evaluating backup automation, recovery point objectives (RPO), recovery time objectives (RTO), and multi-region resilience."}, {"title": "AWS Educate: Getting Started with Cloud Ops", "org": "Amazon Web Services", "category": "Cloud Infrastructure", "proctored": false, "format": "100% Unproctored \u2022 Self-paced Training & Quiz", "time": "1\u20132 hours", "passing": "70% or higher", "skills": ["CloudWatch", "CloudTrail", "Systems Manager", "Automation", "Infrastructure Monitoring"], "course_url": "https://aws.amazon.com/education/awseducate/", "credly_url": "https://www.credly.com/org/amazon-web-services/badge/aws-educate-getting-started-with-cloud-ops-training", "desc": "Focuses on day-2 cloud operations: configuration compliance, logging pipelines, audit monitoring, and automated patch management."}, {"title": "OCI Foundations Associate", "org": "Oracle", "category": "Cloud Infrastructure", "proctored": true, "format": "\ud83d\udfe1 Online Exam via Oracle MyLearn (Free)", "time": "6\u20138 hours prep", "passing": "68% or higher", "skills": ["Oracle Cloud", "OCI Compute", "Virtual Cloud Network", "Autonomous Database", "IAM"], "course_url": "https://mylearn.oracle.com/ou/learning-path/become-an-oci-foundations-associate-2024/137672", "credly_url": "https://www.credly.com/org/oracle/badge/oracle-cloud-infrastructure-2024-certified-foundations-associate", "desc": "Official multi-cloud credential verifying foundational architecture, security, identity, and governance on Oracle Cloud Infrastructure."}, {"title": "AWS Knowledge: Amazon EKS", "org": "Amazon Web Services", "category": "Kubernetes & Containers", "proctored": false, "format": "100% Unproctored \u2022 Skill Builder Assessment", "time": "3\u20134 hours", "passing": "80% or higher", "skills": ["Kubernetes", "Amazon EKS", "Container Pods", "Helm", "Node Groups", "Ingress"], "course_url": "https://explore.skillbuilder.aws/learn/course/external/view/elearning/14496/aws-knowledge-amazon-eks", "credly_url": "https://www.credly.com/org/amazon-web-services/badge/aws-knowledge-amazon-eks-training-badge", "desc": "Covers managed Kubernetes control plane architecture, worker nodes, persistent storage integration, and cluster networking on AWS."}, {"title": "AWS Knowledge: Amazon ECS", "org": "Amazon Web Services", "category": "Kubernetes & Containers", "proctored": false, "format": "100% Unproctored \u2022 Skill Builder Assessment", "time": "3 hours", "passing": "80% or higher", "skills": ["Amazon ECS", "AWS Fargate", "Docker", "Task Definitions", "Service Scaling"], "course_url": "https://explore.skillbuilder.aws/learn/course/external/view/elearning/14495/aws-knowledge-amazon-ecs", "credly_url": "https://www.credly.com/org/amazon-web-services/badge/aws-knowledge-amazon-ecs-training-badge", "desc": "Validates hands-on knowledge of container orchestration using Amazon Elastic Container Service and serverless containers on AWS Fargate."}, {"title": "Certified Calico Operator - eBPF", "org": "Tigera", "category": "Kubernetes & Containers", "proctored": false, "format": "100% Unproctored \u2022 Browser Hands-on Labs & Quiz", "time": "3\u20135 hours", "passing": "Pass lab validations & quiz", "skills": ["Calico CNI", "eBPF", "Kubernetes Networking", "Packet Filtering", "Performance Optimization"], "course_url": "https://academy.tigera.io/course/certified-calico-operator-ebpf/", "credly_url": "https://www.credly.com/org/tigera/badge/certified-calico-operator-ebpf", "desc": "Highly prestigious credential in Kubernetes networking demonstrating how to leverage the Linux kernel eBPF data plane for ultra-fast networking and security."}, {"title": "Certified Calico Operator - AWS Expert", "org": "Tigera", "category": "Kubernetes & Containers", "proctored": false, "format": "100% Unproctored \u2022 Interactive Lab & Exam", "time": "4 hours", "passing": "Pass lab challenges", "skills": ["Calico", "Amazon EKS", "Network Policies", "Security Enclave", "Microsegmentation"], "course_url": "https://academy.tigera.io/course/certified-calico-operator-aws-expert/", "credly_url": "https://www.credly.com/org/tigera/badge/certified-calico-operator-aws-expert", "desc": "Demonstrates advanced network micro-segmentation, securing pod-to-pod communication, and enforcing Calico policy engines on Amazon EKS."}, {"title": "Foundations: Kubernetes Networking & Cilium", "org": "Isovalent", "category": "Kubernetes & Containers", "proctored": false, "format": "100% Unproctored \u2022 Live Browser Terminal Labs", "time": "2\u20133 hours", "passing": "Complete terminal tasks", "skills": ["Cilium", "eBPF", "Kubernetes CNI", "Service Mesh", "Observability (Hubble)"], "course_url": "https://isovalent.com/labs/", "credly_url": "https://www.credly.com/org/isovalent/badge/foundations-kubernetes-networking-cilium", "desc": "Interactive hands-on sandbox labs exploring modern eBPF networking, Cilium CNI deployment, network policies, and service observability with Hubble."}, {"title": "Docker Essentials: A Developer Introduction", "org": "IBM", "category": "Kubernetes & Containers", "proctored": false, "format": "100% Unproctored \u2022 Cognitive Class Lab & Exam", "time": "3 hours", "passing": "70% or higher", "skills": ["Docker", "Dockerfiles", "Container Images", "Docker Hub", "Container Runtime"], "course_url": "https://cognitiveclass.ai/courses/docker-essentials", "credly_url": "https://www.credly.com/org/ibm/badge/docker-essentials-a-developer-introduction", "desc": "Teaches container fundamentals, crafting production-grade Dockerfiles, managing registries, volume mounts, and container isolation."}, {"title": "Kong Gateway Foundations", "org": "Kong", "category": "Kubernetes & Containers", "proctored": false, "format": "100% Unproctored \u2022 Self-paced Training & Quiz", "time": "2 hours", "passing": "Pass quiz", "skills": ["Kong Gateway", "API Gateway", "Ingress Controller", "Rate Limiting", "Routing"], "course_url": "https://academy.konghq.com/courses/kong-gateway-foundations", "credly_url": "https://www.credly.com/org/kong/badge/kong-gateway-foundations.1", "desc": "Validates foundational expertise configuring enterprise API gateways, ingress routes, load balancing plugins, and authentication middleware."}, {"title": "Kong Mesh Foundations", "org": "Kong", "category": "Kubernetes & Containers", "proctored": false, "format": "100% Unproctored \u2022 Self-paced Course & Quiz", "time": "2 hours", "passing": "Pass quiz", "skills": ["Service Mesh", "Kuma", "Envoy", "mTLS", "Traffic Routing"], "course_url": "https://academy.konghq.com/courses/kong-mesh-foundations", "credly_url": "https://www.credly.com/org/kong/badge/kong-mesh-foundations", "desc": "Covers service mesh architectures (built on Kuma and Envoy), mutual TLS (mTLS) zero-trust encryption, and microservice traffic policies."}, {"title": "Chainguard Container Crusader", "org": "Chainguard", "category": "DevSecOps & Security", "proctored": false, "format": "100% Unproctored \u2022 Course Reading & Quiz", "time": "1\u20132 hours", "passing": "Pass quiz", "skills": ["Container Hardening", "Distroless Images", "Vulnerability Reduction", "Wolfi", "DevSecOps"], "course_url": "https://edu.chainguard.dev/chainguard/chainguard-enforce/chainguard-academy/container-crusader/", "credly_url": "https://www.credly.com/org/chainguard/badge/chainguard-container-crusader", "desc": "Focuses on minimizing attack surfaces using minimal, zero-CVE distroless base images and automated vulnerability triage in CI pipelines."}, {"title": "Chainguard Vulnslayer", "org": "Chainguard", "category": "DevSecOps & Security", "proctored": false, "format": "100% Unproctored \u2022 Course Reading & Quiz", "time": "1\u20132 hours", "passing": "Pass quiz", "skills": ["CVE Management", "Software Supply Chain", "SBOM Generation", "Attestations", "Remediation"], "course_url": "https://edu.chainguard.dev/chainguard/chainguard-enforce/chainguard-academy/vulnslayer/", "credly_url": "https://www.credly.com/org/chainguard/badge/chainguard-vulnslayer", "desc": "Teaches practical strategies to analyze, categorize, and remediate CVEs, generate Software Bills of Materials (SBOMs), and secure supply chains."}, {"title": "AWS Knowledge: Security Champion", "org": "Amazon Web Services", "category": "DevSecOps & Security", "proctored": false, "format": "100% Unproctored \u2022 Skill Builder Assessment", "time": "3\u20134 hours", "passing": "80% or higher", "skills": ["AWS Security", "DevSecOps", "Threat Modeling", "Compliance", "Security Automation"], "course_url": "https://explore.skillbuilder.aws/learn/course/external/view/elearning/13437/aws-knowledge-security-champion", "credly_url": "https://www.credly.com/org/amazon-web-services/badge/aws-knowledge-security-champion-training-badge", "desc": "Validates cloud security leadership, embedding automated security controls into CI/CD pipelines, IAM least privilege, and compliance posture."}, {"title": "API Security Fundamentals", "org": "APIsec University", "category": "DevSecOps & Security", "proctored": false, "format": "100% Unproctored \u2022 Video Modules & Exam", "time": "2 hours", "passing": "Pass quiz", "skills": ["OWASP API Top 10", "BOLA / BFLA", "Endpoint Security", "Token Authentication", "Penetration Testing"], "course_url": "https://www.apisecuniversity.com/courses/api-security-fundamentals", "credly_url": "https://www.credly.com/org/apisec-university/badge/api-security-fundamentals-25-2-hours", "desc": "Covers the OWASP API Security Top 10 vulnerabilities (including Broken Object Level Authorization), injection attacks, and endpoint security."}, {"title": "API Gateway Security Best Practices", "org": "APIsec University", "category": "DevSecOps & Security", "proctored": false, "format": "100% Unproctored \u2022 Video & Assessment", "time": "1 hour", "passing": "Pass quiz", "skills": ["API Gateway", "WAF Integration", "Rate Limiting", "Mutual TLS", "Threat Shielding"], "course_url": "https://www.apisecuniversity.com/courses/api-gateway-security-best-practices", "credly_url": "https://www.credly.com/org/apisec-university/badge/api-gateway-security-best-practices-1-hour", "desc": "Explores practical defense tactics using API Gateways to prevent DDoS, enforce rate-limiting quotas, and validate schema integrity."}, {"title": "MITRE ATT&CK Security Stack Mappings: AWS", "org": "AttackIQ", "category": "DevSecOps & Security", "proctored": false, "format": "100% Unproctored \u2022 Course Modules & Exam", "time": "3\u20134 hours", "passing": "Pass assessment", "skills": ["MITRE ATT&CK", "AWS Security", "Threat Emulation", "Defensive Posture", "Adversary Tactics"], "course_url": "https://academy.attackiq.com/courses/mitre-attack-security-stack-mappings-aws", "credly_url": "https://www.credly.com/org/attackiq/badge/mitre-att-ck-security-stack-mappings-aws", "desc": "Maps native AWS security tools (GuardDuty, Security Hub, WAF) directly against real-world adversary techniques in the MITRE ATT&CK matrix."}, {"title": "Foundations of Operationalizing MITRE ATT&CK", "org": "AttackIQ", "category": "DevSecOps & Security", "proctored": false, "format": "100% Unproctored \u2022 Self-paced Course", "time": "2\u20133 hours", "passing": "Pass exam", "skills": ["Threat-Informed Defense", "Adversary Emulation", "Purple Teaming", "MITRE ATT&CK Framework"], "course_url": "https://academy.attackiq.com/courses/foundations-of-operationalizing-mitre-attack", "credly_url": "https://www.credly.com/org/attackiq/badge/foundations-of-operationalizing-mitre-att-ck-v13", "desc": "Teaches threat-informed defense methodology, operationalizing telemetry, and systematically validating security controls."}, {"title": "Certified in Cybersecurity (CC)", "org": "ISC2", "category": "DevSecOps & Security", "proctored": true, "format": "\ud83d\udfe1 Pearson VUE Official Exam (100% Free Voucher via 1MCC)", "time": "10\u201320 hours prep", "passing": "700/1000 on Pearson VUE test", "skills": ["Security Principles", "BCDR & Incident Response", "Access Controls", "Network Security", "Security Operations"], "course_url": "https://www.isc2.org/landing/1mcc", "credly_url": "https://www.credly.com/org/isc2/badge/certified-in-cybersecurity-cc", "desc": "Global gold-standard foundational cybersecurity certification. Free training and exam voucher provided under ISC2 One Million Certified pledge."}, {"title": "Fortinet Certified Fundamentals (FCF) Cybersecurity", "org": "Fortinet", "category": "DevSecOps & Security", "proctored": false, "format": "100% Unproctored \u2022 Training Institute Quizzes", "time": "3\u20134 hours", "passing": "Pass online quizzes", "skills": ["Network Security", "Threat Landscape", "Cloud Security", "Next-Gen Firewalls", "Zero Trust"], "course_url": "https://training.fortinet.com/", "credly_url": "https://www.credly.com/org/fortinet/badge/fortinet-certified-fundamentals-cybersecurity", "desc": "Validates foundational knowledge of today network threat landscape, firewall architectures, and modern cloud defense."}, {"title": "Introduction to Cybersecurity", "org": "Cisco", "category": "DevSecOps & Security", "proctored": false, "format": "100% Unproctored \u2022 Skills for All Course & Final Quiz", "time": "6 hours", "passing": "70% on final exam", "skills": ["Cyber Defense", "Malware Types", "Confidentiality/Integrity/Availability", "Data Privacy"], "course_url": "https://skillsforall.com/course/introduction-to-cybersecurity", "credly_url": "https://www.credly.com/org/cisco/badge/introduction-to-cybersecurity", "desc": "Explores global cyber threats, defensive countermeasures, network vulnerabilities, and safeguarding enterprise confidentiality and data privacy."}, {"title": "Kubernetes Monitoring Learning Path", "org": "Datadog", "category": "Observability & Monitoring", "proctored": false, "format": "100% Unproctored \u2022 Datadog Learning Center", "time": "2\u20133 hours", "passing": "Complete modules & quizzes", "skills": ["Kubernetes Metrics", "Datadog Agent", "Cluster DaemonSets", "Alerting", "Autodiscovery"], "course_url": "https://learn.datadoghq.com/courses/kubernetes-monitoring-learning-path", "credly_url": "https://www.credly.com/org/datadog/badge/kubernetes-monitoring-learning-path", "desc": "Hands-on training deploying the Datadog cluster agent, collecting pod telemetry, configuring autodiscovery, and diagnosing cluster anomalies."}, {"title": "Application Performance Monitoring (APM)", "org": "Datadog", "category": "Observability & Monitoring", "proctored": false, "format": "100% Unproctored \u2022 Datadog Learning Center", "time": "2 hours", "passing": "Complete modules & quizzes", "skills": ["APM Tracing", "Distributed Tracing", "Latency Analysis", "Flame Graphs", "SLOs"], "course_url": "https://learn.datadoghq.com/courses/application-performance-monitoring-learning-path", "credly_url": "https://www.credly.com/org/datadog/badge/application-performance-monitoring-learning-path.1", "desc": "Covers end-to-end distributed tracing, identifying application bottlenecks, reading flame graphs, and setting up service level objectives (SLOs)."}, {"title": "Log Management Fundamentals", "org": "Datadog", "category": "Observability & Monitoring", "proctored": false, "format": "100% Unproctored \u2022 Datadog Learning Center", "time": "1\u20132 hours", "passing": "Complete modules & quizzes", "skills": ["Log Ingestion", "Log Pipelines", "Grok Parsing", "Log Analytics", "Alerting"], "course_url": "https://learn.datadoghq.com/courses/log-management-fundamentals", "credly_url": "https://www.credly.com/org/datadog/badge/log-management-fundamentals", "desc": "Teaches log forwarding, creating Grok parsing rules, building centralized dashboards, and detecting security events from structured logs."}, {"title": "Networking Basics", "org": "Cisco", "category": "Networking & Systems", "proctored": false, "format": "100% Unproctored \u2022 Skills for All Modules & Exam", "time": "10\u201315 hours", "passing": "70% on final exam", "skills": ["IP Addressing", "Subnetting", "Routing & Switching", "TCP/IP", "Network Media"], "course_url": "https://skillsforall.com/course/networking-basics", "credly_url": "https://www.credly.com/org/cisco/badge/networking-basics", "desc": "Foundational networking syllabus directly applicable to cloud VPC architects: IP routing, IPv4/IPv6 CIDR calculations, and network communication."}, {"title": "Postman API Fundamentals Student Expert", "org": "Postman", "category": "Networking & Systems", "proctored": false, "format": "100% Unproctored \u2022 Hands-on Project & Automated Eval", "time": "2\u20133 hours", "passing": "Automated submission pass", "skills": ["REST APIs", "Postman Collections", "Test Automation", "Environment Variables", "API Scripting"], "course_url": "https://www.postman.com/student-program/student-expert/", "credly_url": "https://www.credly.com/org/postman/badge/postman-api-fundamentals-student-expert", "desc": "Hands-on assignment creating API requests, building scripted test suites, automating collection runs, and validating HTTP responses."}];
+
+    const searchInput = document.getElementById('searchInput');
+    const badgeGrid = document.getElementById('badgeGrid');
+    const categoryFilters = document.getElementById('categoryFilters');
+    const modeFilters = document.getElementById('modeFilters');
+
+    let activeCategory = 'all';
+    let activeMode = 'all';
+    let searchQuery = '';
+
+    // Initialize stats
+    document.getElementById('statTotal').innerText = BADGES.length;
+    document.getElementById('statUnproctored').innerText = BADGES.filter(b => !b.proctored).length;
+    const uniqueCats = new Set(BADGES.map(b => b.category));
+    document.getElementById('statCategories').innerText = uniqueCats.size;
+    const uniqueOrgs = new Set(BADGES.map(b => b.org));
+    document.getElementById('statOrgs').innerText = uniqueOrgs.size;
+
+    function renderCards() {
+      const filtered = BADGES.filter(item => {
+        const matchesCat = (activeCategory === 'all' || item.category === activeCategory);
+        const matchesMode = (activeMode === 'all') ||
+                            (activeMode === 'unproctored' && !item.proctored) ||
+                            (activeMode === 'proctored' && item.proctored);
+
+        const q = searchQuery.toLowerCase().trim();
+        const matchesSearch = !q || 
+                              item.title.toLowerCase().includes(q) ||
+                              item.org.toLowerCase().includes(q) ||
+                              item.category.toLowerCase().includes(q) ||
+                              item.desc.toLowerCase().includes(q) ||
+                              item.skills.some(s => s.toLowerCase().includes(q));
+
+        return matchesCat && matchesMode && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        badgeGrid.innerHTML = `
+          <div class="no-results">
+            <h3>No badges found matching your search</h3>
+            <p>Try clearing filters or searching for different keywords like 'AWS', 'Security', 'Kubernetes', or 'AI'.</p>
+          </div>
+        `;
+        return;
+      }
+
+      badgeGrid.innerHTML = filtered.map(b => `
+        <div class="card">
+          <div>
+            <div class="card-header">
+              <span class="issuer-tag">${escapeHtml(b.org)}</span>
+              <span class="mode-tag ${b.proctored ? 'mode-proctored' : 'mode-anywhere'}">
+                ${b.proctored ? '🟡 Proctored' : '🟢 Anywhere'}
+              </span>
+            </div>
+
+            <h3 class="card-title">${escapeHtml(b.title)}</h3>
+            <div class="category-label">${escapeHtml(b.category)}</div>
+            <p class="card-desc">${escapeHtml(b.desc)}</p>
+
+            <div class="skills-container">
+              ${b.skills.map(s => `<span class="skill-chip">${escapeHtml(s)}</span>`).join('')}
+            </div>
+          </div>
+
+          <div>
+            <div class="meta-details">
+              <div class="meta-item">
+                <span>Time:</span>
+                <strong>${escapeHtml(b.time)}</strong>
+              </div>
+              <div class="meta-item">
+                <span>Passing:</span>
+                <strong>${escapeHtml(b.passing)}</strong>
+              </div>
+            </div>
+
+            <div class="actions-row">
+              <a href="${b.course_url}" target="_blank" rel="noopener" class="btn btn-primary">
+                🚀 Start Free
+              </a>
+              <a href="${b.credly_url}" target="_blank" rel="noopener" class="btn btn-outline">
+                🏅 Credly Badge
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // Event listeners
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderCards();
+    });
+
+    categoryFilters.addEventListener('click', (e) => {
+      if (e.target.tagName === 'BUTTON') {
+        categoryFilters.querySelectorAll('.filter-chip').forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+        activeCategory = e.target.dataset.cat;
+        renderCards();
+      }
+    });
+
+    modeFilters.addEventListener('click', (e) => {
+      if (e.target.tagName === 'BUTTON') {
+        modeFilters.querySelectorAll('.filter-chip').forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+        activeMode = e.target.dataset.mode;
+        renderCards();
+      }
+    });
+
+    // Initial render
+    renderCards();
+  </script>
+</body>
+</html>

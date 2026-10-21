@@ -1,0 +1,17 @@
+.git/
+.env
+.env.*
+*.env
+vault/
+audit/
+metrics/
+messages/
+checkpoints/
+outputs/
+.trace/
+.history/
+.checkpoints/
+.install-manifest*
+stf.db*
+*.log
+*.pid
