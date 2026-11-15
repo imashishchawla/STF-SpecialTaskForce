@@ -1,0 +1,12 @@
+{
+  "meta": {
+    "state_code": "QLD",
+    "state_name": "Queensland",
+    "source": "https://www.findazjob.qld.gov.au/nominationskill",
+    "scrape_timestamp": "2026-11-15T18:48:29.956420+00:00",
+    "scrape_status": "failed",
+    "occupation_count": 0
+  },
+  "occupations": [],
+  "quotas": {}
+}

@@ -1,0 +1,19 @@
+# Python & Virtual Environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Sensitive & Environment Files
+.env
+.env.local
+.env.*
+!.env.example
+
+# Runtime output and raw crawler caches
+output/
+cache/
+*.log

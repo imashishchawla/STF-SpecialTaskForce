@@ -1,0 +1,12 @@
+{
+  "meta": {
+    "state_code": "WA",
+    "state_name": "Western Australia",
+    "source": "https://www.wa.gov.au/government/migration",
+    "scrape_timestamp": "2026-11-15T18:48:26.825281+00:00",
+    "scrape_status": "failed",
+    "occupation_count": 0
+  },
+  "occupations": [],
+  "quotas": {}
+}

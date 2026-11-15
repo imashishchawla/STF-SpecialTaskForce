@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "state_code": "NT",
+    "state_name": "Northern Territory",
+    "source": "https://migration.nt.gov.au/",
+    "scrape_timestamp": "2026-11-15T18:48:32.953450+00:00",
+    "scrape_status": "success",
+    "occupation_count": 3
+  },
+  "occupations": [
+    {
+      "occupation_code": "261313",
+      "occupation_title": "Software Engineer",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 7
+    },
+    {
+      "occupation_code": "234111",
+      "occupation_title": "Civil Engineer",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 8
+    },
+    {
+      "occupation_code": "254499",
+      "occupation_title": "Nurse (General)",
+      "visa_type": [
+        "190"
+      ],
+      "available": true,
+      "processing_time_weeks": 6
+    }
+  ],
+  "quotas": {
+    "visa_190_available": 100,
+    "visa_491_available": 50,
+    "notes": "Updated 2026-11-15"
+  }
+}

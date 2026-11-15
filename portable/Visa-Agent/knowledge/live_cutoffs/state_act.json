@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "state_code": "ACT",
+    "state_name": "Australian Capital Territory",
+    "source": "https://www.act.gov.au/",
+    "scrape_timestamp": "2026-11-15T18:48:34.666085+00:00",
+    "scrape_status": "success",
+    "occupation_count": 3
+  },
+  "occupations": [
+    {
+      "occupation_code": "261313",
+      "occupation_title": "Software Engineer",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 8
+    },
+    {
+      "occupation_code": "234111",
+      "occupation_title": "Civil Engineer",
+      "visa_type": [
+        "190"
+      ],
+      "available": true,
+      "processing_time_weeks": 9
+    },
+    {
+      "occupation_code": "261111",
+      "occupation_title": "ICT Business Analyst",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 7
+    }
+  ],
+  "quotas": {
+    "visa_190_available": 120,
+    "visa_491_available": 45,
+    "notes": "Updated 2026-11-15"
+  }
+}

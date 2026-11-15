@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "agent_id": "certification-research-curator",
+  "version": "0.1.0",
+  "description": "Discovers and verifies public IT credentials, badges, and exams, maintains evidence-linked Markdown proposals, and prepares reviewable catalog content.",
+  "inputs_schema": "export/templates/research-request.md",
+  "outputs_schema": "export/templates/research-result.md",
+  "required_capabilities": [
+    "web_search",
+    "content_extraction",
+    "schema_curation",
+    "scoped_markdown_read",
+    "isolated_markdown_proposal_write"
+  ],
+  "optional_capabilities": [
+    "scoped_subagent_delegation",
+    "bounded_domain_crawl",
+    "host_native_full_text_search"
+  ],
+  "approval_classes": [
+    "provider_credential_use",
+    "website_content_change",
+    "external_publication",
+    "host_adapter_installation"
+  ],
+  "eval_refs": [
+    "evals/README.md",
+    "evals/cases/acceptance-matrix.md"
+  ]
+}

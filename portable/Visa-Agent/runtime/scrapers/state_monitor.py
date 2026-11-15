@@ -55,26 +55,26 @@ class StateMonitor:
     STATES = {
         "VIC": {
             "name": "Victoria",
-            "url": "https://immi.vic.gov.au/",
-            "occupation_endpoint": "https://immi.vic.gov.au/skilled-occupation-list",
+            "url": "https://www.vic.gov.au/",
+            "occupation_endpoint": "https://www.vic.gov.au/skilled-migration-occupations",
             "visa_types": ["190", "491"]
         },
         "NSW": {
             "name": "New South Wales",
-            "url": "https://www.nsw.gov.au/business-and-economy/skilled-migration",
-            "occupation_endpoint": "https://www.nsw.gov.au/business-and-economy/skilled-migration/occupations",
+            "url": "https://www.nsw.gov.au/",
+            "occupation_endpoint": "https://www.nsw.gov.au/skilled-migration-occupations",
             "visa_types": ["190", "491"]
         },
         "WA": {
             "name": "Western Australia",
-            "url": "https://www.wa.gov.au/government/migration",
-            "occupation_endpoint": "https://www.wa.gov.au/government/migration/skilled-occupations",
+            "url": "https://www.wa.gov.au/",
+            "occupation_endpoint": "https://www.wa.gov.au/skilled-migration-occupations",
             "visa_types": ["190", "491"]
         },
         "QLD": {
             "name": "Queensland",
-            "url": "https://www.findazjob.qld.gov.au/nominationskill",
-            "occupation_endpoint": "https://www.findazjob.qld.gov.au/nominationskill",
+            "url": "https://www.qld.gov.au/",
+            "occupation_endpoint": "https://www.qld.gov.au/skilled-migration-occupations",
             "visa_types": ["190", "491"]
         },
         "SA": {

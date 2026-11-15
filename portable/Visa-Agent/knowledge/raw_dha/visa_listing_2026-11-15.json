@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "source": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing",
+    "scrape_timestamp": "2026-11-15T18:48:15.718310+00:00",
+    "scrape_status": "success",
+    "row_count": 0,
+    "next_scrape": "2026-11-16T18:48:15.718310+00:00"
+  },
+  "data": {
+    "visas": [],
+    "count": 0
+  },
+  "errors": []
+}

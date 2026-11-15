@@ -1,0 +1,22 @@
+# Master Certification Retrieval & Curation Agent - Core Dependencies
+# Python 3.11+ Compatible (2026 Ready)
+
+# Data Validation & Parsing
+pydantic>=2.7.0
+python-dotenv>=1.0.1
+
+# HTTP & API Clients
+requests>=2.31.0
+tavily-python>=0.3.3
+firecrawl-py>=1.0.0
+
+# LLM Providers (Multi-Model Support)
+google-generativeai>=0.8.0
+anthropic>=0.25.0
+openai>=1.30.0
+
+# Terminal UI & Formatting
+rich>=13.7.1
+
+# Testing & Linting
+pytest>=8.0.0

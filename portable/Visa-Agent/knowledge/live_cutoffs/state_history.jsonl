@@ -1,1 +1,5 @@
 {"timestamp": "2026-11-15T16:53:06.388870+00:00", "state_code": "VIC", "occupation_count": 3, "scrape_status": "success"}
+{"timestamp": "2026-11-15T18:48:31.113981+00:00", "state_code": "SA", "occupation_count": 3, "scrape_status": "success"}
+{"timestamp": "2026-11-15T18:48:31.422550+00:00", "state_code": "TAS", "occupation_count": 2, "scrape_status": "success"}
+{"timestamp": "2026-11-15T18:48:32.953499+00:00", "state_code": "NT", "occupation_count": 3, "scrape_status": "success"}
+{"timestamp": "2026-11-15T18:48:34.666098+00:00", "state_code": "ACT", "occupation_count": 3, "scrape_status": "success"}

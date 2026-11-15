@@ -9,7 +9,7 @@ Fetches and parses Australian Department of Home Affairs visa data from 4 public
 4. Visa Listing - Visa subclasses, status, and conditions
 
 Resilience features:
-- CSS selectors with XPath fallbacks
+- Playwright browser automation for JavaScript rendering
 - Exponential backoff retry (1s, 2s, 4s)
 - Error logging with timestamps
 - Stale data fallback after 2 consecutive failures
@@ -25,17 +25,23 @@ import sys
 import json
 import time
 import logging
+import asyncio
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
-from html.parser import HTMLParser
 
 try:
     from bs4 import BeautifulSoup
 except ImportError:
     BeautifulSoup = None
+
+try:
+    from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeoutError
+    HAS_PLAYWRIGHT = True
+except ImportError:
+    HAS_PLAYWRIGHT = False
 
 
 # Configuration
@@ -93,18 +99,28 @@ class DHAScraper:
     REQUEST_TIMEOUT = 30  # seconds
     USER_AGENT = "Visa-Agent-Scraper/1.0 (Australian visa intelligence)"
 
-    def __init__(self, verbose: bool = False):
+    def __init__(self, verbose: bool = False, use_playwright: bool = True):
         """
         Initialize scraper.
 
         Args:
             verbose: Enable verbose logging
+            use_playwright: Use Playwright for JS rendering (default True)
         """
         self.verbose = verbose
+        self.use_playwright = use_playwright and HAS_PLAYWRIGHT
+
         if verbose:
             logger.setLevel(logging.DEBUG)
 
-        # Check BeautifulSoup availability
+        if not HAS_PLAYWRIGHT:
+            logger.warning(
+                "Playwright not installed. Install with: pip install playwright"
+            )
+            self.use_playwright = False
+        else:
+            logger.info("Using Playwright for JavaScript rendering")
+
         if BeautifulSoup is None:
             logger.warning(
                 "BeautifulSoup4 not installed. Install with: pip install beautifulsoup4"
@@ -239,10 +255,48 @@ class DHAScraper:
 
     # Private methods
 
+    async def _fetch_with_playwright(self, url: str, endpoint_key: str) -> Optional[str]:
+        """
+        Fetch URL with Playwright (handles JavaScript rendering).
+
+        Args:
+            url: URL to fetch
+            endpoint_key: Endpoint identifier for logging
+
+        Returns:
+            HTML content or None on failure
+        """
+        try:
+            async with async_playwright() as p:
+                browser = await p.chromium.launch(headless=True)
+                page = await browser.new_page()
+
+                logger.debug(f"Loading {endpoint_key} with Playwright...")
+                await page.goto(url, wait_until="networkidle", timeout=self.REQUEST_TIMEOUT * 1000)
+
+                # Wait for dynamic content to render
+                await page.wait_for_load_state("networkidle", timeout=10000)
+
+                html = await page.content()
+                await browser.close()
+
+                logger.info(f"Successfully fetched {endpoint_key} with Playwright")
+                return html
+
+        except PlaywrightTimeoutError as e:
+            logger.warning(f"Playwright timeout for {endpoint_key}: {str(e)}")
+            self._log_error(endpoint_key, "playwright_timeout", str(e))
+            return None
+        except Exception as e:
+            logger.error(f"Playwright error for {endpoint_key}: {str(e)}")
+            self._log_error(endpoint_key, "playwright_error", str(e))
+            return None
+
     def _fetch_with_retry(self, url: str, endpoint_key: str) -> Optional[str]:
         """
         Fetch URL with exponential backoff retry logic.
 
+        Uses Playwright for JavaScript rendering if available, falls back to urllib.
         Tries up to MAX_RETRIES times with delays [1s, 2s, 4s].
         Returns None after MAX_RETRIES failures.
 
@@ -253,17 +307,42 @@ class DHAScraper:
         Returns:
             HTML content or None on failure
         """
+        # Try Playwright first if available
+        if self.use_playwright:
+            for attempt in range(self.MAX_RETRIES):
+                try:
+                    logger.debug(f"Playwright attempt {attempt + 1}/{self.MAX_RETRIES} for {endpoint_key}")
+                    html = asyncio.run(self._fetch_with_playwright(url, endpoint_key))
+                    if html:
+                        return html
+                except Exception as e:
+                    logger.warning(f"Playwright fetch failed (attempt {attempt + 1}): {str(e)}")
+                    if attempt < self.MAX_RETRIES - 1:
+                        delay = self.RETRY_DELAYS[attempt]
+                        logger.info(f"Retrying {endpoint_key} in {delay}s...")
+                        time.sleep(delay)
+
+        # Fallback to urllib
+        logger.debug(f"Using urllib fallback for {endpoint_key}")
         for attempt in range(self.MAX_RETRIES):
             try:
-                logger.debug(f"Attempt {attempt + 1}/{self.MAX_RETRIES} for {endpoint_key}")
+                logger.debug(f"urllib attempt {attempt + 1}/{self.MAX_RETRIES} for {endpoint_key}")
 
-                req = Request(url, headers={"User-Agent": self.USER_AGENT})
+                headers = {
+                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                    "Accept-Language": "en-US,en;q=0.5",
+                    "Referer": "https://immi.homeaffairs.gov.au/",
+                    "DNT": "1",
+                    "Connection": "keep-alive",
+                }
+                req = Request(url, headers=headers)
                 with urlopen(req, timeout=self.REQUEST_TIMEOUT) as response:
                     html = response.read().decode("utf-8", errors="replace")
-                    logger.info(f"Successfully fetched {endpoint_key} (attempt {attempt + 1})")
+                    logger.info(f"Successfully fetched {endpoint_key} with urllib (attempt {attempt + 1})")
                     return html
 
-            except (HTTPError, URLError, TimeoutError) as e:
+            except Exception as e:
                 logger.warning(
                     f"Fetch error for {endpoint_key} (attempt {attempt + 1}): {str(e)}"
                 )
@@ -274,11 +353,6 @@ class DHAScraper:
                     delay = self.RETRY_DELAYS[attempt]
                     logger.info(f"Retrying {endpoint_key} in {delay}s...")
                     time.sleep(delay)
-
-            except Exception as e:
-                logger.error(f"Unexpected error fetching {endpoint_key}: {str(e)}")
-                self._log_error(endpoint_key, "unexpected_error", str(e))
-                return None
 
         # All retries exhausted
         logger.error(f"All retries exhausted for {endpoint_key}")

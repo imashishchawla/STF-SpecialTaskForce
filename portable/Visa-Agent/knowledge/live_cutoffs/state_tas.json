@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "state_code": "TAS",
+    "state_name": "Tasmania",
+    "source": "https://www.tas.gov.au/",
+    "scrape_timestamp": "2026-11-15T18:48:31.422506+00:00",
+    "scrape_status": "success",
+    "occupation_count": 2
+  },
+  "occupations": [
+    {
+      "occupation_code": "261313",
+      "occupation_title": "Software Engineer",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 9
+    },
+    {
+      "occupation_code": "234512",
+      "occupation_title": "Structural Engineer",
+      "visa_type": [
+        "190"
+      ],
+      "available": true,
+      "processing_time_weeks": 11
+    }
+  ],
+  "quotas": {
+    "visa_190_available": 80,
+    "visa_491_available": 30,
+    "notes": "Updated 2026-11-15"
+  }
+}

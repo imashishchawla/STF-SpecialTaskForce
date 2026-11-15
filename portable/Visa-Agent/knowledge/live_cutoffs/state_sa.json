@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "state_code": "SA",
+    "state_name": "South Australia",
+    "source": "https://migration.sa.gov.au/",
+    "scrape_timestamp": "2026-11-15T18:48:31.113953+00:00",
+    "scrape_status": "success",
+    "occupation_count": 3
+  },
+  "occupations": [
+    {
+      "occupation_code": "261313",
+      "occupation_title": "Software Engineer",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 8
+    },
+    {
+      "occupation_code": "321111",
+      "occupation_title": "Bricklayer",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 12
+    },
+    {
+      "occupation_code": "232211",
+      "occupation_title": "ICT Manager",
+      "visa_type": [
+        "190"
+      ],
+      "available": true,
+      "processing_time_weeks": 10
+    }
+  ],
+  "quotas": {
+    "visa_190_available": 150,
+    "visa_491_available": 60,
+    "notes": "Updated 2026-11-15"
+  }
+}
