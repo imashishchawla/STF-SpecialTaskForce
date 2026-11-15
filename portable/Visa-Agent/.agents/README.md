@@ -17,6 +17,7 @@ Use [DOCUMENT_WORKFLOW.md](../DOCUMENT_WORKFLOW.md) for private client names, so
 | [Student](./agent_student_visa_specialist.md) | Genuine study goal or graduate route | Course, student, and later-route checks |
 | [Partner/family](./agent_partner_family_specialist.md) | User supplies a relevant relationship | Relationship and sponsor gates, privacy-safe evidence plan |
 | [ACS evidence](./agent_acs_evidence_auditor.md) | ACS is the current assessing authority | Fact and document discrepancy ledger |
+| [Migration intelligence harvester](./agent_migration_intelligence_harvester.md) | Scrape/crawl live migration news, cutoffs, digests, Reddit | Daily/weekly digests, cutoffs, verified policy changes |
 
 ## Run sequence
 

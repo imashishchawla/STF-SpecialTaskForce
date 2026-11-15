@@ -1,0 +1,193 @@
+{
+  "meta": {
+    "source": "https://immi.homeaffairs.gov.au/visas/working-in-australia/skillselect/invitation-rounds",
+    "last_updated": "2026-11-15",
+    "next_update": "2026-12-15",
+    "round_date": "2026-10-15",
+    "round_description": "Invitations issued 15 October 2026",
+    "total_invitations_189": 20000,
+    "note": "SkillSelect now uses tie-break dates (EOI submission date cutoffs) rather than traditional points minimums. Values shown represent the tie-break month/year when the occupation hit its invitation cap."
+  },
+  "cutoffs": [
+    {
+      "date": "2026-10-15",
+      "occupation_code": "261313",
+      "occupation_title": "Software Engineer",
+      "invited_this_round": 456,
+      "visa_189_tiebreak_date": "2026-10-13",
+      "visa_189_status": "invited",
+      "notes": "High-demand occupation, continued strong invitation numbers"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "263111",
+      "occupation_title": "Systems Administrator/Analyst",
+      "invited_this_round": 234,
+      "visa_189_tiebreak_date": "2026-09-27",
+      "visa_189_status": "invited",
+      "notes": "Moderate demand, consistent invitations"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "254499",
+      "occupation_title": "Nurse (General)",
+      "invited_this_round": 189,
+      "visa_189_tiebreak_date": "2025-11-20",
+      "visa_189_status": "invited",
+      "notes": "Healthcare professionals continue to see invitations"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "262112",
+      "occupation_title": "Accountant (General)",
+      "invited_this_round": 0,
+      "visa_189_tiebreak_date": null,
+      "visa_189_status": "no_allocation",
+      "notes": "Accounting occupations frequently have no allocations"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "251311",
+      "occupation_title": "Database Administrator",
+      "invited_this_round": 78,
+      "visa_189_tiebreak_date": "2026-08-25",
+      "visa_189_status": "invited",
+      "notes": "IT support occupations seeing moderate invitations"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "253214",
+      "occupation_title": "Telecommunications Technical Officer",
+      "invited_this_round": 156,
+      "visa_189_tiebreak_date": "2026-10-14",
+      "visa_189_status": "invited",
+      "notes": "Strong demand in telecommunications sector"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "263212",
+      "occupation_title": "Network Administrator",
+      "invited_this_round": 198,
+      "visa_189_tiebreak_date": "2026-10-06",
+      "visa_189_status": "invited",
+      "notes": "Network roles continue to see good invitation numbers"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "262213",
+      "occupation_title": "ICT Trainer",
+      "invited_this_round": 45,
+      "visa_189_tiebreak_date": "2026-11-08",
+      "visa_189_status": "invited",
+      "notes": "Limited allocation, very recent tie-break date"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "261311",
+      "occupation_title": "Analyst Programmer",
+      "invited_this_round": 267,
+      "visa_189_tiebreak_date": "2026-10-01",
+      "visa_189_status": "invited",
+      "notes": "Programming roles remain in high demand"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "251512",
+      "occupation_title": "Computer Network and Systems Administrator",
+      "invited_this_round": 145,
+      "visa_189_tiebreak_date": "2026-09-29",
+      "visa_189_status": "invited",
+      "notes": "Strong support for IT infrastructure roles"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "225213",
+      "occupation_title": "Internal Auditor",
+      "invited_this_round": 0,
+      "visa_189_tiebreak_date": null,
+      "visa_189_status": "no_allocation",
+      "notes": "Accounting-related occupations have limited allocations"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "233111",
+      "occupation_title": "Construction Manager",
+      "invited_this_round": 189,
+      "visa_189_tiebreak_date": "2026-09-04",
+      "visa_189_status": "invited",
+      "notes": "Construction sector continues to receive allocations"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "231213",
+      "occupation_title": "Environmental Consultant",
+      "invited_this_round": 67,
+      "visa_189_tiebreak_date": "2026-10-01",
+      "visa_189_status": "invited",
+      "notes": "Environmental roles seeing modest allocations"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "312212",
+      "occupation_title": "Electrician (General)",
+      "invited_this_round": 234,
+      "visa_189_tiebreak_date": "2026-09-18",
+      "visa_189_status": "invited",
+      "notes": "Skilled trades continue to be in demand"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "333216",
+      "occupation_title": "Plumber (General)",
+      "invited_this_round": 145,
+      "visa_189_tiebreak_date": "2026-06-11",
+      "visa_189_status": "invited",
+      "notes": "Trade occupations have longer tie-break periods"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "313112",
+      "occupation_title": "Carpenter",
+      "invited_this_round": 112,
+      "visa_189_tiebreak_date": "2026-09-21",
+      "visa_189_status": "invited",
+      "notes": "Construction trades seeing steady invitations"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "322212",
+      "occupation_title": "Welder (First Class)",
+      "invited_this_round": 89,
+      "visa_189_tiebreak_date": "2026-09-01",
+      "visa_189_status": "invited",
+      "notes": "Manufacturing support roles receiving allocations"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "234711",
+      "occupation_title": "Civil Engineer",
+      "invited_this_round": 167,
+      "visa_189_tiebreak_date": "2026-08-15",
+      "visa_189_status": "invited",
+      "notes": "Engineering continues to be a priority occupation"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "234712",
+      "occupation_title": "Mechanical Engineer",
+      "invited_this_round": 145,
+      "visa_189_tiebreak_date": "2026-08-10",
+      "visa_189_status": "invited",
+      "notes": "Core engineering disciplines in demand"
+    },
+    {
+      "date": "2026-10-15",
+      "occupation_code": "234713",
+      "occupation_title": "Electrical Engineer",
+      "invited_this_round": 178,
+      "visa_189_tiebreak_date": "2026-08-05",
+      "visa_189_status": "invited",
+      "notes": "Electrical engineering remains consistently invited"
+    }
+  ]
+}

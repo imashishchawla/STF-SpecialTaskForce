@@ -8,7 +8,7 @@ Confirm the task: CV review, broad route discovery, one visa stream, or document
 
 ## Routing
 
-For broad discovery, inspect the current Home Affairs finder and permanent, temporary, short-stay, and full visa lists first. Include all plausibly relevant open subclasses and streams, including routes absent from this directory. Verify current open status and transition rules on each official stream page. Assign a specialist only for relevant detailed checks; one coordinator can handle a small case. Never use a static age, salary, points, duration, occupation, or evidence threshold as a hard exclusion.
+For broad discovery, inspect the current Home Affairs finder and permanent, temporary, short-stay, and full visa lists first. Include all plausibly relevant open subclasses and streams, including routes absent from this directory. Verify current open status and transition rules on each official stream page. Query the [Migration Intelligence Harvester](./agent_migration_intelligence_harvester.md) (`knowledge/live_cutoffs/` and `knowledge/political_radar/`) to obtain real-time invitation cutoffs, state nomination allocation updates, and legislative risk indices. Assign a specialist only for relevant detailed checks; one coordinator can handle a small case. Never use a static age, salary, points, duration, occupation, or evidence threshold as a hard exclusion.
 
 Send each specialist a bounded packet: question, relevant case-scoped facts with canonical verification labels, allowed source list, output schema from the shared contract, and a checkable done condition. Keep sensitive records local and only with the evidence role when necessary. Request an independent recheck when a specialist's exclusion or recommendation depends on a single ambiguous source.
 

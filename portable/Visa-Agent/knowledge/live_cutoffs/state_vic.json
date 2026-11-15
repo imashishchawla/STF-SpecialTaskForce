@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "state_code": "VIC",
+    "state_name": "Victoria",
+    "source": "https://immi.vic.gov.au/",
+    "scrape_timestamp": "2026-11-15T16:53:06.388862+00:00",
+    "scrape_status": "success",
+    "occupation_count": 3
+  },
+  "occupations": [
+    {
+      "occupation_code": "261313",
+      "occupation_title": "Software Engineer",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 8
+    },
+    {
+      "occupation_code": "263111",
+      "occupation_title": "Systems Administrator",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 10
+    },
+    {
+      "occupation_code": "254499",
+      "occupation_title": "Nurse (General)",
+      "visa_type": [
+        "190"
+      ],
+      "available": true,
+      "processing_time_weeks": 6
+    }
+  ],
+  "quotas": {
+    "visa_190_available": 250,
+    "visa_491_available": 100,
+    "notes": "Updated 2026-11-15"
+  }
+}

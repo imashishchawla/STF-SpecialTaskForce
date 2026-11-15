@@ -1,0 +1,115 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-11-10T07:45:00Z",
+  "description": "Autonomous source reputation registry for Australian immigration intelligence",
+  "sources": [
+    {
+      "domain": "immi.homeaffairs.gov.au",
+      "name": "Department of Home Affairs (ImmiAccount & Visa Finder)",
+      "tier": 1,
+      "trust_score": 100,
+      "authority_type": "Federal Government",
+      "status": "Verified Ground Truth",
+      "notes": "Primary statutory authority for visas, fees, gazettes, and SkillSelect invitation rounds."
+    },
+    {
+      "domain": "minister.homeaffairs.gov.au",
+      "name": "Minister for Home Affairs & Immigration Media Center",
+      "tier": 1,
+      "trust_score": 98,
+      "authority_type": "Ministerial Portals",
+      "status": "Verified Ground Truth",
+      "notes": "Official ministerial press releases, planning level speeches, and policy directives."
+    },
+    {
+      "domain": "legislation.gov.au",
+      "name": "Federal Register of Legislation",
+      "tier": 1,
+      "trust_score": 100,
+      "authority_type": "Statutory Law",
+      "status": "Verified Ground Truth",
+      "notes": "Legally binding Migration Regulations 1994, statutory instruments, and legislative amendments."
+    },
+    {
+      "domain": "aph.gov.au",
+      "name": "Parliament of Australia (Hansard & Bills)",
+      "tier": 1,
+      "trust_score": 99,
+      "authority_type": "Federal Parliament",
+      "status": "Verified Ground Truth",
+      "notes": "Official Hansard debate transcripts, Joint Standing Committee on Migration reports, and tabled bills."
+    },
+    {
+      "domain": "liveinmelbourne.vic.gov.au",
+      "name": "Victoria State Government (Live in Melbourne)",
+      "tier": 1,
+      "trust_score": 98,
+      "authority_type": "State Nomination Authority",
+      "status": "Verified Ground Truth",
+      "notes": "Victoria Subclass 190/491 Registration of Interest (ROI) guidelines and round results."
+    },
+    {
+      "domain": "nsw.gov.au",
+      "name": "Investment NSW / NSW Migration",
+      "tier": 1,
+      "trust_score": 98,
+      "authority_type": "State Nomination Authority",
+      "status": "Verified Ground Truth",
+      "notes": "NSW skilled lists, Subclass 190 invitation rounds, and regional nomination policies."
+    },
+    {
+      "domain": "migration.wa.gov.au",
+      "name": "Migration Western Australia",
+      "tier": 1,
+      "trust_score": 98,
+      "authority_type": "State Nomination Authority",
+      "status": "Verified Ground Truth",
+      "notes": "WA State Nominated Migration Program (SNMP) invitation rounds and occupation lists."
+    },
+    {
+      "domain": "migration.qld.gov.au",
+      "name": "Migration Queensland (BSMQ)",
+      "tier": 1,
+      "trust_score": 98,
+      "authority_type": "State Nomination Authority",
+      "status": "Verified Ground Truth",
+      "notes": "Queensland Subclass 190 and 491 criteria, quota tracking, and family sponsorship conditions."
+    },
+    {
+      "domain": "acs.org.au",
+      "name": "Australian Computer Society (ACS)",
+      "tier": 2,
+      "trust_score": 95,
+      "authority_type": "Assessing Authority",
+      "status": "Operational Authority",
+      "notes": "ICT skills assessments, ANZSCO 2613/2631 guidelines, multi-code submission rules, payment evidence criteria."
+    },
+    {
+      "domain": "vetassess.com.au",
+      "name": "VETASSESS",
+      "tier": 2,
+      "trust_score": 95,
+      "authority_type": "Assessing Authority",
+      "status": "Operational Authority",
+      "notes": "General professional and trade occupation assessments, priority processing circulars."
+    },
+    {
+      "domain": "reddit.com/r/AusVisa",
+      "name": "Reddit r/AusVisa Community",
+      "tier": 3,
+      "trust_score": 55,
+      "authority_type": "Community Discussion",
+      "status": "Informal Trend Observation",
+      "notes": "Self-reported invitation cutoffs, lodgement turnaround timelines, grant timestamps. Unverified until corroborated."
+    },
+    {
+      "domain": "forums.whirlpool.net.au",
+      "name": "Whirlpool Immigration Forum",
+      "tier": 3,
+      "trust_score": 58,
+      "authority_type": "Community Discussion",
+      "status": "Informal Trend Observation",
+      "notes": "Long-running threads tracking specific visa subclass grant dates, case officer queries, and verification calls."
+    }
+  ]
+}

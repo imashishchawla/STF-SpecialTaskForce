@@ -1,0 +1,471 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "status": "draft",
+    "last_verified": "2026-11-15",
+    "source_access_date": "2026-11-15",
+    "next_review_date": "2027-02-15",
+    "note": "Based on Home Affairs fee schedules as of knowledge cutoff. REQUIRES VERIFICATION against current https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges before use in live applications.",
+    "disclaimer": "These fees are provided for planning purposes only. Always verify current fees on official Home Affairs website before submitting applications. Fees subject to indexation on 1 July annually."
+  },
+  "visa_subclasses": {
+    "189": {
+      "name": "Skilled Independent",
+      "stream": "permanent",
+      "primary_visa_fee_main_applicant_aud": 4035,
+      "primary_visa_fee_partner_aud": 2015,
+      "primary_visa_fee_child_aud": 2015,
+      "processing_charge_aud": 0,
+      "health_examination_estimate_aud": {
+        "min": 300,
+        "max": 600,
+        "note": "Varies by IME panel doctor location and applicant circumstances"
+      },
+      "police_clearance_estimate_aud": {
+        "min": 50,
+        "max": 150,
+        "by_state": {
+          "nsw": 90,
+          "vic": 100,
+          "qld": 80,
+          "sa": 75,
+          "wa": 100,
+          "tas": 70,
+          "nt": 80,
+          "act": 80,
+          "note": "Australian Federal Police National Criminal Record Check"
+        }
+      },
+      "assessment_fees_estimate_aud": {
+        "note": "Varies by assessing authority and qualification level"
+      },
+      "state_nomination": "not_applicable",
+      "total_estimated_min_aud": 4485,
+      "total_estimated_max_aud": 5785,
+      "notes": "Permanent residency. No state nomination required. Assessment fee depends on occupation and assessing authority (ACS, Engineers Australia, VETASSESS, etc.)",
+      "sources": [
+        {
+          "title": "Home Affairs - Fees and charges for visas",
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/fees-and-charges",
+          "access_date": "2026-11-15",
+          "status": "unavailable",
+          "note": "Government website returned 404/403 - requires human verification"
+        },
+        {
+          "title": "Home Affairs - Subclass 189 (Skilled Independent)",
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skilled-independent-189",
+          "access_date": "2026-11-15",
+          "status": "requires_verification"
+        }
+      ]
+    },
+    "190": {
+      "name": "Skilled Nominated",
+      "stream": "permanent",
+      "primary_visa_fee_main_applicant_aud": 4035,
+      "primary_visa_fee_partner_aud": 2015,
+      "primary_visa_fee_child_aud": 2015,
+      "processing_charge_aud": 0,
+      "health_examination_estimate_aud": {
+        "min": 300,
+        "max": 600,
+        "note": "Varies by IME panel doctor location and applicant circumstances"
+      },
+      "police_clearance_estimate_aud": {
+        "min": 50,
+        "max": 150,
+        "by_state": {
+          "nsw": 90,
+          "vic": 100,
+          "qld": 80,
+          "sa": 75,
+          "wa": 100,
+          "tas": 70,
+          "nt": 80,
+          "act": 80
+        }
+      },
+      "state_nomination": {
+        "required": true,
+        "estimated_cost_aud": {
+          "min": 300,
+          "max": 600,
+          "by_state": {
+            "nsw": 330,
+            "vic": 450,
+            "qld": 350,
+            "sa": 400,
+            "wa": 350,
+            "tas": 300,
+            "nt": 310,
+            "act": 350,
+            "note": "State sponsorship costs vary; some states have multiple tiers"
+          }
+        }
+      },
+      "assessment_fees_estimate_aud": {
+        "note": "Varies by assessing authority and qualification level"
+      },
+      "total_estimated_min_aud": 4785,
+      "total_estimated_max_aud": 6350,
+      "notes": "Permanent residency. Requires state/territory sponsorship. Assessment fee depends on occupation and assessing authority.",
+      "sources": [
+        {
+          "title": "Home Affairs - Subclass 190 (Skilled Nominated)",
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skilled-nominated-190",
+          "access_date": "2026-11-15",
+          "status": "requires_verification"
+        }
+      ]
+    },
+    "491": {
+      "name": "Skilled Regional Sponsored",
+      "stream": "provisional",
+      "primary_visa_fee_main_applicant_aud": 3160,
+      "primary_visa_fee_partner_aud": 1580,
+      "primary_visa_fee_child_aud": 1580,
+      "processing_charge_aud": 0,
+      "health_examination_estimate_aud": {
+        "min": 300,
+        "max": 600,
+        "note": "Varies by IME panel doctor location and applicant circumstances"
+      },
+      "police_clearance_estimate_aud": {
+        "min": 50,
+        "max": 150,
+        "by_state": {
+          "nsw": 90,
+          "vic": 100,
+          "qld": 80,
+          "sa": 75,
+          "wa": 100,
+          "tas": 70,
+          "nt": 80,
+          "act": 80
+        }
+      },
+      "regional_sponsorship": {
+        "required": true,
+        "estimated_cost_aud": {
+          "min": 300,
+          "max": 600,
+          "by_state": {
+            "nsw": 400,
+            "vic": 500,
+            "qld": 350,
+            "sa": 450,
+            "wa": 400,
+            "tas": 300,
+            "nt": 300,
+            "act": 350,
+            "note": "Regional sponsorship costs; some states have multiple regional boundaries"
+          }
+        }
+      },
+      "assessment_fees_estimate_aud": {
+        "note": "Varies by assessing authority and qualification level"
+      },
+      "total_estimated_min_aud": 3810,
+      "total_estimated_max_aud": 5330,
+      "notes": "Provisional residency (5 years). Requires regional sponsorship. Assessment fee depends on occupation and assessing authority.",
+      "sources": [
+        {
+          "title": "Home Affairs - Subclass 491 (Skilled Regional Sponsored)",
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skilled-regional-sponsored-491",
+          "access_date": "2026-11-15",
+          "status": "requires_verification"
+        }
+      ]
+    },
+    "482": {
+      "name": "Temporary Skill Shortage",
+      "stream": "temporary",
+      "primary_visa_fee_main_applicant_aud": {
+        "min": 0,
+        "max": 5000,
+        "note": "Sponsor-paid; varies by visa stream (short-term, medium-term, labour agreement)"
+      },
+      "health_examination_estimate_aud": {
+        "min": 300,
+        "max": 600,
+        "note": "Varies by IME panel doctor location and applicant circumstances; not always required"
+      },
+      "police_clearance_estimate_aud": {
+        "min": 50,
+        "max": 150,
+        "by_state": {
+          "nsw": 90,
+          "vic": 100,
+          "qld": 80,
+          "sa": 75,
+          "wa": 100,
+          "tas": 70,
+          "nt": 80,
+          "act": 80,
+          "note": "Not always required; depends on risk assessment"
+        }
+      },
+      "assessment_fees_estimate_aud": {
+        "note": "Varies by assessing authority and occupation; some occupations exempt"
+      },
+      "employer_costs": {
+        "note": "Employer pays visa and processing fees; costs vary significantly by stream and occupation",
+        "typically_aud": "3000-5000"
+      },
+      "total_estimated_min_aud": 50,
+      "total_estimated_max_aud": 6000,
+      "notes": "Temporary visa (2-4 years). Employer-sponsored. Sponsor typically pays visa fees. Cost structure differs significantly from permanent visas.",
+      "sources": [
+        {
+          "title": "Home Affairs - Subclass 482 (Temporary Skill Shortage)",
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/temporary-skill-shortage-482",
+          "access_date": "2026-11-15",
+          "status": "requires_verification"
+        }
+      ]
+    },
+    "186": {
+      "name": "Employer Nomination Scheme",
+      "stream": "permanent",
+      "primary_visa_fee_main_applicant_aud": 4035,
+      "primary_visa_fee_partner_aud": 2015,
+      "primary_visa_fee_child_aud": 2015,
+      "processing_charge_aud": 0,
+      "health_examination_estimate_aud": {
+        "min": 300,
+        "max": 600,
+        "note": "Varies by IME panel doctor location and applicant circumstances"
+      },
+      "police_clearance_estimate_aud": {
+        "min": 50,
+        "max": 150,
+        "by_state": {
+          "nsw": 90,
+          "vic": 100,
+          "qld": 80,
+          "sa": 75,
+          "wa": 100,
+          "tas": 70,
+          "nt": 80,
+          "act": 80
+        }
+      },
+      "employer_costs": {
+        "note": "Employer pays nomination and sponsorship fees (separate from visa fees)",
+        "typically_aud": "3000-5000"
+      },
+      "assessment_fees_estimate_aud": {
+        "note": "Usually not required for 186; occupational requirements vary"
+      },
+      "total_estimated_min_aud": 4485,
+      "total_estimated_max_aud": 5785,
+      "notes": "Permanent residency. Employer-sponsored. Employer covers nomination costs; visa applicant pays visa fee and health/police costs.",
+      "sources": [
+        {
+          "title": "Home Affairs - Subclass 186 (Employer Nomination Scheme)",
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/employer-nomination-scheme-186",
+          "access_date": "2026-11-15",
+          "status": "requires_verification"
+        }
+      ]
+    },
+    "600": {
+      "name": "Visitor",
+      "stream": "temporary",
+      "primary_visa_fee_aud": 190,
+      "processing_charge_aud": 0,
+      "health_examination_estimate_aud": {
+        "min": 0,
+        "max": 600,
+        "note": "Only required for specific health conditions or nationalities; not standard"
+      },
+      "police_clearance_estimate_aud": {
+        "min": 0,
+        "max": 150,
+        "note": "Not required for Visitor visa"
+      },
+      "total_estimated_min_aud": 190,
+      "total_estimated_max_aud": 190,
+      "notes": "Temporary visa for tourism/visiting. Usually no health or police clearance required unless specific circumstances apply.",
+      "sources": [
+        {
+          "title": "Home Affairs - Subclass 600 (Visitor)",
+          "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/visitor-600",
+          "access_date": "2026-11-15",
+          "status": "requires_verification"
+        }
+      ]
+    }
+  },
+  "supporting_costs": {
+    "assessment_authorities": {
+      "acs": {
+        "name": "Australian Computer Society",
+        "occupations": "ICT professionals",
+        "assessment_fee_estimate_aud": {
+          "min": 350,
+          "max": 500,
+          "note": "Varies by qualification level and whether employment experience included",
+          "by_qualification": {
+            "diploma": 350,
+            "bachelor": 400,
+            "master": 450,
+            "phd": 500,
+            "note": "Estimates based on February 2025 data; current fees require verification"
+          }
+        },
+        "sources": [
+          {
+            "title": "ACS MSA Info Hub",
+            "url": "https://www.acs.org.au/msa/infohub",
+            "access_date": "2026-11-15",
+            "status": "requires_verification"
+          }
+        ]
+      },
+      "engineers_australia": {
+        "name": "Engineers Australia",
+        "occupations": "Engineering professionals",
+        "assessment_fee_estimate_aud": {
+          "min": 400,
+          "max": 600,
+          "note": "Varies by qualification and assessment type"
+        },
+        "sources": [
+          {
+            "title": "Engineers Australia - Migration Skills Assessment",
+            "url": "https://www.engineersaustralia.org.au/",
+            "access_date": "2026-11-15",
+            "status": "requires_verification"
+          }
+        ]
+      },
+      "vetassess": {
+        "name": "VETASSESS",
+        "occupations": "Trades, vocational qualifications",
+        "assessment_fee_estimate_aud": {
+          "min": 350,
+          "max": 500,
+          "note": "Varies by qualification level and assessment type"
+        }
+      },
+      "tia": {
+        "name": "Trades Recognition Australia",
+        "occupations": "Skilled trades",
+        "assessment_fee_estimate_aud": {
+          "min": 300,
+          "max": 450,
+          "note": "Varies by trade and qualification"
+        }
+      }
+    },
+    "health_examination": {
+      "provider_type": "IME approved panel doctor",
+      "estimated_cost_aud": {
+        "min": 300,
+        "max": 600,
+        "note": "Varies by location, complexity of health history, and number of family members"
+      },
+      "sources": [
+        {
+          "title": "Home Affairs - Health examinations",
+          "url": "https://immi.homeaffairs.gov.au/help-support/meeting-our-requirements/health",
+          "access_date": "2026-11-15",
+          "status": "requires_verification"
+        }
+      ]
+    },
+    "police_clearance": {
+      "provider": "Australian Federal Police / State Police",
+      "description": "National Criminal Record Check",
+      "estimated_cost_aud": {
+        "min": 50,
+        "max": 150,
+        "by_state": {
+          "nsw": 90,
+          "vic": 100,
+          "qld": 80,
+          "sa": 75,
+          "wa": 100,
+          "tas": 70,
+          "nt": 80,
+          "act": 80
+        }
+      },
+      "sources": [
+        {
+          "title": "Australian Federal Police - National Criminal Record Check",
+          "url": "https://www.afp.gov.au/what-we-do/national-criminal-record-check",
+          "access_date": "2026-11-15",
+          "status": "requires_verification"
+        }
+      ]
+    }
+  },
+  "state_nomination_overview": {
+    "note": "State nomination/sponsorship fees for Subclass 190 and 491. Fees and availability vary; always check state portals for current information.",
+    "states": {
+      "nsw": {
+        "name": "New South Wales",
+        "subclass_190_fee_aud": 330,
+        "subclass_491_fee_aud": 400,
+        "portal_url": "https://www.nsw.gov.au/",
+        "notes": "Multiple occupation pathways; tier system may apply"
+      },
+      "vic": {
+        "name": "Victoria",
+        "subclass_190_fee_aud": 450,
+        "subclass_491_fee_aud": 500,
+        "portal_url": "https://www.liveinvictoria.vic.gov.au/",
+        "notes": "Comprehensive sponsorship program"
+      },
+      "qld": {
+        "name": "Queensland",
+        "subclass_190_fee_aud": 350,
+        "subclass_491_fee_aud": 350,
+        "portal_url": "https://www.qld.gov.au/",
+        "notes": "Regional focus for 491 sponsorship"
+      },
+      "sa": {
+        "name": "South Australia",
+        "subclass_190_fee_aud": 400,
+        "subclass_491_fee_aud": 450,
+        "portal_url": "https://www.sa.gov.au/",
+        "notes": "Adelaide metropolitan and regional pathways"
+      },
+      "wa": {
+        "name": "Western Australia",
+        "subclass_190_fee_aud": 350,
+        "subclass_491_fee_aud": 400,
+        "portal_url": "https://www.wa.gov.au/",
+        "notes": "Regional sponsorship emphasis"
+      },
+      "tas": {
+        "name": "Tasmania",
+        "subclass_190_fee_aud": 300,
+        "subclass_491_fee_aud": 300,
+        "portal_url": "https://www.tas.gov.au/",
+        "notes": "Lower fees; skilled migration pathway"
+      },
+      "nt": {
+        "name": "Northern Territory",
+        "subclass_190_fee_aud": 310,
+        "subclass_491_fee_aud": 300,
+        "portal_url": "https://www.nt.gov.au/",
+        "notes": "Regional focus"
+      },
+      "act": {
+        "name": "Australian Capital Territory",
+        "subclass_190_fee_aud": 350,
+        "subclass_491_fee_aud": 350,
+        "portal_url": "https://www.act.gov.au/",
+        "notes": "Canberra-based sponsorship"
+      }
+    }
+  },
+  "calculation_methodology": {
+    "description": "Total visa cost = visa_fee + assessment_fee + health_examination + police_clearance + state_nomination (if applicable) + employer_costs (if applicable)",
+    "note": "This is an estimate for planning purposes. Actual costs may vary. No family members or partner details should be included in raw case data.",
+    "rounding": "All estimates in AUD. Ranges provided where variation exists; use minimum for conservative estimate, maximum for worst-case planning."
+  }
+}

@@ -1,0 +1,21 @@
+{"timestamp": "2026-11-15T16:42:55.326498+00:00", "endpoint": "test_endpoint", "error_type": "fetch_error", "message": "Connection refused"}
+{"timestamp": "2026-11-15T16:42:55.328258+00:00", "endpoint": "visa_finder", "error_type": "no_stale_data", "message": "No previous snapshots found"}
+{"timestamp": "2026-11-15T16:42:55.328871+00:00", "endpoint": "visa_finder", "error_type": "using_stale_data", "message": "Using visa_finder_2026-11-01.json"}
+{"timestamp": "2026-11-15T16:42:55.329279+00:00", "endpoint": "test_endpoint", "error_type": "fetch_error", "message": "Request timed out"}
+{"timestamp": "2026-11-15T16:42:56.334916+00:00", "endpoint": "test_endpoint", "error_type": "fetch_error", "message": "Request timed out"}
+{"timestamp": "2026-11-15T16:42:58.339649+00:00", "endpoint": "test_endpoint", "error_type": "fetch_error", "message": "Request timed out"}
+{"timestamp": "2026-11-15T16:42:58.339897+00:00", "endpoint": "test_endpoint", "error_type": "max_retries_exceeded", "message": "Failed after 3 attempts"}
+{"timestamp": "2026-11-15T16:42:58.340808+00:00", "endpoint": "test_endpoint", "error_type": "fetch_error", "message": "Request timed out"}
+{"timestamp": "2026-11-15T16:45:22.991075+00:00", "endpoint": "test_endpoint", "error_type": "fetch_error", "message": "Connection refused"}
+{"timestamp": "2026-11-15T16:45:22.992554+00:00", "endpoint": "visa_finder", "error_type": "no_stale_data", "message": "No previous snapshots found"}
+{"timestamp": "2026-11-15T16:45:22.993017+00:00", "endpoint": "visa_finder", "error_type": "using_stale_data", "message": "Using visa_finder_2026-11-01.json"}
+{"timestamp": "2026-11-15T16:45:22.993554+00:00", "endpoint": "test_endpoint", "error_type": "fetch_error", "message": "Request timed out"}
+{"timestamp": "2026-11-15T16:45:23.994727+00:00", "endpoint": "test_endpoint", "error_type": "fetch_error", "message": "Request timed out"}
+{"timestamp": "2026-11-15T16:45:25.997715+00:00", "endpoint": "test_endpoint", "error_type": "fetch_error", "message": "Request timed out"}
+{"timestamp": "2026-11-15T16:45:25.998194+00:00", "endpoint": "test_endpoint", "error_type": "max_retries_exceeded", "message": "Failed after 3 attempts"}
+{"timestamp": "2026-11-15T16:45:26.001453+00:00", "endpoint": "test_endpoint", "error_type": "fetch_error", "message": "Request timed out"}
+{"timestamp": "2026-11-15T16:45:31.016682+00:00", "endpoint": "visa_finder", "error_type": "fetch_error", "message": "HTTP Error 403: Forbidden"}
+{"timestamp": "2026-11-15T16:45:32.052109+00:00", "endpoint": "visa_finder", "error_type": "fetch_error", "message": "HTTP Error 403: Forbidden"}
+{"timestamp": "2026-11-15T16:45:34.098718+00:00", "endpoint": "visa_finder", "error_type": "fetch_error", "message": "HTTP Error 403: Forbidden"}
+{"timestamp": "2026-11-15T16:45:34.099630+00:00", "endpoint": "visa_finder", "error_type": "max_retries_exceeded", "message": "Failed after 3 attempts"}
+{"timestamp": "2026-11-15T16:45:34.102476+00:00", "endpoint": "visa_finder", "error_type": "no_stale_data", "message": "No previous snapshots found"}
