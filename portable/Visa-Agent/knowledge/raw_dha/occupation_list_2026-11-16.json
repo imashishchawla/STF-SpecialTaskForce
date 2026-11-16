@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "source": "https://immi.homeaffairs.gov.au/visas/working-in-australia/skill-occupation-list",
+    "scrape_timestamp": "2026-11-16T03:10:43.747946+00:00",
+    "scrape_status": "success",
+    "row_count": 0,
+    "next_scrape": "2026-11-17T03:10:43.747946+00:00"
+  },
+  "data": {
+    "occupations": [],
+    "count": 0
+  },
+  "errors": []
+}

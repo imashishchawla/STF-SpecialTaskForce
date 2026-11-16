@@ -3,7 +3,7 @@
     "state_code": "SA",
     "state_name": "South Australia",
     "source": "https://migration.sa.gov.au/",
-    "scrape_timestamp": "2026-11-15T18:48:31.113953+00:00",
+    "scrape_timestamp": "2026-11-16T03:47:33.998811+00:00",
     "scrape_status": "success",
     "occupation_count": 3
   },
@@ -41,6 +41,6 @@
   "quotas": {
     "visa_190_available": 150,
     "visa_491_available": 60,
-    "notes": "Updated 2026-11-15"
+    "notes": "Updated 2026-11-16"
   }
 }

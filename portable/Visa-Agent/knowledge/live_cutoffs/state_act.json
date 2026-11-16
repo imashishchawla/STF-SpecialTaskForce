@@ -3,7 +3,7 @@
     "state_code": "ACT",
     "state_name": "Australian Capital Territory",
     "source": "https://www.act.gov.au/",
-    "scrape_timestamp": "2026-11-15T18:48:34.666085+00:00",
+    "scrape_timestamp": "2026-11-16T03:47:34.365012+00:00",
     "scrape_status": "success",
     "occupation_count": 3
   },
@@ -41,6 +41,6 @@
   "quotas": {
     "visa_190_available": 120,
     "visa_491_available": 45,
-    "notes": "Updated 2026-11-15"
+    "notes": "Updated 2026-11-16"
   }
 }

@@ -2,11 +2,45 @@
   "meta": {
     "state_code": "WA",
     "state_name": "Western Australia",
-    "source": "https://www.wa.gov.au/government/migration",
-    "scrape_timestamp": "2026-11-15T18:48:26.825281+00:00",
-    "scrape_status": "failed",
-    "occupation_count": 0
+    "source": "https://www.wa.gov.au/",
+    "scrape_timestamp": "2026-11-16T03:47:32.759673+00:00",
+    "scrape_status": "success",
+    "occupation_count": 3
   },
-  "occupations": [],
-  "quotas": {}
+  "occupations": [
+    {
+      "occupation_code": "261313",
+      "occupation_title": "Software Engineer",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 8
+    },
+    {
+      "occupation_code": "234111",
+      "occupation_title": "Civil Engineer",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 9
+    },
+    {
+      "occupation_code": "262112",
+      "occupation_title": "Accountant",
+      "visa_type": [
+        "190"
+      ],
+      "available": false,
+      "processing_time_weeks": null
+    }
+  ],
+  "quotas": {
+    "visa_190_available": 200,
+    "visa_491_available": 80,
+    "notes": "Updated 2026-11-16"
+  }
 }

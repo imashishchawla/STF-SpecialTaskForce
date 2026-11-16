@@ -1,0 +1,1431 @@
+{
+  "metadata": {
+    "source": "Airtable shared view",
+    "import_date": "2026-11-16T03:51:51.465426+00:00",
+    "total_companies": 61,
+    "states_covered": 6,
+    "occupations_mapped": 3
+  },
+  "companies": [
+    {
+      "name": "AirTasker",
+      "url": "https://www.airtasker.com/careers/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Ruby",
+        "Ruby on Rails",
+        "NodeJs",
+        "Javascript",
+        "React",
+        "Java",
+        "Python or Golang"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Atlassian",
+      "url": "https://www.atlassian.com/company/careers/sydney",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Java",
+        "NodeJs",
+        "Javascript",
+        "React"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "BCG Digital Ventures",
+      "url": "https://careers.bcgdv.com/locations/sydney/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "JavaScript",
+        "Angular",
+        "React",
+        "Hadoop",
+        "NoSQL"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "BigCommerce",
+      "url": "https://www.bigcommerce.com/careers/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Ruby",
+        "PHP",
+        "Javascript",
+        "Puppet"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Canva",
+      "url": "https://www.canva.com/careers/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Java",
+        "Javascript",
+        "NodeJs",
+        "React",
+        "Typescript"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Deputy",
+      "url": "https://www.deputy.com/au/careers",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "PHP",
+        "Javascript",
+        "Android",
+        "SQL"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313"
+      ]
+    },
+    {
+      "name": "Domain Group",
+      "url": "https://domaingroup.csod.com/ux/ats/careersite/4/home?c=domaingroup",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "PHP",
+        "Javascript",
+        "Nodejs",
+        "React",
+        "Android",
+        "Python",
+        "C#",
+        "Swift"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Envato",
+      "url": "https://envato.com/careers/",
+      "locations": [
+        "Melbourne CBD, Melbourne"
+      ],
+      "skills": [
+        "Ruby",
+        "Ruby on Rails",
+        "NodeJs",
+        "Elixir",
+        "React"
+      ],
+      "states": [
+        "VIC"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Expert360",
+      "url": "https://expert360.com/company/careers",
+      "locations": [
+        "Melbourne CBD, Melbourne",
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Elixir",
+        "Javascript",
+        "React",
+        "GraphQL",
+        "Elasticsearch"
+      ],
+      "states": [
+        "NSW",
+        "VIC"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313"
+      ]
+    },
+    {
+      "name": "HealthEngine",
+      "url": "https://careers.healthengine.com.au/opportunities/",
+      "locations": [
+        "Perth CBD, Perth",
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "JavaScript",
+        "PHP",
+        "NodeJs",
+        "React",
+        "Symfony/Laravel",
+        "Java",
+        "Kotlin"
+      ],
+      "states": [
+        "NSW",
+        "WA"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Healthshare",
+      "url": "https://www.healthsharedigital.com/company/careers/",
+      "locations": [
+        "Bondi Junction, Sydney"
+      ],
+      "skills": [
+        "Python",
+        "Javascript",
+        "React"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "HiPages",
+      "url": "https://hipagesgroup.com.au/careers/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "PHP",
+        "NodeJs",
+        "MySQL",
+        "Swift",
+        "Objective-C"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313"
+      ]
+    },
+    {
+      "name": "HireUp",
+      "url": "https://hireup.com.au/careers/",
+      "locations": [
+        "Greenwich, Sydney"
+      ],
+      "skills": [
+        "NodeJs",
+        "Javascript",
+        "React",
+        "Mongo DB"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "IRESS",
+      "url": "https://www.iress.com/au/company/join-us/",
+      "locations": [
+        "Melbourne CBD, Melbourne",
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Reactjs",
+        "Python",
+        "JavaScript",
+        "TypeScript",
+        "AWS"
+      ],
+      "states": [
+        "NSW",
+        "VIC"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Learnosity",
+      "url": "https://learnosity.com/company/careers/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "PHP",
+        "Go",
+        "Javascript",
+        "MySQL",
+        "PostgreSQL",
+        "ElasticSearch",
+        "Redshift",
+        "AWS"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Lendi",
+      "url": "https://lendi.recruiterbox.com/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Java",
+        "Scala",
+        "NodeJs",
+        "Javascript",
+        "SQL",
+        "Python"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313"
+      ]
+    },
+    {
+      "name": "Local Measure",
+      "url": "https://www.localmeasure.com/company/careers",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Python",
+        "Mongo",
+        "Javascript",
+        "AWS"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Oliver Wyman Labs",
+      "url": "https://tech.labs.oliverwyman.com/ow-join/join-us/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Database",
+        "SQL",
+        "Hadoop",
+        "Python",
+        "NoSQL"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313"
+      ]
+    },
+    {
+      "name": "Optiver",
+      "url": "https://www.optiver.com/ap/en/job-opportunities",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "C#",
+        "C++",
+        "Python"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Propeller",
+      "url": "https://www.propelleraero.com/jobs/sydney/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Javascript",
+        "NodeJs",
+        "Python",
+        "Django",
+        "React",
+        "AWS",
+        "Kubernetes",
+        "Terraform"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Quantium",
+      "url": "https://www.quantium.com/careers/",
+      "locations": [
+        "Melbourne CBD, Melbourne",
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Java",
+        "Scala",
+        "Javascript",
+        "NodeJs",
+        "postgres"
+      ],
+      "states": [
+        "NSW",
+        "VIC"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313"
+      ]
+    },
+    {
+      "name": "Qwilr",
+      "url": "https://qwilr.com/jobs/",
+      "locations": [
+        "Melbourne CBD, Melbourne",
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "MongoDB",
+        "Javascript",
+        "NodeJs",
+        "Angular",
+        "ReactJs"
+      ],
+      "states": [
+        "NSW",
+        "VIC"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313"
+      ]
+    },
+    {
+      "name": "REA Group",
+      "url": "https://www.rea-group.com/careers/",
+      "locations": [
+        "Dulwich, Adelaide",
+        "Fortitude Valley, Brisbane",
+        "Fyshwick, Canberra",
+        "Richmond, Melbourne",
+        "Subiaco, Perth",
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Scala",
+        "Ruby",
+        "Javascript",
+        "NodeJs",
+        "React",
+        "Docker",
+        "Elasticsearch",
+        "AWS",
+        "Big Query"
+      ],
+      "states": [
+        "ACT",
+        "NSW",
+        "QLD",
+        "SA",
+        "VIC",
+        "WA"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Red Ant",
+      "url": "https://redant.com.au/jobs/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Ruby",
+        "Ruby on Rails",
+        "Javascript",
+        "Angular"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Rockend",
+      "url": "https://www.rockend.com/careers",
+      "locations": [
+        "St Leonards, Sydney"
+      ],
+      "skills": [
+        "C#",
+        "ASP.NET",
+        "Javascript",
+        "Angular"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "SafetyCulture",
+      "url": "https://safetyculture.com/careers/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "GoLang",
+        "C++",
+        "Javascript",
+        "NodeJs"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "SiteMinder",
+      "url": "https://www.siteminder.com/jobs/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Javascript",
+        "Typescript",
+        "NodeJs",
+        "Vue",
+        "Ruby",
+        "GoLang",
+        "Java"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Spaceship",
+      "url": "https://www.spaceship.com.au/careers",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Go",
+        "Javascript",
+        "React"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "SwitchMedia",
+      "url": "https://www.switch.tv/careers/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "PHP",
+        "Javascript",
+        "Go"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Tyro",
+      "url": "https://www.tyro.com/careers/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Java",
+        "Scala",
+        "Kotlin",
+        "Kafka",
+        "Spark",
+        "AWS"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "WiseTech Global",
+      "url": "https://www.wisetechglobal.com/careers/current-openings",
+      "locations": [
+        "Alexandria, Sydney"
+      ],
+      "skills": [
+        "C#",
+        ".net",
+        "Javascirpt",
+        "Android",
+        "Sharepoint"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Zendesk",
+      "url": "https://www.zendesk.com/jobs/melbourne/",
+      "locations": [
+        "Melbourne CBD, Melbourne"
+      ],
+      "skills": [
+        "Ruby",
+        "Scala",
+        "Python",
+        "Go",
+        "PHP",
+        "AWS",
+        "GCP",
+        "MySQL",
+        "Redis",
+        "Kafka",
+        "ELK",
+        "Cassandra",
+        "Memcache",
+        "Kubernetes",
+        "Hadoop",
+        "Chef",
+        "Terraform"
+      ],
+      "states": [
+        "VIC"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Zip",
+      "url": "https://zip.co/careers",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        ".net",
+        "Javascript",
+        "NodeJs",
+        "Angular",
+        "Python",
+        "AWS"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "LegalVision",
+      "url": "https://legalvision.com.au/careers/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "PHP",
+        "Laravel",
+        "Javascript",
+        "AWS"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "CSIRO's Data61",
+      "url": "https://jobs.csiro.au/search/?q=data61&locationsearch=",
+      "locations": [
+        "Brisbane CBD, Brisbane",
+        "Canberra CBD, Canberra",
+        "Melbourne CBD, Melbourne",
+        "Perth CBD, Perth",
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Bigdata",
+        "C++",
+        "Drones",
+        "IOT",
+        "JavaScript",
+        "Machine Learning",
+        "Python",
+        "R"
+      ],
+      "states": [
+        "ACT",
+        "NSW",
+        "QLD",
+        "VIC",
+        "WA"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Expedia Group",
+      "url": "https://lifeatexpedia.com/jobs?location=Australia",
+      "locations": [
+        "Brisbane City, Brisbane"
+      ],
+      "skills": [
+        "Javascript",
+        "AWS",
+        "Java",
+        "React",
+        "Node"
+      ],
+      "states": [
+        "QLD"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Finder",
+      "url": "https://www.finder.com.au/careers",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "PHP",
+        "JavaScript",
+        "NodeJs"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Elmo",
+      "url": "https://elmosoftware.com.au/jobs/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "PHP",
+        ".net",
+        "Javascript",
+        "Angular",
+        "AWS"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Papercut Software",
+      "url": "https://www.papercut.com/about/careers/",
+      "locations": [
+        "Camberwell, Melbourne"
+      ],
+      "skills": [
+        "Java",
+        "Go",
+        "Javascript",
+        "GCP"
+      ],
+      "states": [
+        "VIC"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Koala",
+      "url": "https://www.linkedin.com/company/koala-mattress/jobs/",
+      "locations": [
+        "Alexandria, Sydney"
+      ],
+      "skills": [
+        "Go",
+        "PHP",
+        "Javascript",
+        "AWS"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Split Payments",
+      "url": "https://www.splitpayments.com.au/careers/",
+      "locations": [
+        "Porter Street, Byron Bay"
+      ],
+      "skills": [
+        "Ruby",
+        "Ruby on Rails",
+        "Javascript",
+        "Postgres",
+        "Redis",
+        "Sidekiq",
+        "AWS"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Pragmateam",
+      "url": "https://pragma.team/talent#apply",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Javascript",
+        "NodeJs",
+        "Angular",
+        "React"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "GlamCorner",
+      "url": "https://www.glamcorner.com.au/opportunities",
+      "locations": [
+        "Alexandria, Sydney"
+      ],
+      "skills": [
+        "Ruby",
+        "Javascript",
+        "Typescript",
+        "React",
+        "Docker",
+        "Jenkins",
+        "AWS",
+        "MySQL",
+        "Redis",
+        "PHP"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "JXT Global",
+      "url": "https://www.jxt.com.au/join-us",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        ".NET",
+        "C#",
+        "React",
+        "Angular",
+        "AWS"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Kayo Sports",
+      "url": "https://www.linkedin.com/company/kayo-sports/jobs/",
+      "locations": [
+        "Artamon, Sydney"
+      ],
+      "skills": [
+        "Javascript",
+        "NodeJs",
+        "Reactjs",
+        "Express.js"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "RedBubble",
+      "url": "https://careers.redbubble.com/jobs",
+      "locations": [
+        "Melbourne CBD, Melbourne"
+      ],
+      "skills": [
+        "Ruby",
+        "Ruby on Rails",
+        "Go",
+        "MySQL",
+        "NodeJS",
+        "ReactJS"
+      ],
+      "states": [
+        "VIC"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313"
+      ]
+    },
+    {
+      "name": "ClipChamp",
+      "url": "https://clipchamp.com/en/company/careers",
+      "locations": [
+        "Fortitude Valley, Brisbane"
+      ],
+      "skills": [
+        "Javascript",
+        "Typescript",
+        "Angular",
+        "React",
+        "Python",
+        "C"
+      ],
+      "states": [
+        "QLD"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Easygo",
+      "url": "https://easygo.io/careers/",
+      "locations": [
+        "Melbourne CBD, Melbourne"
+      ],
+      "skills": [
+        "JavaScript",
+        "NodeJs",
+        "React"
+      ],
+      "states": [
+        "VIC"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Isentia",
+      "url": "https://www.isentia.com/careers/",
+      "locations": [
+        "Sydney CBD, Sydney",
+        "Melbourne CBD, Melbourne"
+      ],
+      "skills": [
+        "Nodejs",
+        "Angularjs",
+        "Python",
+        "AWS",
+        "Docker"
+      ],
+      "states": [
+        "NSW",
+        "VIC"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Brighte",
+      "url": "https://brighte.com.au/careers/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "PHP",
+        "MYSQL",
+        "Javascript",
+        "AWS"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "DigIO",
+      "url": "https://digio.com.au/current-opportunities/",
+      "locations": [
+        "Melbourne CBD, Melbourne",
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Java",
+        "Javascript",
+        "NodeJs",
+        "Kubernetes",
+        "AWS"
+      ],
+      "states": [
+        "NSW",
+        "VIC"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "HeadUp Labs",
+      "url": "https://www.headuplabs.com/careers",
+      "locations": [
+        "Balaclava, Victoria"
+      ],
+      "skills": [
+        "C#",
+        "Azure",
+        "Cosmos Db",
+        "Javascript",
+        "React Native",
+        "Typescript",
+        "Azure Functions"
+      ],
+      "states": [
+        "VIC"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Home Care Heroes",
+      "url": "https://homecareheroes.com.au/careers",
+      "locations": [
+        "Redfern, Sydney"
+      ],
+      "skills": [
+        "Javascript",
+        "NodeJs",
+        "React",
+        "Ruby",
+        "Ruby on Rails",
+        "Rails",
+        "Docker"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Shippit",
+      "url": "https://www.shippit.com/careers/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Ruby",
+        "Javascript",
+        "NodeJs",
+        "ReactJs",
+        "AWS"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "Simply Wall St",
+      "url": "https://simplywall.st/careers",
+      "locations": [
+        "Surry Hills, Sydney"
+      ],
+      "skills": [
+        "Javascript",
+        "Typescript",
+        "NodeJS",
+        "ReactJs"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Aiven",
+      "url": "https://aiven.io/careers",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Python",
+        "PostgreSQL",
+        "MySQL",
+        "Elasticsearch",
+        "Cassandra",
+        "Grafana",
+        "InfluxDB",
+        "Redis",
+        "Kafka"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313"
+      ]
+    },
+    {
+      "name": "DriveYello",
+      "url": "https://www.driveyello.com/yello-jobs/",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "PHP",
+        "JavaScript",
+        "NodeJs",
+        "React",
+        "Python"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313"
+      ]
+    },
+    {
+      "name": "Harrison.Ai",
+      "url": "https://www.harrison.ai/careers",
+      "locations": [
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "Javascript",
+        "Typescript",
+        "Python",
+        "AWS",
+        "React"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "MyCompany",
+      "url": "https://example.com/jobs",
+      "locations": [
+        "Melbourne CBD, Melbourne",
+        "Sydney CBD, Sydney"
+      ],
+      "skills": [
+        "PHP",
+        "JavaScript",
+        "Android",
+        "SQL"
+      ],
+      "states": [
+        "NSW",
+        "VIC"
+      ],
+      "occupation_codes": [
+        "254411",
+        "261313"
+      ]
+    },
+    {
+      "name": "Rokt",
+      "url": "https://www.rokt.com/careers",
+      "locations": [
+        "Surry Hills, Sydney"
+      ],
+      "skills": [
+        "C#",
+        "ASP.NET",
+        "JavaScript",
+        "React",
+        "Angular",
+        "Go",
+        "ML",
+        "AWS",
+        "Kubernetes",
+        "Terraform"
+      ],
+      "states": [
+        "NSW"
+      ],
+      "occupation_codes": [
+        "261313",
+        "263111"
+      ]
+    },
+    {
+      "name": "SquareUp",
+      "url": "https://careers.squareup.com/",
+      "locations": [
+        "Melbourne, Sydney"
+      ],
+      "skills": [
+        "CI/CD",
+        "AWS",
+        "Data Analyst",
+        "DevOps"
+      ],
+      "states": [
+        "NSW",
+        "VIC"
+      ],
+      "occupation_codes": [
+        "263111"
+      ]
+    }
+  ],
+  "indices": {
+    "skills": {
+      "ruby": 12,
+      "ruby on rails": 6,
+      "nodejs": 27,
+      "javascript": 49,
+      "react": 23,
+      "java": 11,
+      "python or golang": 1,
+      "angular": 10,
+      "hadoop": 3,
+      "nosql": 2,
+      "php": 16,
+      "puppet": 1,
+      "typescript": 8,
+      "android": 4,
+      "sql": 4,
+      "python": 16,
+      "c#": 7,
+      "swift": 2,
+      "elixir": 2,
+      "graphql": 1,
+      "elasticsearch": 4,
+      "symfony/laravel": 1,
+      "kotlin": 2,
+      "mysql": 7,
+      "objective-c": 1,
+      "mongo db": 1,
+      "reactjs": 6,
+      "aws": 22,
+      "go": 8,
+      "postgresql": 2,
+      "redshift": 1,
+      "scala": 5,
+      "mongo": 1,
+      "database": 1,
+      "c++": 3,
+      "django": 1,
+      "kubernetes": 4,
+      "terraform": 3,
+      "postgres": 2,
+      "mongodb": 1,
+      "docker": 4,
+      "big query": 1,
+      "asp.net": 2,
+      "golang": 2,
+      "vue": 1,
+      "kafka": 3,
+      "spark": 1,
+      ".net": 4,
+      "javascirpt": 1,
+      "sharepoint": 1,
+      "gcp": 2,
+      "redis": 4,
+      "elk": 1,
+      "cassandra": 2,
+      "memcache": 1,
+      "chef": 1,
+      "laravel": 1,
+      "bigdata": 1,
+      "drones": 1,
+      "iot": 1,
+      "machine learning": 1,
+      "r": 1,
+      "node": 1,
+      "sidekiq": 1,
+      "jenkins": 1,
+      "express.js": 1,
+      "c": 1,
+      "angularjs": 1,
+      "azure": 1,
+      "cosmos db": 1,
+      "react native": 1,
+      "azure functions": 1,
+      "rails": 1,
+      "grafana": 1,
+      "influxdb": 1,
+      "ml": 1,
+      "ci/cd": 1,
+      "data analyst": 1,
+      "devops": 1
+    },
+    "locations": {
+      "NSW": 53,
+      "VIC": 16,
+      "WA": 3,
+      "ACT": 2,
+      "QLD": 4,
+      "SA": 1
+    },
+    "occupations": {
+      "261313": 60,
+      "254411": 16,
+      "263111": 24
+    }
+  }
+}

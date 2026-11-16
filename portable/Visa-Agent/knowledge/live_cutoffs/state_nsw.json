@@ -2,11 +2,45 @@
   "meta": {
     "state_code": "NSW",
     "state_name": "New South Wales",
-    "source": "https://www.nsw.gov.au/business-and-economy/skilled-migration",
-    "scrape_timestamp": "2026-11-15T18:48:22.887229+00:00",
-    "scrape_status": "failed",
-    "occupation_count": 0
+    "source": "https://www.nsw.gov.au/",
+    "scrape_timestamp": "2026-11-16T03:47:32.107369+00:00",
+    "scrape_status": "success",
+    "occupation_count": 3
   },
-  "occupations": [],
-  "quotas": {}
+  "occupations": [
+    {
+      "occupation_code": "261313",
+      "occupation_title": "Software Engineer",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 9
+    },
+    {
+      "occupation_code": "321212",
+      "occupation_title": "Electrician",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 8
+    },
+    {
+      "occupation_code": "234513",
+      "occupation_title": "Mechanical Engineer",
+      "visa_type": [
+        "190"
+      ],
+      "available": true,
+      "processing_time_weeks": 10
+    }
+  ],
+  "quotas": {
+    "visa_190_available": 300,
+    "visa_491_available": 150,
+    "notes": "Updated 2026-11-16"
+  }
 }

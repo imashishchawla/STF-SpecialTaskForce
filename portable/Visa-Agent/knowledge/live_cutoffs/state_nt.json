@@ -3,7 +3,7 @@
     "state_code": "NT",
     "state_name": "Northern Territory",
     "source": "https://migration.nt.gov.au/",
-    "scrape_timestamp": "2026-11-15T18:48:32.953450+00:00",
+    "scrape_timestamp": "2026-11-16T03:47:34.990173+00:00",
     "scrape_status": "success",
     "occupation_count": 3
   },
@@ -41,6 +41,6 @@
   "quotas": {
     "visa_190_available": 100,
     "visa_491_available": 50,
-    "notes": "Updated 2026-11-15"
+    "notes": "Updated 2026-11-16"
   }
 }

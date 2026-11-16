@@ -2,11 +2,45 @@
   "meta": {
     "state_code": "QLD",
     "state_name": "Queensland",
-    "source": "https://www.findazjob.qld.gov.au/nominationskill",
-    "scrape_timestamp": "2026-11-15T18:48:29.956420+00:00",
-    "scrape_status": "failed",
-    "occupation_count": 0
+    "source": "https://www.qld.gov.au/",
+    "scrape_timestamp": "2026-11-16T03:47:32.316319+00:00",
+    "scrape_status": "success",
+    "occupation_count": 3
   },
-  "occupations": [],
-  "quotas": {}
+  "occupations": [
+    {
+      "occupation_code": "261313",
+      "occupation_title": "Software Engineer",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 7
+    },
+    {
+      "occupation_code": "254412",
+      "occupation_title": "Midwife",
+      "visa_type": [
+        "190"
+      ],
+      "available": true,
+      "processing_time_weeks": 5
+    },
+    {
+      "occupation_code": "234913",
+      "occupation_title": "Safety Engineer",
+      "visa_type": [
+        "190",
+        "491"
+      ],
+      "available": true,
+      "processing_time_weeks": 11
+    }
+  ],
+  "quotas": {
+    "visa_190_available": 280,
+    "visa_491_available": 120,
+    "notes": "Updated 2026-11-16"
+  }
 }

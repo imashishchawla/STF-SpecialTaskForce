@@ -3,7 +3,7 @@
     "state_code": "TAS",
     "state_name": "Tasmania",
     "source": "https://www.tas.gov.au/",
-    "scrape_timestamp": "2026-11-15T18:48:31.422506+00:00",
+    "scrape_timestamp": "2026-11-16T03:47:33.683220+00:00",
     "scrape_status": "success",
     "occupation_count": 2
   },
@@ -31,6 +31,6 @@
   "quotas": {
     "visa_190_available": 80,
     "visa_491_available": 30,
-    "notes": "Updated 2026-11-15"
+    "notes": "Updated 2026-11-16"
   }
 }
